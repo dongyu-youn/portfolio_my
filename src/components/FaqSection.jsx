@@ -50,10 +50,10 @@ function FaqSection() {
 
           {/* 오른쪽 FAQ 리스트 */}
           <div className="lg:w-1/2">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-[#00939A]">
+            <h2 className="sm:text-xl lg:text-3xl lg:text-4xl font-bold mb-4 text-[#00939A]">
               인터코어의 알림톡여행이란 무엇인가?
             </h2>
-            <h3 className="text-xl text-gray-600 mb-8">FAQ</h3>
+            <h3 className="sm:text-lg lg:text-xl text-gray-600 mb-8">FAQ</h3>
 
             <div className="space-y-4">
               {faqs.map((faq, index) => (

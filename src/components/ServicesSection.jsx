@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import {
-  FaBlogger,
-  FaMobileAlt,
-  FaDatabase,
-  FaPrint,
-  FaHandshake,
-  FaChartLine,
+  FaSeedling,
+  FaLeaf,
+  FaTree,
+  FaSun,
+  FaWater,
+  FaRecycle,
 } from 'react-icons/fa';
 
 function ServicesSection() {
@@ -17,55 +17,57 @@ function ServicesSection() {
 
   const services = [
     {
-      icon: <FaBlogger size={32} />,
-      title: '블로그 마케팅',
+      icon: <FaSeedling size={32} />,
+      title: '새싹처럼 시작하는 블로그 마케팅',
       description:
-        '블로그와 SNS를 이용하여 고객과 소통하고 기업의 서비스를 설명합니다. 인터코어는 기업과 고객을 신뢰로 이어주는 역할을 합니다.',
-      bgColor: 'bg-[#9BC53D]',
+        '작은 새싹처럼 시작해서 블로그와 SNS를 통해 고객과 함께 성장합니다. 인터코어는 신뢰의 씨앗을 심어 풍성한 결실을 맺습니다.',
+      bgColor: 'bg-[#7FB069]',
     },
     {
-      icon: <FaMobileAlt size={32} />,
-      title: '앱과 웹을 기획 제작과 관리를 합니다',
+      icon: <FaLeaf size={32} />,
+      title: '성장하는 디지털 솔루션',
       description:
-        '기업의 사업내용이 잘 드러나도록 고객의 의견을 우리의 기술을 통해 충실히 실행하고 관리 웹의 유지 및 관리 서비스를 합니다.',
-      bgColor: 'bg-[#5DA9E9]',
+        '새로운 아이디어가 돋아나는 잎사귀처럼, 웹과 앱을 통해 고객의 비전을 실현합니다. 지속적인 관리로 더욱 튼튼하게 자라납니다.',
+      bgColor: 'bg-[#98C9A3]',
     },
     {
-      icon: <FaDatabase size={32} />,
-      title:
-        '데이터를 수집하고 데이터를 기반으로 가업의 마케팅 방향을 제안합니다',
+      icon: <FaTree size={32} />,
+      title: '데이터로 키우는 마케팅 전략',
       description:
-        '고객의 홈페이 사이트를 통해 수집된 데이터를 가공, 고객 마케팅을 위한 콘텐츠 제작합니다.',
-      bgColor: 'bg-[#FF8C42]',
+        '단단한 나무처럼 견고한 데이터를 기반으로, 성장을 위한 최적의 마케팅 전략을 제시합니다.',
+      bgColor: 'bg-[#77AB59]',
     },
     {
-      icon: <FaPrint size={32} />,
-      title: '오프라인 홍보를 위한 인쇄',
-      description: '기업의 오프라인 홍보를 위한 인쇄, 출판물을 만듭니다.',
-      bgColor: 'bg-[#9BC53D]',
+      icon: <FaSun size={32} />,
+      title: '빛나는 오프라인 홍보물',
+      description:
+        '따스한 햇살처럼 고객의 브랜드를 밝게 비춰줄 인쇄물을 제작합니다.',
+      bgColor: 'bg-[#C4D6B0]',
     },
     {
-      icon: <FaHandshake size={32} />,
-      title: 'Partnership',
+      icon: <FaWater size={32} />,
+      title: '함께 자라나는 파트너십',
       description:
-        '인터코어는 필요에 의한 업체를 입니다. 개발 진행, 사이트 관유 등 다양한 방법으로 진행할 수 있습니다.',
-      bgColor: 'bg-[#5DA9E9]',
+        '물과 영양분처럼 필수적인 파트너가 되어, 고객의 비즈니스가 더욱 건강하게 자랄 수 있도록 지원합니다.',
+      bgColor: 'bg-[#A8E6CF]',
     },
     {
-      icon: <FaChartLine size={32} />,
-      title: '고객과 함께 성장합니다',
+      icon: <FaRecycle size={32} />,
+      title: '지속 가능한 성장',
       description:
-        '지속가능한 기업을 위해 인터코어는 고객과 함께 성장, 발전하는 방향을 찾아갑니다.',
-      bgColor: 'bg-[#FF8C42]',
+        '자연의 순환처럼 끊임없이 혁신하고 발전하며, 고객과 함께 지속 가능한 미래를 만들어갑니다.',
+      bgColor: 'bg-[#8ECF6F]',
     },
   ];
 
   return (
     <section className="bg-white py-20 font-sans">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
-        <div className="text-center mb-16">
+        <div className="text-left mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-4">OUR services</h2>
-          <p className="text-gray-600 text-lg">우리가 하는 일은?</p>
+          <p className="text-gray-600 text-lg">
+            새싹처럼 자라나는 우리의 서비스
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

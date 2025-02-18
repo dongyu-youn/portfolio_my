@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 function AboutSection() {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeService, setActiveService] = useState(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -22,49 +23,71 @@ function AboutSection() {
     },
     {
       icon: '/images/mainIcons/icon_web.gif',
-      title: '서비스 기획',
+      title: '알림톡 서비스',
       description:
-        '플랫폼 제작에 필요한 처음 설계에서부터 서비스 기획까지 고객의 생각을 구현하는 든든한 파트너가 되겠습니다.',
+        '알림톡 여행은 고객의 여행 일정과 관련된 정보를 실시간으로 제공하며, 맞춤형 알림 서비스를 제공합니다. 앱 스토어나 플레이 스토어에서 앱을 다운로드 받은 후, 간단한 회원가입 절차를 통해 서비스를 이용하실 수 있습니다.',
     },
   ];
 
+  const handleCardClick = (index) => {
+    setActiveService(activeService === index ? null : index);
+  };
+
   return (
-    <section className="bg-white py-20 font-sans">
+    <section className="bg-white sm:py-8 lg:py-20 font-sans">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-[#00939A]">
-            인터코어...
+        <div className="text-left sm:mb-8 lg:mb-16">
+          <h2 className="sm:text-xl 2xl:text-3xl lg:text-4xl font-bold mb-4">
+            인터코어만의 솔루션!
           </h2>
           <p className="text-gray-600 text-base lg:text-lg">
-            중소기업 비즈니스를 위한 파트너!
+            인터코어만의 솔루션을 소개합니다
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div
-              key={index}
-              className={`bg-white p-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:cursor-pointer
-                ${
-                  isVisible
-                    ? 'translate-y-0 opacity-100'
-                    : 'translate-y-10 opacity-0'
-                } hover:border-b-4 hover:border-[#00939A]`}
-              style={{ transitionDelay: `${index * 0.2}s` }}
-            >
-              <div className="flex flex-col items-center text-center">
-                <img
-                  src={service.icon}
-                  alt={service.title}
-                  className="w-20 h-20 mb-4"
-                />
-                <h3 className="text-lg lg:text-xl font-bold mb-4">
-                  {service.title}
-                </h3>
+            <div key={index}>
+              <div
+                className={`bg-white p-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:cursor-pointer
+                  ${
+                    isVisible
+                      ? 'translate-y-0 opacity-100'
+                      : 'translate-y-10 opacity-0'
+                  } 
+                  ${
+                    activeService === index
+                      ? 'border-b-4 border-brand-green'
+                      : ''
+                  }
+                  hover:border-b-4 hover:border-green`}
+                style={{ transitionDelay: `${index * 0.2}s` }}
+                onClick={() => handleCardClick(index)}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <img
+                    src={service.icon}
+                    alt={service.title}
+                    className="w-20 h-20 mb-4"
+                  />
+                  <h3 className="text-lg lg:text-xl font-bold mb-4">
+                    {service.title}
+                  </h3>
+                </div>
+              </div>
+
+              {/* 설명 박스 */}
+              <div
+                className={`mt-4 bg-gray-50 p-6 rounded-lg shadow transition-all duration-300
+                  ${
+                    activeService === index
+                      ? 'opacity-100 max-h-96'
+                      : 'opacity-0 max-h-0 overflow-hidden'
+                  }`}
+              >
                 <p className="text-gray-600 text-sm lg:text-base leading-relaxed">
                   {service.description}
                 </p>
-                <div className="w-full h-1 mt-4 bg-transparent transition-all duration-300"></div>
               </div>
             </div>
           ))}

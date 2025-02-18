@@ -54,12 +54,12 @@ function ProjectSection() {
   return (
     <section className="bg-[#f8f9fa] py-20 font-sans">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            건설기계통합관리서비스
+        <div className="text-left mb-16">
+          <h2 className="sm:text-xl lg:text-3xl lg:text-4xl font-bold mb-4">
+            대표작품
           </h2>
           <p className="text-gray-600 text-base lg:text-lg">
-            개발 운영 플랫폼 서비스
+            건설기계통합관리서비스
           </p>
         </div>
 

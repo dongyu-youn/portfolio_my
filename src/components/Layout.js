@@ -3,14 +3,14 @@ import Header from './Header';
 
 function Layout() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
       <Header />
 
-      <main className="flex-grow pt-16">
+      <main className="flex-grow pt-16 w-full">
         <Outlet />
       </main>
 
-      <footer className="bg-gray-100 py-6">{/* 푸터 내용 */}</footer>
+      <footer className="bg-gray-100 py-6 w-full">{/* 푸터 내용 */}</footer>
     </div>
   );
 }

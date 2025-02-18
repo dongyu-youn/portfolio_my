@@ -10,6 +10,7 @@ module.exports = {
           info: '#5bc0de',
           warning: '#f0ad4e',
           danger: '#d9534f',
+          green: '#008000',
         },
         gray: {
           light: '#f5f5f5',
@@ -41,10 +42,32 @@ module.exports = {
           '75%': { transform: 'translateX(60vw) rotate(2deg)' },
           '100%': { transform: 'translateX(120vw) rotate(0deg)' },
         },
+        waterDrop: {
+          '0%': {
+            transform: 'translate(-50%, 0) scale(0)',
+            opacity: '0.3',
+          },
+          '50%': {
+            transform: 'translate(-50%, 0) scale(1.2)',
+            opacity: '0.2',
+          },
+          '100%': {
+            transform: 'translate(-50%, 0) scale(2)',
+            opacity: '0',
+          },
+        },
+      },
+      screens: {
+        sm: '20rem', // 320px
+        md: '48rem', // 768px
+        lg: '64rem', // 1024px
+        xl: '95rem', // 1520px
+        '2xl': '110rem', // 1760px
       },
       animation: {
         excavator: 'excavator 15s linear infinite',
         'bounce-slow': 'bounce 3s infinite',
+        waterDrop: 'waterDrop 1s ease-out forwards',
       },
     },
   },
