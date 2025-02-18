@@ -22,10 +22,10 @@ function MainContent() {
               }`}
             style={{ transitionDelay: '0.5s' }}
           >
-            <h1 className="text-xl sm:text-lg lg:text-5xl font-bold text-[#b9f0ea] text-center sm:text-left">
+            <h1 className="text-xl sm:text-lg lg:text-5xl font-bold text-[#b9f0ea] text-center sm:text-left space-y-4">
               <span className="block">가치란,</span>
-              <span className="block sm:block lg:block">이해와 공감에서</span>
-              <span className="block sm:block lg:inline">시작합니다.</span>
+              <span className="block ">이해와 공감에서</span>
+              <span className="block ">시작합니다.</span>
             </h1>
             <div className="text-base sm:text-sm lg:text-xl text-center sm:text-left">
               <p className="font-light text-[#b9f0ea]">

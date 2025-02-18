@@ -69,7 +69,7 @@ function ProjectSection() {
             {features.slice(0, 3).map((feature, index) => (
               <div
                 key={index}
-                className={`flex items-center gap-6 transition-all duration-700 transform
+                className={`flex items-center gap-6 transition-all duration-700 transform hover:scale-105
                   ${
                     isVisible
                       ? 'translate-x-0 opacity-100'
@@ -78,10 +78,14 @@ function ProjectSection() {
                 style={{ transitionDelay: `${index * 0.2}s` }}
               >
                 <div className="flex-1 text-right">
-                  <h3 className="font-bold text-lg mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 text-sm">{feature.description}</p>
+                  <h3 className="font-bold text-lg mb-2 hover:text-[#A87E6E] transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm hover:text-gray-800 transition-colors duration-300">
+                    {feature.description}
+                  </p>
                 </div>
-                <div className="w-14 h-14 flex items-center justify-center bg-[#A87E6E] rounded-full transform rotate-45 flex-shrink-0">
+                <div className="w-14 h-14 flex items-center justify-center bg-[#A87E6E] rounded-full transform rotate-45 flex-shrink-0 hover:bg-[#8B6B5A] transition-colors duration-300 hover:scale-110">
                   <div className="transform -rotate-45 text-white">
                     {feature.icon}
                   </div>
@@ -95,9 +99,8 @@ function ProjectSection() {
             <img
               src="/images/mainContent/image.png"
               alt="Project Preview"
-              className={`w-full transition-all duration-700 transform
+              className={`w-full transition-all duration-300 transform hover:scale-110
                 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
-              style={{ transitionDelay: '0.6s' }}
             />
           </div>
 
@@ -106,7 +109,7 @@ function ProjectSection() {
             {features.slice(3).map((feature, index) => (
               <div
                 key={index}
-                className={`flex items-center gap-6 transition-all duration-700 transform
+                className={`flex items-center gap-6 transition-all duration-700 transform hover:scale-105
                   ${
                     isVisible
                       ? 'translate-x-0 opacity-100'
@@ -114,14 +117,18 @@ function ProjectSection() {
                   }`}
                 style={{ transitionDelay: `${(index + 3) * 0.2}s` }}
               >
-                <div className="w-14 h-14 flex items-center justify-center bg-[#A87E6E] rounded-full transform rotate-45 flex-shrink-0">
+                <div className="w-14 h-14 flex items-center justify-center bg-[#A87E6E] rounded-full transform rotate-45 flex-shrink-0 hover:bg-[#8B6B5A] transition-colors duration-300 hover:scale-110">
                   <div className="transform -rotate-45 text-white">
                     {feature.icon}
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-lg mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 text-sm">{feature.description}</p>
+                  <h3 className="font-bold text-lg mb-2 hover:text-[#A87E6E] transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm hover:text-gray-800 transition-colors duration-300">
+                    {feature.description}
+                  </p>
                 </div>
               </div>
             ))}
