@@ -52,7 +52,7 @@ function ProjectSection() {
   ];
 
   return (
-    <section className="bg-[#f8f9fa] sm:py-10 lg:py-20 font-sans">
+    <section className="bg-white sm:pt-10 lg:pt-12 font-sans">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
         <div className="text-left mb-16">
           <h2 className="sm:text-xl lg:text-3xl lg:text-4xl font-bold mb-4">

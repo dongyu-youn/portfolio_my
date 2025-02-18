@@ -56,6 +56,10 @@ module.exports = {
             opacity: '0',
           },
         },
+        pulse: {
+          '0%, 100%': { opacity: 0 },
+          '50%': { opacity: 0.3 },
+        },
       },
       screens: {
         sm: '20rem', // 320px
@@ -68,6 +72,7 @@ module.exports = {
         excavator: 'excavator 15s linear infinite',
         'bounce-slow': 'bounce 3s infinite',
         waterDrop: 'waterDrop 1s ease-out forwards',
+        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },

@@ -37,8 +37,8 @@ function Header() {
 
   return (
     <header className="fixed top-0 w-full bg-white z-50 p-[20px] font-sans">
-      <nav className="navbar">
-        <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
+      <nav className="navbar lg:max-w-lg 2xl:max-w-2xl mx-auto">
+        <div className="mx-auto px-4">
           <div className="flex justify-between items-center h-16">
             <Logo scrollToTop={scrollToTop} />
             <DesktopNav

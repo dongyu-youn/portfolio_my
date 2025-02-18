@@ -213,8 +213,8 @@ function AboutSection() {
 
   return (
     <section
-      className={`bg-white sm:py-8 lg:pt-20 font-sans ${
-        activeService !== null && !isMobile ? 'lg:pb-[700px]' : 'lg:pb-40'
+      className={` sm:pt-8 lg:pt-12 font-sans bg-[#f8f9fa] ${
+        activeService !== null && !isMobile ? 'lg:pb-[700px]' : 'lg:pb-20'
       }`}
       onClick={handleBackgroundClick}
     >

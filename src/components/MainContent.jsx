@@ -10,23 +10,51 @@ function MainContent() {
 
   return (
     <section className="bg-brand-green font-sans w-full ">
-      <div className="container mx-auto px-2 lg:h-[500px] sm:h-[300px] sm:mt-20 lg:mt-20 max-w-2xl">
+      <div className="container mx-auto px-2 lg:h-[500px] sm:h-[300px] sm:mt-20 lg:mt-20 lg:max-w-lg 2xl:max-w-2xl">
         <div className="flex flex-row lg:flex-row items-center justify-start h-full">
           {/* 왼쪽 텍스트 영역 */}
           <div
-            className={`w-1/2 lg:w-1/2 text-white space-y-4 sm:space-y-2 lg:space-y-6 text-center lg:text-left flex flex-col justify-start h-full mb-[5%] sm:mt-[25%] lg:mt-[15%] transition-all duration-700 transform sm:pt-4 lg:pt-0
+            className={`w-1/2 lg:w-1/2 text-white space-y-4 sm:space-y-2 lg:space-y-6 text-center lg:text-left flex flex-col justify-start h-full mb-[5%] sm:mt-[25%] lg:mt-[20%] transition-all duration-1000 transform sm:pt-4 lg:pt-0
               ${
                 isVisible
                   ? 'translate-y-0 opacity-100'
                   : 'translate-y-10 opacity-0'
               }`}
-            style={{ transitionDelay: '0.5s' }}
+            style={{ transitionDelay: '200ms' }}
           >
-            <h1 className="text-xl sm:text-lg lg:text-5xl font-bold text-[#b9f0ea] text-center sm:text-left lg:space-y-4">
-              <span className="block">가치란,</span>
-              <span className="block ">이해와 공감에서</span>
-              <span className="block ">시작합니다.</span>
+            <h1 className="text-xl sm:text-lg lg:text-5xl font-bold text-[#b9f0ea] text-center sm:text-left lg:space-y-4 transition-all duration-1000 ease-out">
+              <span
+                className={`block transform lg:inline ${
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: '400ms' }}
+              >
+                가치란,
+              </span>
+              <span
+                className={`block transform lg:inline ${
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: '600ms' }}
+              >
+                이해와 공감에서
+              </span>
+              <span
+                className={`block transform ${
+                  isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: '800ms' }}
+              >
+                시작합니다.
+              </span>
             </h1>
+
             <div className="text-base sm:text-sm lg:text-xl text-center sm:text-left">
               <p className="font-light text-[#b9f0ea]">
                 간결하면서도 섬세한 UX,
@@ -45,19 +73,19 @@ function MainContent() {
 
           {/* 오른쪽 이미지 영역 */}
           <div
-            className={`w-1/2 lg:w-1/2 lg:mt-12 flex justify-center items-center transition-all duration-2500 transform  lg:pl-[12%] lg:pb-[3%]
+            className={`w-1/2 lg:w-1/2 lg:mt-12 flex justify-center items-center transition-all duration-1000 transform  lg:pl-[12%] lg:pb-[3%]
               ${
                 isVisible
                   ? 'translate-y-0 opacity-100'
                   : 'translate-y-10 opacity-0'
               }`}
-            style={{ transitionDelay: '2s' }}
+            style={{ transitionDelay: '400ms' }}
           >
             <div className="relative flex justify-center items-center">
               <img
                 src="/images/mainIcons/mainIcon.jpeg"
                 alt="Phone 1"
-                className={`transform h-[200px] sm:w-[250px] sm:h-[180px] lg:w-[400px] lg:h-[400px] hover:rotate-0 transition-transform duration-3000 mix-blend-luminosity opacity-90 hover:opacity-100 hover:mix-blend-normal rounded-full object-cover
+                className={`transform h-[200px] sm:w-[250px] sm:h-[180px] lg:w-[400px] lg:h-[400px] hover:rotate-0 transition-all duration-1000 mix-blend-luminosity opacity-90 hover:opacity-100 hover:mix-blend-normal rounded-full object-cover
                   ${isVisible ? 'animate-bulb-glow' : ''}`}
               />
             </div>

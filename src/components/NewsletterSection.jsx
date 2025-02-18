@@ -58,7 +58,7 @@ function NewsletterSection() {
   };
 
   return (
-    <section className="bg-white sm:py-10 lg:py-20 font-sans newsletter-section">
+    <section className="bg-white sm:py-10 lg:py-12 font-sans newsletter-section">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
         <div
           className={`text-left mb-16 transition-all duration-700 transform

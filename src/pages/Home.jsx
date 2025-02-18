@@ -12,9 +12,10 @@ function Home() {
       <MainContent />
       <PortfolioSection />
       <AboutSection />
-      <ProjectSection />
+
       <NewsletterSection />
       <ServicesSection />
+      <ProjectSection />
       {/* 추가 섹션 */}
     </div>
   );
