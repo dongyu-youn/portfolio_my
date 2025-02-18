@@ -58,7 +58,7 @@ function NewsletterSection() {
   };
 
   return (
-    <section className="bg-white py-20 font-sans newsletter-section">
+    <section className="bg-white sm:py-10 lg:py-20 font-sans newsletter-section">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
         <div
           className={`text-left mb-16 transition-all duration-700 transform
@@ -66,7 +66,9 @@ function NewsletterSection() {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}
         >
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">인터코어 소식</h2>
+          <h2 className="sm:text-xl 2xl:text-3xl lg:text-4xl font-bold mb-4">
+            인터코어 소식
+          </h2>
           <p className="text-gray-600 text-base lg:text-lg">
             최신 소식과 업데이트를 확인하세요
           </p>

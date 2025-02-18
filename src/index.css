@@ -83,12 +83,6 @@ a {
   overflow-x: hidden;
 }
 
-@media screen and (max-width: 768px) {
-  #root {
-    max-width: 360px;
-  }
-}
-
 @keyframes bulb-glow {
   0% {
     filter: brightness(1);

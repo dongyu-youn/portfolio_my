@@ -15,6 +15,7 @@ import {
 function AboutSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeService, setActiveService] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     // 컴포넌트가 마운트되면 isVisible을 true로 설정
@@ -22,7 +23,16 @@ function AboutSection() {
       setIsVisible(true);
     }, 100);
 
-    return () => clearTimeout(timer);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const solutionData = [
@@ -47,9 +57,9 @@ function AboutSection() {
     {
       title: '기술 스택',
       description: [
-        '최신 웹 기술 활용',
-        '안정적인 서버 운영',
-        '확장 가능한 아키텍처',
+        'React, Next.js 프론트엔드 개발',
+        'Node.js, Spring Boot 백엔드 구축',
+        'AWS, Docker 클라우드 인프라 활용',
       ],
       icon: <FaCode className="w-12 h-12 text-green-500" />,
     },
@@ -142,7 +152,7 @@ function AboutSection() {
       description: (
         <section className="">
           <div className="max-w-6xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-[500px]">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:h-[500px]">
               {marketingData.map((item, index) => (
                 <div
                   key={index}
@@ -204,7 +214,7 @@ function AboutSection() {
   return (
     <section
       className={`bg-white sm:py-8 lg:pt-20 font-sans ${
-        activeService !== null ? 'lg:pb-[700px]' : 'lg:pb-40'
+        activeService !== null && !isMobile ? 'lg:pb-[700px]' : 'lg:pb-40'
       }`}
       onClick={handleBackgroundClick}
     >
@@ -221,7 +231,7 @@ function AboutSection() {
         <div className="relative">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index}>
+              <div key={index} className="flex flex-col">
                 <div
                   className={`bg-white p-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:cursor-pointer
                     ${
@@ -252,11 +262,20 @@ function AboutSection() {
                     </h3>
                   </div>
                 </div>
+                {/* 모바일용 설명 섹션 */}
+                {isMobile && activeService === index && (
+                  <div className="mt-4 bg-gray-50 p-4 rounded-lg shadow-md">
+                    <div className="text-gray-600 text-sm leading-relaxed">
+                      {service.description}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
 
-          {activeService !== null && (
+          {/* 데스크톱용 설명 섹션 */}
+          {!isMobile && activeService !== null && (
             <div
               className={`absolute left-0 right-0 mt-4 bg-gray-50 p-6 rounded-lg shadow transition-all duration-300
                 ${

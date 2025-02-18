@@ -31,7 +31,7 @@ function FaqSection() {
   ];
 
   return (
-    <section className="bg-white py-20 font-sans">
+    <section className="bg-white sm:py-10 lg:py-20 font-sans">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           {/* 왼쪽 이미지 */}
