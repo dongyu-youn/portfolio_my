@@ -5,7 +5,7 @@ function Logo({ scrollToTop }) {
     <div className="flex items-center">
       <Link
         to="/"
-        className="text-xl font-bold text-black text-2xl no-underline hover:no-underline hover:text-[#00939A] transition-colors duration-300"
+        className="text-4xl font-bold text-black  no-underline hover:no-underline hover:text-[#00939A] transition-colors duration-300 font-ssukssuk"
         id="logo"
         onClick={scrollToTop}
       >

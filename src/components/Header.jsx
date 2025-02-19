@@ -27,7 +27,6 @@ function Header() {
     { path: '/history', text: '연혁' },
     { path: '/recruit', text: '채용정보' },
     { path: '/portfolio', text: '제작사례' },
-    { path: '/services', text: '우리가 하는 일' },
   ];
 
   const isActive = (path) => {
@@ -36,7 +35,7 @@ function Header() {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-white z-50 p-[20px] font-sans">
+    <header className="fixed top-0 w-full bg-white z-50 p-[20px] ">
       <nav className="navbar lg:max-w-lg 2xl:max-w-2xl mx-auto">
         <div className="mx-auto px-4">
           <div className="flex justify-between items-center h-16">

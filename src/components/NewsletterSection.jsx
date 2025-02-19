@@ -87,7 +87,7 @@ function NewsletterSection() {
               style={{ transitionDelay: `${index * 0.2}s` }}
             >
               <div
-                className={`bg-gray-50 rounded-lg p-6 cursor-pointer
+                className={` rounded-lg p-6 cursor-pointer
                   transition-all duration-300 hover:shadow-lg
                   ${
                     activeNews === item.id

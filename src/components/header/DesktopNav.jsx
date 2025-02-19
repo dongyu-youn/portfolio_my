@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { IoIosWater } from 'react-icons/io';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function DesktopNav({
   menuItems,
@@ -9,48 +9,88 @@ function DesktopNav({
   setHoverItem,
   scrollToTop,
 }) {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
   useEffect(() => {
-    // 컴포넌트가 마운트되거나 menuItems가 변경될 때 실행
-    return () => setHoverItem(null); // cleanup function
+    return () => setHoverItem(null);
   }, [menuItems, setHoverItem]);
 
+  useEffect(() => {
+    if (hoveredIndex !== null) {
+      console.log(`메뉴 ${menuItems[hoveredIndex].text}에 마우스 오버됨`);
+    }
+  }, [hoveredIndex, menuItems]);
+
   return (
-    <div className="hidden md:block">
+    <div className="hidden md:block font-sans">
       <ul className="flex items-center space-x-8">
-        {menuItems.map((item, index) => (
-          <li key={index} className="relative group">
-            <Link
-              to={item.path}
-              className={`block py-2 text-black text-base hover:text-[#00939A] hover:no-underline relative
-                ${isActive(item.path) ? 'text-[#00939A]' : ''}`}
-              onClick={scrollToTop}
-              onMouseEnter={() => setHoverItem(index)}
-              onMouseLeave={() => setHoverItem(null)}
-            >
-              {item.text}
-              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 pointer-events-none">
-                <IoIosWater
-                  className={`text-[#00939A] transition-all duration-500
+        {menuItems.map((item, index) => {
+          const isHovered = hoveredIndex === index;
+          console.log(`${item.text} 메뉴 hover 상태:`, isHovered);
+
+          return (
+            <li key={index} className="relative group">
+              <Link
+                to={item.path}
+                className={`block py-2 text-black text-base relative hover:text-[#00939A] transition-colors duration-300
+                  ${isActive(item.path) ? 'text-[#00939A]' : ''}`}
+                onClick={scrollToTop}
+                onMouseEnter={() => {
+                  setHoverItem(index);
+                  setHoveredIndex(index);
+                  console.log(`${item.text} 메뉴에 마우스 진입`);
+                }}
+                onMouseLeave={() => {
+                  setHoverItem(null);
+                  setHoveredIndex(null);
+                  console.log(`${item.text} 메뉴에서 마우스 이탈`);
+                }}
+              >
+                {item.text}
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 pointer-events-none">
+                  <IoIosWater
+                    className={`text-[#00939A] transition-all duration-500
+                      ${
+                        isActive(item.path) || isHovered
+                          ? 'opacity-100 translate-y-4'
+                          : 'opacity-0 translate-y-0'
+                      }`}
+                    size={16}
+                  />
+                </div>
+                <div
+                  className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#00939A] transform origin-left
                     ${
-                      isActive(item.path) || hoverItem === index
-                        ? 'opacity-100 translate-y-4'
-                        : 'opacity-0 translate-y-0'
+                      isActive(item.path) || isHovered
+                        ? 'transition-transform duration-300 ease-out scale-x-100'
+                        : 'transition-transform duration-300 ease-out scale-x-0'
                     }`}
-                  size={16}
                 />
-              </div>
-              <div
-                className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#00939A] transform origin-left
-                  transition-all duration-300 ease-out
-                  ${
-                    isActive(item.path) || hoverItem === index
-                      ? 'scale-x-100'
-                      : 'scale-x-0'
-                  }`}
-              />
-            </Link>
-          </li>
-        ))}
+                <div
+                  className={`absolute -bottom-1 left-1/2 transform -translate-x-1/2
+                    w-8 h-8 bg-[#00939A]/20 rounded-full
+                    ${
+                      isActive(item.path)
+                        ? 'animate-ripple opacity-100'
+                        : isHovered
+                        ? 'animate-rippleOnHover opacity-100'
+                        : 'opacity-0'
+                    }`}
+                />
+              </Link>
+            </li>
+          );
+        })}
+        <li>
+          <Link
+            to="/project-inquiry"
+            className="block py-2 px-4 bg-brand-green text-white rounded-full 
+              hover:bg-brand-primary/90 hover:no-underline 
+              transition-all duration-300 transform hover:scale-105"
+          >
+            프로젝트 문의
+          </Link>
+        </li>
       </ul>
     </div>
   );

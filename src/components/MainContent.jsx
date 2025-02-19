@@ -9,7 +9,7 @@ function MainContent() {
   }, []);
 
   return (
-    <section className="bg-brand-green font-sans w-full ">
+    <section className="bg-brand-green font-ssukssuk w-full ">
       <div className="container mx-auto px-2 lg:h-[500px] sm:h-[300px] sm:mt-20 lg:mt-20 lg:max-w-lg 2xl:max-w-2xl">
         <div className="flex flex-row lg:flex-row items-center justify-start h-full">
           {/* 왼쪽 텍스트 영역 */}

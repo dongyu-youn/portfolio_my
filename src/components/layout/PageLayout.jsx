@@ -9,7 +9,7 @@ function PageLayout({ children }) {
   }, [location.pathname]);
 
   return (
-    <div className="pt-24 min-h-screen bg-gray-50">
+    <div className="pt-24 min-h-screen">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">{children}</div>
     </div>
   );

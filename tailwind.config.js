@@ -20,6 +20,9 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Noto Sans KR', 'sans-serif'],
+        myeongjo: ['Nanum Myeongjo', 'serif'],
+        penscript: ['Nanum Pen Script', 'cursive'],
+        ssukssuk: ['Cafe24Ssukssuk', 'sans-serif'],
       },
       fontSize: {
         xs: '12px',
@@ -60,6 +63,44 @@ module.exports = {
           '0%, 100%': { opacity: 0 },
           '50%': { opacity: 0.3 },
         },
+        'slide-in-left': {
+          '0%': {
+            transform: 'translateX(-20px)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'translateX(0)',
+            opacity: '1',
+          },
+        },
+        'slide-in-right': {
+          '0%': {
+            transform: 'translateX(20px)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'translateX(0)',
+            opacity: '1',
+          },
+        },
+        'fade-in': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '0.9',
+          },
+        },
+        ripple: {
+          '0%': {
+            transform: 'translate(-50%, 0) scale(0)',
+            opacity: '1',
+          },
+          '100%': {
+            transform: 'translate(-50%, 0) scale(2)',
+            opacity: '0',
+          },
+        },
       },
       screens: {
         sm: '20rem', // 320px
@@ -71,8 +112,13 @@ module.exports = {
       animation: {
         excavator: 'excavator 15s linear infinite',
         'bounce-slow': 'bounce 3s infinite',
-        waterDrop: 'waterDrop 1s ease-out forwards',
+        waterDrop: 'ripple 1s ease-out infinite',
         pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'slide-in-left': 'slide-in-left 1s ease-out forwards',
+        'slide-in-right': 'slide-in-right 1s ease-out forwards',
+        'fade-in': 'fade-in 0.8s ease-out forwards',
+        ripple: 'ripple 1s ease-out forwards',
+        rippleOnHover: 'ripple 1s ease-out',
       },
     },
   },

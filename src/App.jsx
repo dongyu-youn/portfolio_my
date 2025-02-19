@@ -9,6 +9,7 @@ import Portfolio from './pages/Portfolio';
 import Services from './pages/Services';
 import SideNavigation from './components/SideNavigation';
 import ScrollToTop from './components/ScrollToTop';
+import ProjectInquiryForm from './components/ProjectInquiryForm';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/recruit" element={<Recruit />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/project-inquiry" element={<ProjectInquiryForm />} />
           </Routes>
         </main>
         <Footer />

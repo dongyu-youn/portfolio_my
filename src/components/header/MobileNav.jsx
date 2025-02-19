@@ -7,7 +7,7 @@ function MobileNav({ isDrawerOpen, toggleDrawer, menuItems, scrollToTop }) {
   return (
     <>
       {/* 모바일 햄버거 버튼 */}
-      <div className="md:hidden w-full flex justify-end z-[9999]">
+      <div className="md:hidden w-full flex justify-end z-[9999] font-sans">
         <IconButton
           variant="text"
           className="text-3xl text-black"
