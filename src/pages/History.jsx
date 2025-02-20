@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const HistoryPage = () => {
   const timelineData = {
@@ -45,11 +46,16 @@ const HistoryPage = () => {
   };
 
   return (
-    <div className="lg:py-16 sm:py-0 lg:max-w-[75rem] 2xl:max-w-layout mx-auto lg:mt-[5rem] sm:px-8 lg:p-0 font-sans lg:my-16 ">
-      <h1 className="text-3xl font-bold mb-8">INTER HISTORY</h1>
+    <div className="lg:py-16 sm:py-16 lg:max-w-[75rem] 2xl:max-w-layout mx-auto lg:mt-[5rem] sm:px-8 lg:p-0 font-sans  lg:my-16">
       <div className="mt-12 max-w-4xl mx-auto">
-        {Object.entries(timelineData).map(([year, events]) => (
-          <div key={year} className="mb-16">
+        {Object.entries(timelineData).map(([year, events], yearIndex) => (
+          <motion.div
+            key={year}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 + yearIndex * 0.1 }}
+            className="mb-16"
+          >
             <h2 className="text-4xl font-bold mb-8">{year}</h2>
             <div className="relative border-l-2 border-gray-200 pl-8 ml-2">
               {events.map((event, index) => (
@@ -62,7 +68,7 @@ const HistoryPage = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

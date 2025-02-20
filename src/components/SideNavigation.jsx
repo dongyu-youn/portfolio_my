@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function SideNavigation() {
   const [activeSection, setActiveSection] = useState(1);
+  const location = useLocation();
 
   useEffect(() => {
     const sections = document.querySelectorAll('section');
@@ -54,7 +56,11 @@ function SideNavigation() {
   };
 
   return (
-    <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 font-sans hidden md:block">
+    <div
+      className={`fixed right-8 top-1/2 transform -translate-y-1/2 z-50 font-sans hidden md:block ${
+        location.pathname !== '/' ? 'hidden' : ''
+      }`}
+    >
       <div className="flex flex-col space-y-4">
         {navigationItems.map((item) => (
           <button

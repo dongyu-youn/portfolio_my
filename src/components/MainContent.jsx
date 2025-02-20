@@ -10,11 +10,11 @@ function MainContent() {
 
   return (
     <section className="bg-brand-green font-ssukssuk w-full ">
-      <div className="container mx-auto px-2 lg:h-[500px] sm:h-[300px] sm:mt-20 lg:mt-20 lg:max-w-lg 2xl:max-w-2xl">
+      <div className="container px-2 lg:mx-auto lg:h-[500px] sm:h-[300px] sm:mt-20 lg:mt-20 sm:max-w-[400px] lg:max-w-lg 2xl:max-w-2xl">
         <div className="flex flex-row lg:flex-row items-center justify-start h-full">
           {/* 왼쪽 텍스트 영역 */}
           <div
-            className={`w-1/2 lg:w-1/2 text-white space-y-4 sm:space-y-2 lg:space-y-6 text-center lg:text-left flex flex-col justify-start h-full mb-[5%] sm:mt-[25%] lg:mt-[20%] transition-all duration-1000 transform sm:pt-4 lg:pt-0
+            className={`w-full sm:w-1/2 lg:w-1/2 text-white space-y-4 sm:space-y-2 lg:space-y-6 text-center lg:text-left flex flex-col justify-start h-full mb-[5%] sm:mt-[25%] lg:mt-[20%] transition-all duration-1000 transform sm:pt-4 lg:pt-0
               ${
                 isVisible
                   ? 'translate-y-0 opacity-100'
@@ -73,7 +73,7 @@ function MainContent() {
 
           {/* 오른쪽 이미지 영역 */}
           <div
-            className={`w-1/2 lg:w-1/2 lg:mt-12 flex justify-center items-center transition-all duration-1000 transform  lg:pl-[12%] lg:pb-[3%]
+            className={`w-full sm:w-1/2 lg:w-1/2 lg:mt-12 flex justify-center items-center transition-all duration-1000 transform  lg:pl-[12%] lg:pb-[3%]
               ${
                 isVisible
                   ? 'translate-y-0 opacity-100'
