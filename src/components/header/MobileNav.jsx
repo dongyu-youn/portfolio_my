@@ -2,16 +2,13 @@ import { IconButton } from '@material-tailwind/react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { FaFacebook, FaInstagram } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
-import { useAdminAuth } from '../../contexts/AdminAuthContext';
 
 function MobileNav({ isDrawerOpen, toggleDrawer, menuItems, scrollToTop }) {
-  const { setAdmin } = useAdminAuth();
   const adminToken = localStorage.getItem('adminToken');
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
-    setAdmin(null);
-    toggleDrawer();
+    window.location.reload();
   };
 
   return (

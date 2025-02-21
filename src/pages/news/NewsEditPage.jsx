@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import CKEditorComponent from '@/StyledUIComponent/CKEditor/CKEditorComponent.jsx';
-import { Button, Card, CardBody, Input } from '@material-tailwind/react';
+import {
+  Button,
+  Card,
+  CardBody,
+  Input,
+  Textarea,
+} from '@material-tailwind/react';
 import { getNewsById, createNews, updateNews } from '@/api/news';
 import DropAreaInput from '@/component/DropAreaInput';
 
@@ -11,6 +16,7 @@ const initialNewsData = {
   content: '',
   mainImage: [],
   category: '',
+  date: '', // date 필드 추가
 };
 
 const NewsEditPage = () => {
@@ -24,18 +30,25 @@ const NewsEditPage = () => {
     if (
       !newsData.title ||
       !newsData.content ||
-      newsData.mainImage.length === 0
+      newsData.mainImage.length === 0 ||
+      !newsData.date // date 필수값 체크 추가
     ) {
       alert('필수 필드를 모두 입력해주세요.');
       return;
     }
     try {
-      const response = await createNews(newsData);
+      const formData = new FormData();
+      formData.append('title', newsData.title);
+      formData.append('content', newsData.content);
+      formData.append('category', newsData.category);
+      formData.append('date', newsData.date); // date 추가
+      // 파일 객체 직접 전달
+      formData.append('mainImage', newsData.mainImage[0]);
+
+      const response = await createNews(formData);
       if (response.status === 201) {
         alert('뉴스가 생성되었습니다.');
         navigate(-1);
-      } else {
-        alert(response.data.message);
       }
     } catch (error) {
       console.error('Failed to create news:', error);
@@ -47,7 +60,8 @@ const NewsEditPage = () => {
     if (
       !newsData.title ||
       !newsData.content ||
-      newsData.mainImage.length === 0
+      newsData.mainImage.length === 0 ||
+      !newsData.date // date 필수값 체크 추가
     ) {
       alert('필수 필드를 모두 입력해주세요.');
       return;
@@ -78,16 +92,13 @@ const NewsEditPage = () => {
 
   const onMainFilesUpdate = useCallback(
     (files) => {
-      const current = newsData.mainImage;
-      const isEqual =
-        files.length === current.length &&
-        files.every((file, idx) => file === current[idx]);
-
-      if (!isEqual) {
+      console.log('새로운 파일 업데이트:', files);
+      // 파일이 있을 때만 업데이트
+      if (files && files.length > 0) {
         handleNewsDataChange('mainImage', files);
       }
     },
-    [newsData.mainImage, handleNewsDataChange]
+    [handleNewsDataChange]
   );
 
   useEffect(() => {
@@ -96,16 +107,27 @@ const NewsEditPage = () => {
         try {
           const response = await getNewsById(id);
           if (response) {
-            const parsedMainImage = response.mainImage
-              ? JSON.parse(response.mainImage)
-              : [];
+            console.log('받아온 뉴스 데이터:', response);
+            // mainImage가 문자열이면 파싱, 아니면 그대로 사용
+            let mainImage = response.mainImage;
+            try {
+              if (typeof mainImage === 'string') {
+                mainImage = JSON.parse(mainImage);
+              }
+            } catch (e) {
+              console.log('이미지 파싱 실패:', e);
+              mainImage = [response.mainImage]; // 문자열이면 배열로 변환
+            }
+
+            console.log('처리된 이미지:', mainImage);
 
             setNewsData({
               id: response.id,
               title: response.title,
               content: response.content,
-              mainImage: parsedMainImage,
+              mainImage: mainImage,
               category: response.category || '',
+              date: response.date || '', // date 필드 추가
             });
           }
         } catch (error) {
@@ -146,9 +168,22 @@ const NewsEditPage = () => {
               value={newsData.category}
               onChange={(e) => handleNewsDataChange('category', e.target.value)}
             />
-            <CKEditorComponent
-              content={newsData.content}
-              setContent={(value) => handleNewsDataChange('content', value)}
+            <Input
+              className="mb-6"
+              type="date"
+              size="lg"
+              label="날짜"
+              value={newsData.date}
+              onChange={(e) => handleNewsDataChange('date', e.target.value)}
+            />
+            <Textarea
+              className="mb-6"
+              size="lg"
+              placeholder="내용을 입력해 주세요"
+              label="내용"
+              rows={10}
+              value={newsData.content}
+              onChange={(e) => handleNewsDataChange('content', e.target.value)}
             />
             <DropAreaInput
               value={newsData.mainImage}
@@ -158,11 +193,25 @@ const NewsEditPage = () => {
               description="권장 이미지 크기: 367 x 450px"
             />
             <div className="flex justify-end gap-2 pt-4">
-              <Button onClick={handleCancel}>취소</Button>
+              <Button onClick={handleCancel} color="red">
+                취소
+              </Button>
               {location.pathname.includes('edit') ? (
-                <Button onClick={handleUpdate}>수정</Button>
+                <Button
+                  onClick={handleUpdate}
+                  className="bg-[#00939A]"
+                  color="blue"
+                >
+                  수정
+                </Button>
               ) : (
-                <Button onClick={handleCreate}>생성</Button>
+                <Button
+                  className="bg-[#00939A]"
+                  onClick={handleCreate}
+                  color="green"
+                >
+                  생성
+                </Button>
               )}
             </div>
           </CardBody>

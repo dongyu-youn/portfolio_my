@@ -2,14 +2,12 @@ import PageLayout from '../components/layout/PageLayout';
 import { useState, useEffect } from 'react';
 import { HiChevronRight } from 'react-icons/hi';
 import { motion } from 'framer-motion';
-import { getAllNews, createNews, updateNews, deleteNews } from '../api/news';
-import { useAuth } from '../context/AuthContext';
+import { getAllNews, deleteNews } from '../api/news';
 import { Button } from '@material-tailwind/react';
 import { useNavigate } from 'react-router-dom';
 
 function News() {
   const [newsItems, setNewsItems] = useState([]);
-  const { auth } = useAuth();
   const navigate = useNavigate();
   const adminToken = localStorage.getItem('adminToken');
 
@@ -47,6 +45,10 @@ function News() {
     navigate('/news/create');
   };
 
+  const handleCardClick = (id) => {
+    navigate(`/news/${id}`);
+  };
+
   return (
     <PageLayout className="bg-white">
       <div className="lg:max-w-lg 2xl:max-w-2xl mx-auto lg:my-16 font-sans">
@@ -65,6 +67,7 @@ function News() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
               className="group flex justify-between items-center h-40 px-6 border-t border-b border-gray-200 cursor-pointer hover:bg-gray-50 relative"
+              onClick={() => handleCardClick(item.id)}
             >
               <div className="space-y-2">
                 <span className="text-sm text-gray-600">{item.category}</span>
@@ -76,7 +79,10 @@ function News() {
               <div className="flex items-center gap-4">
                 <span className="text-gray-600">{item.date}</span>
                 {adminToken && (
-                  <div className="flex gap-2">
+                  <div
+                    className="flex gap-2"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Button
                       size="sm"
                       className="bg-[#00939A]"

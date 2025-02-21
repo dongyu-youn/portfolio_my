@@ -32,9 +32,12 @@ export const createPortfolio = async (portfolioData) => {
 // 특정 포트폴리오 조회
 export const getPortfolioById = async (id) => {
   try {
+    console.log('포트폴리오 상세 조회 요청:', id);
     const response = await api.get(`/portfolio/${id}`);
+    console.log('포트폴리오 상세 응답:', response.data);
     return response.data;
   } catch (error) {
+    console.error('포트폴리오 상세 조회 에러:', error.response || error);
     throw error;
   }
 };

@@ -2,13 +2,11 @@ import { HiChevronRight } from 'react-icons/hi';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { getAllPortfolios, deletePortfolio } from '../api/portfolio';
-import { useAuth } from '../context/AuthContext';
 import { Button } from '@material-tailwind/react';
 import { useNavigate } from 'react-router-dom';
 
 function Portfolio() {
   const [portfolioItems, setPortfolioItems] = useState([]);
-  const { auth } = useAuth();
   const navigate = useNavigate();
   const adminToken = localStorage.getItem('adminToken');
 
@@ -25,11 +23,13 @@ function Portfolio() {
     }
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = (e, id) => {
+    e.stopPropagation();
     navigate(`/portfolio/${id}/edit`);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (e, id) => {
+    e.stopPropagation();
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
 
     try {
@@ -44,6 +44,10 @@ function Portfolio() {
 
   const handleCreate = () => {
     navigate('/portfolio/create');
+  };
+
+  const handleCardClick = (id) => {
+    navigate(`/portfolio/${id}`);
   };
 
   return (
@@ -64,6 +68,7 @@ function Portfolio() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
               className="group flex sm:flex-col lg:flex-row justify-between items-center h-[300px] px-6 border-t last:border-b border-gray-200 cursor-pointer hover:bg-gray-50 relative"
+              onClick={() => handleCardClick(item.id)}
             >
               <div className="flex-1 space-y-2 pr-8 my-4">
                 <div className="flex gap-2 flex-wrap">
@@ -88,14 +93,14 @@ function Portfolio() {
                     <Button
                       size="sm"
                       className="bg-[#00939A]"
-                      onClick={() => handleEdit(item.id)}
+                      onClick={(e) => handleEdit(e, item.id)}
                     >
                       수정
                     </Button>
                     <Button
                       size="sm"
                       color="red"
-                      onClick={() => handleDelete(item.id)}
+                      onClick={(e) => handleDelete(e, item.id)}
                     >
                       삭제
                     </Button>

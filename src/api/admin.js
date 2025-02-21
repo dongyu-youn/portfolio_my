@@ -35,16 +35,6 @@ export const adminLogin = async (username, password) => {
   }
 };
 
-export const checkAuth = async () => {
-  try {
-    const response = await api.get('check-auth');
-    return response.data;
-  } catch (error) {
-    console.error('인증 체크 에러:', error);
-    throw error;
-  }
-};
-
 export const adminLogout = async () => {
   try {
     const response = await api.get('logout');

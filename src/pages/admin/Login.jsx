@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { adminLogin } from '../../api/admin';
-import { useAdminAuth } from '../../contexts/AdminAuthContext';
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const { setAdmin } = useAdminAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,12 +15,9 @@ const AdminLogin = () => {
       const response = await adminLogin(username, password);
 
       if (response.success) {
-        console.log('Admin Login Response:', response);
-        console.log('Admin Token:', response.token);
-        // 토큰을 localStorage에 저장
         localStorage.setItem('adminToken', response.token);
-        setAdmin(response.admin);
         setSuccess(true);
+        navigate('/');
       }
     } catch (error) {
       setError('로그인에 실패했습니다.');
@@ -39,7 +35,7 @@ const AdminLogin = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center lg:mt-40  py-4 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col items-center justify-center lg:mt-40 py-4 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

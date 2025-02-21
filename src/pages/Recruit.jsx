@@ -3,13 +3,11 @@ import { useState, useEffect } from 'react';
 import { HiChevronRight } from 'react-icons/hi';
 import { motion } from 'framer-motion';
 import { getAllRecruits, deleteRecruit } from '../api/recruit';
-import { useAuth } from '../context/AuthContext';
 import { Button } from '@material-tailwind/react';
 import { useNavigate } from 'react-router-dom';
 
 function Recruit() {
   const [recruitItems, setRecruitItems] = useState([]);
-  const { auth } = useAuth();
   const navigate = useNavigate();
   const adminToken = localStorage.getItem('adminToken');
 

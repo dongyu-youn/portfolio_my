@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import CKEditorComponent from '@/StyledUIComponent/CKEditor/CKEditorComponent.jsx';
-import { Button, Card, CardBody, Input } from '@material-tailwind/react';
+import {
+  Button,
+  Card,
+  CardBody,
+  Input,
+  Textarea,
+} from '@material-tailwind/react';
 import { getRecruitById, createRecruit, updateRecruit } from '@/api/recruit';
 import DropAreaInput from '@/component/DropAreaInput';
 
@@ -164,9 +169,16 @@ const RecruitEditPage = () => {
                 handleRecruitDataChange('deadline', e.target.value)
               }
             />
-            <CKEditorComponent
-              content={recruitData.content}
-              setContent={(value) => handleRecruitDataChange('content', value)}
+            <Textarea
+              className="mb-6"
+              size="lg"
+              placeholder="내용을 입력해 주세요"
+              label="내용"
+              rows={10}
+              value={recruitData.content}
+              onChange={(e) =>
+                handleRecruitDataChange('content', e.target.value)
+              }
             />
             <DropAreaInput
               value={recruitData.mainImage}
@@ -176,11 +188,25 @@ const RecruitEditPage = () => {
               description="권장 이미지 크기: 367 x 450px"
             />
             <div className="flex justify-end gap-2 pt-4">
-              <Button onClick={handleCancel}>취소</Button>
+              <Button onClick={handleCancel} color="red">
+                취소
+              </Button>
               {location.pathname.includes('edit') ? (
-                <Button onClick={handleUpdate}>수정</Button>
+                <Button
+                  onClick={handleUpdate}
+                  className="bg-[#00939A]"
+                  color="blue"
+                >
+                  수정
+                </Button>
               ) : (
-                <Button onClick={handleCreate}>생성</Button>
+                <Button
+                  onClick={handleCreate}
+                  className="bg-[#00939A]"
+                  color="green"
+                >
+                  생성
+                </Button>
               )}
             </div>
           </CardBody>

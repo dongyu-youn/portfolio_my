@@ -12,43 +12,71 @@ const DropAreaInput = ({
   initialFiles,
   description,
 }) => {
-  const {
-    uploadedFiles,
-    handleFileChange,
-    handleDrop,
-    handleFileDelete,
-    setUploadedFiles,
-  } = useUpload();
+  const { uploadedFiles, handleFileChange, handleDrop, setUploadedFiles } =
+    useUpload();
   const [isInitialized, setIsInitialized] = useState(false);
+  const [previewFiles, setPreviewFiles] = useState([]);
   const fileInputRef = useRef(null);
   const location = useLocation();
+  const isProgramPage = location.pathname.includes('program');
 
   useEffect(() => {
     if (!isInitialized && value && value.length > 0) {
       setUploadedFiles(value);
+      setPreviewFiles(
+        value.map((file) => ({
+          name: file.name,
+          preview: file instanceof File ? URL.createObjectURL(file) : file,
+        }))
+      );
       setIsInitialized(true);
-    } else if (!isInitialized && (!value || value.length === 0)) {
+    } else if (!isInitialized) {
       setIsInitialized(true);
     }
   }, [isInitialized, value, setUploadedFiles]);
 
-  useEffect(() => {
-    if (isInitialized) {
-      const isEqual =
-        value &&
-        uploadedFiles.length === value.length &&
-        uploadedFiles.every((f, i) => f === value[i]);
-      if (!isEqual) {
-        onFilesUpdate(uploadedFiles);
-      }
+  const handleUpload = async (files) => {
+    try {
+      console.log('업로드할 파일:', files);
+      // 파일 미리보기 생성
+      const previews = files.map((file) => ({
+        name: file.name,
+        preview: URL.createObjectURL(file),
+      }));
+      setPreviewFiles(previews);
+      setUploadedFiles(files);
+      onFilesUpdate(files);
+    } catch (error) {
+      console.error('파일 업로드 실패:', error);
     }
-  }, [uploadedFiles, isInitialized, onFilesUpdate, value]);
-
-  const updateFileOrder = (newOrder) => {
-    setUploadedFiles(newOrder);
   };
 
-  const isProgramPage = location.pathname.includes('program');
+  const onDrop = async (acceptedFiles) => {
+    if (acceptedFiles?.length > 0) {
+      await handleUpload(acceptedFiles);
+    }
+  };
+
+  const handleFileDelete = (index) => {
+    const newFiles = uploadedFiles.filter((_, i) => i !== index);
+    const newPreviews = previewFiles.filter((_, i) => i !== index);
+    setUploadedFiles(newFiles);
+    setPreviewFiles(newPreviews);
+    onFilesUpdate(newFiles);
+  };
+
+  // 컴포넌트 언마운트 시 URL.createObjectURL로 생성된 URL 해제
+  useEffect(() => {
+    return () => {
+      previewFiles.forEach((file) => {
+        if (file.preview && file.preview.startsWith('blob:')) {
+          URL.revokeObjectURL(file.preview);
+        }
+      });
+    };
+  }, [previewFiles]);
+
+  console.log('렌더링 상태:', { uploadedFiles, initialFiles });
 
   return (
     <div
@@ -58,18 +86,29 @@ const DropAreaInput = ({
     >
       <DropArea
         fileInputRef={fileInputRef}
-        handleFileChange={handleFileChange}
-        handleDrop={handleDrop}
+        handleFileChange={async (e) => {
+          const files = Array.from(e.target.files);
+          await handleUpload(files);
+        }}
+        handleDrop={onDrop}
         imageOnly={imageOnly}
         maxFile={maxFile}
-        initialFiles={initialFiles}
         description={description}
       />
       <FileList
-        initialFiles={initialFiles}
-        files={uploadedFiles}
+        files={previewFiles}
         removeFile={handleFileDelete}
-        updateFileOrder={updateFileOrder}
+        updateFileOrder={(newOrder) => {
+          setPreviewFiles(newOrder);
+          setUploadedFiles(
+            newOrder.map(
+              (file) =>
+                uploadedFiles[
+                  previewFiles.findIndex((p) => p.preview === file.preview)
+                ]
+            )
+          );
+        }}
       />
     </div>
   );

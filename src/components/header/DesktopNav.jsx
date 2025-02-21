@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { IoIosWater } from 'react-icons/io';
 import { useEffect, useState } from 'react';
-import { useAdminAuth } from '../../contexts/AdminAuthContext';
 
 function DesktopNav({
   menuItems,
@@ -10,7 +9,6 @@ function DesktopNav({
   setHoverItem,
   scrollToTop,
 }) {
-  const { setAdmin } = useAdminAuth();
   const adminToken = localStorage.getItem('adminToken');
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -26,7 +24,7 @@ function DesktopNav({
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
-    setAdmin(null);
+    window.location.reload();
   };
 
   return (
