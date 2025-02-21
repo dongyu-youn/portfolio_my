@@ -10,6 +10,7 @@ function Portfolio() {
   const [portfolioItems, setPortfolioItems] = useState([]);
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const adminToken = localStorage.getItem('adminToken');
 
   useEffect(() => {
     fetchPortfolios();
@@ -48,9 +49,11 @@ function Portfolio() {
   return (
     <div className="pt-36 min-h-screen bg-white font-sans">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
-        {auth.accessToken && (
+        {adminToken && (
           <div className="flex justify-end mb-4">
-            <Button onClick={handleCreate}>새 포트폴리오 작성</Button>
+            <Button className="bg-[#00939A]" onClick={handleCreate}>
+              새 포트폴리오 작성
+            </Button>
           </div>
         )}
         <div className="grid sm:gap-24 lg:gap-0">
@@ -80,9 +83,13 @@ function Portfolio() {
                 <p className="text-gray-600 text-sm line-clamp-2">
                   {item.description}
                 </p>
-                {auth.accessToken && (
+                {adminToken && (
                   <div className="flex gap-2 mt-4">
-                    <Button size="sm" onClick={() => handleEdit(item.id)}>
+                    <Button
+                      size="sm"
+                      className="bg-[#00939A]"
+                      onClick={() => handleEdit(item.id)}
+                    >
                       수정
                     </Button>
                     <Button

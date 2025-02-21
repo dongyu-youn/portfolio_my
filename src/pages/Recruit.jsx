@@ -11,6 +11,7 @@ function Recruit() {
   const [recruitItems, setRecruitItems] = useState([]);
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const adminToken = localStorage.getItem('adminToken');
 
   useEffect(() => {
     fetchRecruits();
@@ -46,18 +47,25 @@ function Recruit() {
     navigate('/recruit/create');
   };
 
+  const handleCardClick = (id) => {
+    navigate(`/recruit/${id}`);
+  };
+
   return (
     <PageLayout className="bg-white">
       <div className="lg:max-w-lg 2xl:max-w-2xl mx-auto lg:my-16 font-sans">
-        {auth.accessToken && (
+        {adminToken && (
           <div className="flex justify-end mb-4">
-            <Button onClick={handleCreate}>새 채용공고 작성</Button>
+            <Button className="bg-[#00939A]" onClick={handleCreate}>
+              새 채용공고 작성
+            </Button>
           </div>
         )}
         <div className="space-y-0">
           {recruitItems.map((item, index) => (
             <motion.div
               key={item.id}
+              onClick={() => handleCardClick(item.id)}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
@@ -67,14 +75,21 @@ function Recruit() {
                 <span className="text-sm text-gray-600">{item.category}</span>
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-bold">{item.title}</h2>
-                  <HiChevronRight className="text-gray-600 transform -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-in-out text-3xl" />
+                  <HiChevronRight className="text-gray-400 transform -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-in-out text-xl" />
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-gray-600">{item.date}</span>
-                {auth.accessToken && (
-                  <div className="flex gap-2">
-                    <Button size="sm" onClick={() => handleEdit(item.id)}>
+                {adminToken && (
+                  <div
+                    className="flex gap-2"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Button
+                      size="sm"
+                      className="bg-[#00939A]"
+                      onClick={() => handleEdit(item.id)}
+                    >
                       수정
                     </Button>
                     <Button

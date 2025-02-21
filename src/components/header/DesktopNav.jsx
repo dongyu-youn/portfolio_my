@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { IoIosWater } from 'react-icons/io';
 import { useEffect, useState } from 'react';
+import { useAdminAuth } from '../../contexts/AdminAuthContext';
 
 function DesktopNav({
   menuItems,
@@ -9,6 +10,8 @@ function DesktopNav({
   setHoverItem,
   scrollToTop,
 }) {
+  const { setAdmin } = useAdminAuth();
+  const adminToken = localStorage.getItem('adminToken');
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   useEffect(() => {
@@ -20,6 +23,11 @@ function DesktopNav({
       console.log(`메뉴 ${menuItems[hoveredIndex].text}에 마우스 오버됨`);
     }
   }, [hoveredIndex, menuItems]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    setAdmin(null);
+  };
 
   return (
     <div className="hidden md:block font-sans">
@@ -82,14 +90,25 @@ function DesktopNav({
           );
         })}
         <li>
-          <Link
-            to="/project-inquiry"
-            className="block py-2 px-4 bg-brand-green text-white rounded-full 
-              hover:bg-brand-primary/90 hover:no-underline 
-              transition-all duration-300 transform hover:scale-105"
-          >
-            프로젝트 문의
-          </Link>
+          {adminToken ? (
+            <button
+              onClick={handleLogout}
+              className="block py-2 px-4 bg-red-500 text-white rounded-full 
+                hover:bg-red-600 hover:no-underline 
+                transition-all duration-300 transform hover:scale-105"
+            >
+              관리자 로그아웃
+            </button>
+          ) : (
+            <Link
+              to="/project-inquiry"
+              className="block py-2 px-4 bg-brand-green text-white rounded-full 
+                hover:bg-brand-primary/90 hover:no-underline 
+                transition-all duration-300 transform hover:scale-105"
+            >
+              프로젝트 문의
+            </Link>
+          )}
         </li>
       </ul>
     </div>

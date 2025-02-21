@@ -17,6 +17,8 @@ import { AuthProvider } from './context/AuthContext';
 import NewsEditPage from './pages/news/NewsEditPage';
 import RecruitEditPage from './pages/recruit/RecruitEditPage';
 import PortfolioEditPage from './pages/portfolio/PortfolioEditPage';
+import RecruitDetail from './pages/RecruitDetail';
+import NewsDetail from './pages/NewsDetail';
 
 function App() {
   return (
@@ -51,6 +53,8 @@ function App() {
                   element={<ProjectInquiryForm />}
                 />
                 <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/recruit/:id" element={<RecruitDetail />} />
+                <Route path="/news/:id" element={<NewsDetail />} />
               </Routes>
             </main>
             <Footer />

@@ -14,7 +14,12 @@ const AdminLogin = () => {
     e.preventDefault();
     try {
       const response = await adminLogin(username, password);
+
       if (response.success) {
+        console.log('Admin Login Response:', response);
+        console.log('Admin Token:', response.token);
+        // 토큰을 localStorage에 저장
+        localStorage.setItem('adminToken', response.token);
         setAdmin(response.admin);
         setSuccess(true);
       }

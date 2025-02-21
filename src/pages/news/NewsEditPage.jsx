@@ -126,46 +126,48 @@ const NewsEditPage = () => {
   }
 
   return (
-    <div className="w-full h-auto p-4 sm:p-6 md:p-8 lg:p-10 m-4 sm:m-6 md:m-8 lg:m-10 flex flex-col min-h-screen overflow-hidden">
-      <Card className="p-4 sm:p-6 md:p-8 lg:p-10 flex-1">
-        <CardBody>
-          <Input
-            className="mb-6"
-            size="lg"
-            placeholder="제목을 입력해 주세요"
-            label="제목"
-            value={newsData.title}
-            onChange={(e) => handleNewsDataChange('title', e.target.value)}
-          />
-          <Input
-            className="mb-6"
-            size="lg"
-            placeholder="카테고리를 입력해 주세요"
-            label="카테고리"
-            value={newsData.category}
-            onChange={(e) => handleNewsDataChange('category', e.target.value)}
-          />
-          <CKEditorComponent
-            content={newsData.content}
-            setContent={(value) => handleNewsDataChange('content', value)}
-          />
-          <DropAreaInput
-            value={newsData.mainImage}
-            onFilesUpdate={onMainFilesUpdate}
-            maxFile={1}
-            initialFiles={newsData.mainImage}
-            description="권장 이미지 크기: 367 x 450px"
-          />
-          <div className="flex justify-end gap-2 pt-4">
-            <Button onClick={handleCancel}>취소</Button>
-            {location.pathname.includes('edit') ? (
-              <Button onClick={handleUpdate}>수정</Button>
-            ) : (
-              <Button onClick={handleCreate}>생성</Button>
-            )}
-          </div>
-        </CardBody>
-      </Card>
+    <div className="flex justify-center items-center min-h-screen w-full py-12">
+      <div className="w-full lg:w-[768px] 2xl:w-[1024px] mt-20 px-4">
+        <Card className="p-4 sm:p-6 md:p-8 lg:p-10">
+          <CardBody>
+            <Input
+              className="mb-6"
+              size="lg"
+              placeholder="제목을 입력해 주세요"
+              label="제목"
+              value={newsData.title}
+              onChange={(e) => handleNewsDataChange('title', e.target.value)}
+            />
+            <Input
+              className="mb-6"
+              size="lg"
+              placeholder="카테고리를 입력해 주세요"
+              label="카테고리"
+              value={newsData.category}
+              onChange={(e) => handleNewsDataChange('category', e.target.value)}
+            />
+            <CKEditorComponent
+              content={newsData.content}
+              setContent={(value) => handleNewsDataChange('content', value)}
+            />
+            <DropAreaInput
+              value={newsData.mainImage}
+              onFilesUpdate={onMainFilesUpdate}
+              maxFile={1}
+              initialFiles={newsData.mainImage}
+              description="권장 이미지 크기: 367 x 450px"
+            />
+            <div className="flex justify-end gap-2 pt-4">
+              <Button onClick={handleCancel}>취소</Button>
+              {location.pathname.includes('edit') ? (
+                <Button onClick={handleUpdate}>수정</Button>
+              ) : (
+                <Button onClick={handleCreate}>생성</Button>
+              )}
+            </div>
+          </CardBody>
+        </Card>
+      </div>
     </div>
   );
 };

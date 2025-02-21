@@ -2,8 +2,18 @@ import { IconButton } from '@material-tailwind/react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { FaFacebook, FaInstagram } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import { useAdminAuth } from '../../contexts/AdminAuthContext';
 
 function MobileNav({ isDrawerOpen, toggleDrawer, menuItems, scrollToTop }) {
+  const { setAdmin } = useAdminAuth();
+  const adminToken = localStorage.getItem('adminToken');
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    setAdmin(null);
+    toggleDrawer();
+  };
+
   return (
     <>
       {/* 모바일 햄버거 버튼 */}
@@ -47,6 +57,28 @@ function MobileNav({ isDrawerOpen, toggleDrawer, menuItems, scrollToTop }) {
               </Link>
             </div>
           ))}
+
+          <div className="border-b">
+            {adminToken ? (
+              <button
+                onClick={handleLogout}
+                className="block w-full py-2 text-red-500 hover:text-red-600"
+              >
+                관리자 로그아웃
+              </button>
+            ) : (
+              <Link
+                to="/project-inquiry"
+                className="block py-2 text-black hover:text-[#00939A]"
+                onClick={() => {
+                  toggleDrawer();
+                  scrollToTop();
+                }}
+              >
+                프로젝트 문의
+              </Link>
+            )}
+          </div>
 
           <div className="flex gap-2 mt-4">
             <IconButton

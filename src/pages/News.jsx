@@ -11,6 +11,7 @@ function News() {
   const [newsItems, setNewsItems] = useState([]);
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const adminToken = localStorage.getItem('adminToken');
 
   useEffect(() => {
     fetchNews();
@@ -49,9 +50,11 @@ function News() {
   return (
     <PageLayout className="bg-white">
       <div className="lg:max-w-lg 2xl:max-w-2xl mx-auto lg:my-16 font-sans">
-        {auth.accessToken && (
+        {adminToken && (
           <div className="flex justify-end mb-4">
-            <Button onClick={handleCreate}>새 뉴스 작성</Button>
+            <Button className="bg-[#00939A]" onClick={handleCreate}>
+              새 뉴스 작성
+            </Button>
           </div>
         )}
         <div className="space-y-0">
@@ -72,9 +75,13 @@ function News() {
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-gray-600">{item.date}</span>
-                {auth.accessToken && (
+                {adminToken && (
                   <div className="flex gap-2">
-                    <Button size="sm" onClick={() => handleEdit(item.id)}>
+                    <Button
+                      size="sm"
+                      className="bg-[#00939A]"
+                      onClick={() => handleEdit(item.id)}
+                    >
                       수정
                     </Button>
                     <Button
