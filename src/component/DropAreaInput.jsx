@@ -20,13 +20,14 @@ const DropAreaInput = ({
   const location = useLocation();
   const isProgramPage = location.pathname.includes('program');
 
+  // 최초 한 번만 value와 uploadedFiles 동기화
   useEffect(() => {
     if (!isInitialized && value && value.length > 0) {
       setUploadedFiles(value);
       setPreviewFiles(
         value.map((file) => ({
-          name: file.name,
-          preview: file instanceof File ? URL.createObjectURL(file) : file,
+          name: typeof file === 'string' ? file.split('/').pop() : file.name,
+          preview: typeof file === 'string' ? file : URL.createObjectURL(file),
         }))
       );
       setIsInitialized(true);
@@ -35,33 +36,36 @@ const DropAreaInput = ({
     }
   }, [isInitialized, value, setUploadedFiles]);
 
+  // uploadedFiles 변경 시 상위 컴포넌트에 업데이트 전달
   const handleUpload = async (files) => {
     try {
-      console.log('업로드할 파일:', files);
-      // 파일 미리보기 생성
       const previews = files.map((file) => ({
-        name: file.name,
-        preview: URL.createObjectURL(file),
+        name: typeof file === 'string' ? file.split('/').pop() : file.name,
+        preview: typeof file === 'string' ? file : URL.createObjectURL(file),
       }));
+
       setPreviewFiles(previews);
       setUploadedFiles(files);
-      onFilesUpdate(files);
+      onFilesUpdate(files); // 바로 전달
     } catch (error) {
       console.error('파일 업로드 실패:', error);
     }
   };
 
   const onDrop = async (acceptedFiles) => {
+    console.log('5. 드롭된 파일:', acceptedFiles);
     if (acceptedFiles?.length > 0) {
       await handleUpload(acceptedFiles);
     }
   };
 
   const handleFileDelete = (index) => {
+    console.log('6. 파일 삭제 전:', { uploadedFiles, previewFiles });
     const newFiles = uploadedFiles.filter((_, i) => i !== index);
     const newPreviews = previewFiles.filter((_, i) => i !== index);
     setUploadedFiles(newFiles);
     setPreviewFiles(newPreviews);
+    console.log('7. 파일 삭제 후:', { newFiles, newPreviews });
     onFilesUpdate(newFiles);
   };
 
@@ -75,8 +79,6 @@ const DropAreaInput = ({
       });
     };
   }, [previewFiles]);
-
-  console.log('렌더링 상태:', { uploadedFiles, initialFiles });
 
   return (
     <div
@@ -100,14 +102,14 @@ const DropAreaInput = ({
         removeFile={handleFileDelete}
         updateFileOrder={(newOrder) => {
           setPreviewFiles(newOrder);
-          setUploadedFiles(
-            newOrder.map(
-              (file) =>
-                uploadedFiles[
-                  previewFiles.findIndex((p) => p.preview === file.preview)
-                ]
-            )
+          const newUploadedFiles = newOrder.map(
+            (file) =>
+              uploadedFiles[
+                previewFiles.findIndex((p) => p.preview === file.preview)
+              ]
           );
+          setUploadedFiles(newUploadedFiles);
+          onFilesUpdate(newUploadedFiles);
         }}
       />
     </div>

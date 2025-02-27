@@ -17,6 +17,7 @@ import PortfolioEditPage from './pages/portfolio/PortfolioEditPage';
 import RecruitDetail from './pages/RecruitDetail';
 import NewsDetail from './pages/NewsDetail';
 import PortfolioDetail from './pages/PortfolioDetail';
+import InquiryList from './pages/InquiryList';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/recruit/:id" element={<RecruitDetail />} />
             <Route path="/news/:id" element={<NewsDetail />} />
+            <Route path="/inquiry-list" element={<InquiryList />} />
           </Routes>
         </main>
         <Footer />

@@ -13,13 +13,17 @@ import {
   updatePortfolio,
 } from '@/api/portfolio';
 import DropAreaInput from '@/component/DropAreaInput';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL;
+const API_BASE_URL = API_URL.replace('/api', ''); // '/api' 경로 제거
 
 const initialPortfolioData = {
   id: 0,
   title: '',
   content: '',
   description: '',
-  mainImage: [],
+  image: [],
   tags: [],
   link: '',
 };
@@ -31,18 +35,64 @@ const PortfolioEditPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const handleImageUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const config = {
+        headers: {
+          Accept: '*/*',
+        },
+        withCredentials: true,
+      };
+
+      console.log('업로드 시도:', {
+        url: `${API_URL}/upload/image`,
+        file: {
+          name: file.name,
+          type: file.type,
+          size: file.size,
+        },
+      });
+
+      const response = await axios.post(
+        `${API_URL}/upload/image`,
+        formData,
+        config
+      );
+
+      console.log('업로드 응답:', response);
+
+      // 절대 경로로 변환 (API_BASE_URL 사용)
+      const imageUrl = response.data.url;
+      const absoluteImageUrl = imageUrl.startsWith('http')
+        ? imageUrl
+        : `${API_BASE_URL}${imageUrl}`;
+
+      return absoluteImageUrl;
+    } catch (error) {
+      console.error('업로드 실패:', error);
+      throw error;
+    }
+  };
+
   const handleCreate = async () => {
+    const dataToSubmit = {
+      ...portfolioData,
+      image: portfolioData.image[0],
+    };
+
     if (
-      !portfolioData.title ||
-      !portfolioData.content ||
-      !portfolioData.description ||
-      portfolioData.mainImage.length === 0
+      !dataToSubmit.title ||
+      !dataToSubmit.description ||
+      !dataToSubmit.image
     ) {
       alert('필수 필드를 모두 입력해주세요.');
       return;
     }
     try {
-      const response = await createPortfolio(portfolioData);
+      const response = await createPortfolio(dataToSubmit);
       if (response.status === 201) {
         alert('포트폴리오가 생성되었습니다.');
         navigate(-1);
@@ -56,17 +106,22 @@ const PortfolioEditPage = () => {
   };
 
   const handleUpdate = async () => {
+    const dataToSubmit = {
+      ...portfolioData,
+      image: portfolioData.image[0],
+      id,
+    };
+
     if (
-      !portfolioData.title ||
-      !portfolioData.content ||
-      !portfolioData.description ||
-      portfolioData.mainImage.length === 0
+      !dataToSubmit.title ||
+      !dataToSubmit.description ||
+      !dataToSubmit.image
     ) {
       alert('필수 필드를 모두 입력해주세요.');
       return;
     }
     try {
-      const response = await updatePortfolio({ ...portfolioData, id });
+      const response = await updatePortfolio(dataToSubmit);
       if (response.status === 200) {
         alert('포트폴리오가 수정되었습니다.');
         navigate('/portfolio');
@@ -99,17 +154,18 @@ const PortfolioEditPage = () => {
   };
 
   const onMainFilesUpdate = useCallback(
-    (files) => {
-      const current = portfolioData.mainImage;
-      const isEqual =
-        files.length === current.length &&
-        files.every((file, idx) => file === current[idx]);
-
-      if (!isEqual) {
-        handlePortfolioDataChange('mainImage', files);
+    async (files) => {
+      try {
+        if (files && files.length > 0) {
+          console.log('업로드 시도할 파일:', files[0]); // 디버깅
+          const uploadedUrl = await handleImageUpload(files[0]);
+          handlePortfolioDataChange('image', [uploadedUrl]);
+        }
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
       }
     },
-    [portfolioData.mainImage, handlePortfolioDataChange]
+    [handlePortfolioDataChange]
   );
 
   useEffect(() => {
@@ -118,8 +174,8 @@ const PortfolioEditPage = () => {
         try {
           const response = await getPortfolioById(id);
           if (response) {
-            const parsedMainImage = response.mainImage
-              ? JSON.parse(response.mainImage)
+            const parsedImage = response.image
+              ? JSON.parse(response.image)
               : [];
 
             setPortfolioData({
@@ -127,7 +183,7 @@ const PortfolioEditPage = () => {
               title: response.title,
               content: response.content,
               description: response.description,
-              mainImage: parsedMainImage,
+              image: parsedImage,
               tags: response.tags || [],
               link: response.link || '',
             });
@@ -194,10 +250,10 @@ const PortfolioEditPage = () => {
             />
 
             <DropAreaInput
-              value={portfolioData.mainImage}
+              value={portfolioData.image}
               onFilesUpdate={onMainFilesUpdate}
               maxFile={1}
-              initialFiles={portfolioData.mainImage}
+              initialFiles={portfolioData.image}
               description="권장 이미지 크기: 367 x 450px"
             />
             <div className="flex justify-end gap-2 pt-4">

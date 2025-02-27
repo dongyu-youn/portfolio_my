@@ -18,6 +18,7 @@ function Portfolio() {
     try {
       const data = await getAllPortfolios();
       setPortfolioItems(data);
+      console.log(data);
     } catch (error) {
       console.error('포트폴리오를 불러오는데 실패했습니다:', error);
     }

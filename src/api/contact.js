@@ -1,7 +1,13 @@
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
-const API_IMG = import.meta.env.VITE_API_IMGURL;
+
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 // 클라이언트 데이터를 서버에 보내기 위한 변환
 const prepareContactData = (data) => ({
@@ -23,51 +29,42 @@ const parseContactData = (data) => {
   };
 };
 
-export const getContactList = async () => {
+// 모든 문의 조회
+export const getAllContacts = async () => {
   try {
-    const response = await axios.get(`${API_URL}contact`);
-    return response.data.map(parseContactData);
+    const response = await api.get('/contact');
+    return response.data;
   } catch (error) {
-    console.error(error);
-    return error;
+    throw error;
   }
 };
 
-export const getContactDetail = async (id) => {
+// 새 문의 생성
+export const createContact = async (contactData) => {
   try {
-    const response = await axios.get(`${API_URL}contact/${id}`);
-    return parseContactData(response.data);
+    const response = await api.post('/contact', contactData);
+    return response.data;
   } catch (error) {
-    console.error(error);
-    return error;
+    throw error;
   }
 };
 
-export const createContact = async (data) => {
+// 특정 문의 조회
+export const getContactById = async (id) => {
   try {
-    const preparedData = prepareContactData(data);
-    return await axios.post(`${API_URL}contact`, preparedData);
+    const response = await api.get(`/contact/${id}`);
+    return response.data;
   } catch (error) {
-    console.error(error);
-    return error;
+    throw error;
   }
 };
 
-export const updateContact = async (data) => {
-  try {
-    const preparedData = prepareContactData(data);
-    return await axios.put(`${API_URL}contact/${data.id}`, preparedData);
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
-};
-
+// 특정 문의 삭제
 export const deleteContact = async (id) => {
   try {
-    return await axios.delete(`${API_URL}contact/${id}`);
+    const response = await api.delete(`/contact/${id}`);
+    return response.data;
   } catch (error) {
-    console.error(error);
-    return error;
+    throw error;
   }
 };

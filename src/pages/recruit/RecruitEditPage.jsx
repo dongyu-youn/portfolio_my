@@ -18,6 +18,7 @@ const initialRecruitData = {
   position: '',
   requirements: '',
   deadline: '',
+  category: '', // category 추가
 };
 
 const RecruitEditPage = () => {
@@ -32,19 +33,16 @@ const RecruitEditPage = () => {
       !recruitData.title ||
       !recruitData.content ||
       !recruitData.position ||
-      !recruitData.deadline
+      !recruitData.deadline ||
+      !recruitData.category // category 필수값 체크 추가
     ) {
       alert('필수 필드를 모두 입력해주세요.');
       return;
     }
     try {
-      const response = await createRecruit(recruitData);
-      if (response.status === 201) {
-        alert('채용공고가 생성되었습니다.');
-        navigate(-1);
-      } else {
-        alert(response.data.message);
-      }
+      await createRecruit(recruitData);
+      alert('채용공고가 생성되었습니다.');
+      navigate('/recruit');
     } catch (error) {
       console.error('Failed to create recruit:', error);
       alert('채용공고 생성에 실패했습니다.');
@@ -56,7 +54,8 @@ const RecruitEditPage = () => {
       !recruitData.title ||
       !recruitData.content ||
       !recruitData.position ||
-      !recruitData.deadline
+      !recruitData.deadline ||
+      !recruitData.category // category 필수값 체크 추가
     ) {
       alert('필수 필드를 모두 입력해주세요.');
       return;
@@ -117,6 +116,7 @@ const RecruitEditPage = () => {
               position: response.position,
               requirements: response.requirements,
               deadline: response.deadline,
+              category: response.category, // category 추가
             });
           }
         } catch (error) {
@@ -148,6 +148,16 @@ const RecruitEditPage = () => {
               label="제목"
               value={recruitData.title}
               onChange={(e) => handleRecruitDataChange('title', e.target.value)}
+            />
+            <Input
+              className="mb-6"
+              size="lg"
+              placeholder="카테고리를 입력해 주세요"
+              label="카테고리"
+              value={recruitData.category}
+              onChange={(e) =>
+                handleRecruitDataChange('category', e.target.value)
+              }
             />
             <Input
               className="mb-6"

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'http://localhost:8080';
+const API_URL = `${API_BASE_URL}/api`;
 
 const api = axios.create({
   baseURL: API_URL,
@@ -22,9 +23,22 @@ export const getAllPortfolios = async () => {
 // 새 포트폴리오 생성
 export const createPortfolio = async (portfolioData) => {
   try {
-    const response = await api.post('/portfolio', portfolioData);
-    return response.data;
+    const imageUrl = portfolioData.image;
+    const absoluteImageUrl = imageUrl.startsWith('http')
+      ? imageUrl
+      : `${API_BASE_URL}${imageUrl}`;
+
+    const modifiedData = {
+      ...portfolioData,
+      image: absoluteImageUrl,
+    };
+
+    console.log('포트폴리오 생성 요청 데이터:', modifiedData);
+    const response = await api.post('/portfolio', modifiedData);
+    console.log('포트폴리오 생성 응답:', response);
+    return response;
   } catch (error) {
+    console.error('포트폴리오 생성 에러:', error);
     throw error;
   }
 };
@@ -45,9 +59,12 @@ export const getPortfolioById = async (id) => {
 // 특정 포트폴리오 수정
 export const updatePortfolio = async (id, portfolioData) => {
   try {
+    console.log('포트폴리오 수정 요청 데이터:', { id, portfolioData });
     const response = await api.put(`/portfolio/${id}`, portfolioData);
-    return response.data;
+    console.log('포트폴리오 수정 응답:', response);
+    return response;
   } catch (error) {
+    console.error('포트폴리오 수정 에러:', error);
     throw error;
   }
 };

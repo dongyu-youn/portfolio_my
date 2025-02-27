@@ -89,14 +89,24 @@ function DesktopNav({
         })}
         <li>
           {adminToken ? (
-            <button
-              onClick={handleLogout}
-              className="block py-2 px-4 bg-red-500 text-white rounded-full 
-                hover:bg-red-600 hover:no-underline 
-                transition-all duration-300 transform hover:scale-105"
-            >
-              관리자 로그아웃
-            </button>
+            <div className="flex space-x-4">
+              <Link
+                to="/inquiry-list"
+                className="block py-2 px-4 bg-brand-green text-white rounded-full 
+                  hover:bg-brand-primary/90 hover:no-underline 
+                  transition-all duration-300 transform hover:scale-105"
+              >
+                문의 목록보기
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="block py-2 px-4 bg-red-500 text-white rounded-full 
+                  hover:bg-red-600 hover:no-underline 
+                  transition-all duration-300 transform hover:scale-105"
+              >
+                관리자 로그아웃
+              </button>
+            </div>
           ) : (
             <Link
               to="/project-inquiry"

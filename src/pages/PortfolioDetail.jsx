@@ -32,7 +32,7 @@ function PortfolioDetail() {
 
   return (
     <div className="pt-36 min-h-screen bg-white font-sans">
-      <div className="mx-auto px-4 lg:max-w-4xl">
+      <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

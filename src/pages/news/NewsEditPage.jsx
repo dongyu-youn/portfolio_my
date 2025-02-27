@@ -31,7 +31,7 @@ const NewsEditPage = () => {
       !newsData.title ||
       !newsData.content ||
       newsData.mainImage.length === 0 ||
-      !newsData.date // date 필수값 체크 추가
+      !newsData.date
     ) {
       alert('필수 필드를 모두 입력해주세요.');
       return;
@@ -41,15 +41,12 @@ const NewsEditPage = () => {
       formData.append('title', newsData.title);
       formData.append('content', newsData.content);
       formData.append('category', newsData.category);
-      formData.append('date', newsData.date); // date 추가
-      // 파일 객체 직접 전달
+      formData.append('date', newsData.date);
       formData.append('mainImage', newsData.mainImage[0]);
 
       const response = await createNews(formData);
-      if (response.status === 201) {
-        alert('뉴스가 생성되었습니다.');
-        navigate(-1);
-      }
+      alert('뉴스가 생성되었습니다.');
+      navigate('/news');
     } catch (error) {
       console.error('Failed to create news:', error);
       alert('뉴스 생성에 실패했습니다.');
@@ -71,8 +68,6 @@ const NewsEditPage = () => {
       if (response.status === 200) {
         alert('뉴스가 수정되었습니다.');
         navigate('/news');
-      } else {
-        console.error(response.data.message);
       }
     } catch (error) {
       console.error('Failed to update news:', error);

@@ -18,9 +18,10 @@ function News() {
   const fetchNews = async () => {
     try {
       const data = await getAllNews();
-      setNewsItems(data);
+      setNewsItems(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('뉴스를 불러오는데 실패했습니다:', error);
+      setNewsItems([]);
     }
   };
 
