@@ -16,6 +16,7 @@ import DropAreaInput from '@/component/DropAreaInput';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
+const IMG_URL = import.meta.env.VITE_IMG_URL;
 const API_BASE_URL = API_URL.replace('/api', ''); // '/api' 경로 제거
 
 const initialPortfolioData = {
@@ -47,15 +48,6 @@ const PortfolioEditPage = () => {
         withCredentials: true,
       };
 
-      console.log('업로드 시도:', {
-        url: `${API_URL}/upload/image`,
-        file: {
-          name: file.name,
-          type: file.type,
-          size: file.size,
-        },
-      });
-
       const response = await axios.post(
         `${API_URL}/upload/image`,
         formData,
@@ -64,13 +56,15 @@ const PortfolioEditPage = () => {
 
       console.log('업로드 응답:', response);
 
-      // 절대 경로로 변환 (API_BASE_URL 사용)
-      const imageUrl = response.data.url;
-      const absoluteImageUrl = imageUrl.startsWith('http')
-        ? imageUrl
-        : `${API_BASE_URL}${imageUrl}`;
+      // 현재 날짜로 폴더명 생성
+      const today = new Date();
+      const dateFolder = today.toISOString().split('T')[0]; // 'YYYY-MM-DD' 형식
 
-      return absoluteImageUrl;
+      // 환경변수의 이미지 서버 URL 사용
+      const imageUrl = `${IMG_URL}/uploads/${dateFolder}/${response.data.url
+        .split('/')
+        .pop()}`;
+      return imageUrl;
     } catch (error) {
       console.error('업로드 실패:', error);
       throw error;

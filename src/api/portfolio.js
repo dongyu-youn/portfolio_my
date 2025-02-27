@@ -23,19 +23,16 @@ export const getAllPortfolios = async () => {
 // 새 포트폴리오 생성
 export const createPortfolio = async (portfolioData) => {
   try {
-    const imageUrl = portfolioData.image;
-    const absoluteImageUrl = imageUrl.startsWith('http')
-      ? imageUrl
-      : `${API_BASE_URL}${imageUrl}`;
+    const currentDate = new Date().toISOString().split('T')[0];
 
     const modifiedData = {
       ...portfolioData,
-      image: absoluteImageUrl,
+      date: currentDate,
+      image: portfolioData.image, // 이미지 URL을 그대로 사용
     };
 
     console.log('포트폴리오 생성 요청 데이터:', modifiedData);
     const response = await api.post('/portfolio', modifiedData);
-    console.log('포트폴리오 생성 응답:', response);
     return response;
   } catch (error) {
     console.error('포트폴리오 생성 에러:', error);

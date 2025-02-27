@@ -9,14 +9,18 @@ import {
 } from '@material-tailwind/react';
 import { getNewsById, createNews, updateNews } from '@/api/news';
 import DropAreaInput from '@/component/DropAreaInput';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL;
+const IMG_URL = import.meta.env.VITE_IMG_URL;
 
 const initialNewsData = {
   id: 0,
   title: '',
   content: '',
-  mainImage: [],
+  image: [],
   category: '',
-  date: '', // date 필드 추가
+  date: '',
 };
 
 const NewsEditPage = () => {
@@ -26,11 +30,42 @@ const NewsEditPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const handleImageUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const config = {
+        headers: {
+          Accept: '*/*',
+        },
+        withCredentials: true,
+      };
+
+      const response = await axios.post(
+        `${API_URL}/upload/image`,
+        formData,
+        config
+      );
+
+      const today = new Date();
+      const dateFolder = today.toISOString().split('T')[0];
+
+      const imageUrl = `${IMG_URL}/uploads/${dateFolder}/${response.data.url
+        .split('/')
+        .pop()}`;
+      return imageUrl;
+    } catch (error) {
+      console.error('업로드 실패:', error);
+      throw error;
+    }
+  };
+
   const handleCreate = async () => {
     if (
       !newsData.title ||
       !newsData.content ||
-      newsData.mainImage.length === 0 ||
+      newsData.image.length === 0 ||
       !newsData.date
     ) {
       alert('필수 필드를 모두 입력해주세요.');
@@ -42,7 +77,7 @@ const NewsEditPage = () => {
       formData.append('content', newsData.content);
       formData.append('category', newsData.category);
       formData.append('date', newsData.date);
-      formData.append('mainImage', newsData.mainImage[0]);
+      formData.append('image', newsData.image[0]);
 
       const response = await createNews(formData);
       alert('뉴스가 생성되었습니다.');
@@ -54,21 +89,14 @@ const NewsEditPage = () => {
   };
 
   const handleUpdate = async () => {
-    if (
-      !newsData.title ||
-      !newsData.content ||
-      newsData.mainImage.length === 0 ||
-      !newsData.date // date 필수값 체크 추가
-    ) {
+    if (!newsData.title || !newsData.content || !newsData.date) {
       alert('필수 필드를 모두 입력해주세요.');
       return;
     }
     try {
-      const response = await updateNews({ ...newsData, id });
-      if (response.status === 200) {
-        alert('뉴스가 수정되었습니다.');
-        navigate('/news');
-      }
+      const response = await updateNews(id, newsData);
+      alert('뉴스가 수정되었습니다.');
+      navigate('/news');
     } catch (error) {
       console.error('Failed to update news:', error);
       alert('뉴스 수정에 실패했습니다.');
@@ -86,11 +114,15 @@ const NewsEditPage = () => {
   }, []);
 
   const onMainFilesUpdate = useCallback(
-    (files) => {
-      console.log('새로운 파일 업데이트:', files);
-      // 파일이 있을 때만 업데이트
-      if (files && files.length > 0) {
-        handleNewsDataChange('mainImage', files);
+    async (files) => {
+      try {
+        if (files && files.length > 0) {
+          console.log('업로드 시도할 파일:', files[0]);
+          const uploadedUrl = await handleImageUpload(files[0]);
+          handleNewsDataChange('image', [uploadedUrl]);
+        }
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
       }
     },
     [handleNewsDataChange]
@@ -103,26 +135,25 @@ const NewsEditPage = () => {
           const response = await getNewsById(id);
           if (response) {
             console.log('받아온 뉴스 데이터:', response);
-            // mainImage가 문자열이면 파싱, 아니면 그대로 사용
-            let mainImage = response.mainImage;
+            let image = response.image;
             try {
-              if (typeof mainImage === 'string') {
-                mainImage = JSON.parse(mainImage);
+              if (typeof image === 'string') {
+                image = JSON.parse(image);
               }
             } catch (e) {
               console.log('이미지 파싱 실패:', e);
-              mainImage = [response.mainImage]; // 문자열이면 배열로 변환
+              image = [response.image];
             }
 
-            console.log('처리된 이미지:', mainImage);
+            console.log('처리된 이미지:', image);
 
             setNewsData({
               id: response.id,
               title: response.title,
               content: response.content,
-              mainImage: mainImage,
+              image: image,
               category: response.category || '',
-              date: response.date || '', // date 필드 추가
+              date: response.date || '',
             });
           }
         } catch (error) {
@@ -181,10 +212,10 @@ const NewsEditPage = () => {
               onChange={(e) => handleNewsDataChange('content', e.target.value)}
             />
             <DropAreaInput
-              value={newsData.mainImage}
+              value={newsData.image}
               onFilesUpdate={onMainFilesUpdate}
               maxFile={1}
-              initialFiles={newsData.mainImage}
+              initialFiles={newsData.image}
               description="권장 이미지 크기: 367 x 450px"
             />
             <div className="flex justify-end gap-2 pt-4">

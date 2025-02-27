@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
-const API_BASE_URL = API_URL.replace('/api', ''); // '/api' 경로 제거
 
 const api = axios.create({
   baseURL: API_URL,
@@ -23,22 +22,9 @@ export const getAllNews = async () => {
 // 새 뉴스 생성
 export const createNews = async (newsData) => {
   try {
-    const imageUrl = newsData.mainImage;
-    const absoluteImageUrl = imageUrl.startsWith('http')
-      ? imageUrl
-      : `${API_BASE_URL}${imageUrl}`;
-
-    const modifiedData = {
-      ...newsData,
-      mainImage: absoluteImageUrl,
-    };
-
-    console.log('뉴스 생성 요청 데이터:', modifiedData);
-    const response = await api.post('/news', modifiedData);
-    console.log('뉴스 생성 응답:', response);
-    return response;
+    const response = await api.post('/news', newsData);
+    return response.data;
   } catch (error) {
-    console.error('뉴스 생성 에러:', error);
     throw error;
   }
 };
@@ -56,7 +42,7 @@ export const getNewsById = async (id) => {
 // 특정 뉴스 수정
 export const updateNews = async (id, newsData) => {
   try {
-    const response = await api.put(`/news/${id}`, newsData);
+    const response = await api.put(`/news/${String(id)}`, newsData);
     return response.data;
   } catch (error) {
     throw error;

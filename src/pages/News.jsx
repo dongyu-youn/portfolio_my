@@ -26,6 +26,10 @@ function News() {
   };
 
   const handleEdit = async (id) => {
+    console.log('Edit ID:', id, typeof id);
+    if (typeof id === 'object') {
+      id = id.id;
+    }
     navigate(`/news/${id}/edit`);
   };
 
@@ -87,7 +91,10 @@ function News() {
                     <Button
                       size="sm"
                       className="bg-[#00939A]"
-                      onClick={() => handleEdit(item.id)}
+                      onClick={() => {
+                        console.log('Item ID:', item.id, typeof item.id);
+                        handleEdit(item.id);
+                      }}
                     >
                       수정
                     </Button>
