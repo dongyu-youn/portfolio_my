@@ -14,16 +14,22 @@ function NewsDetail() {
     const fetchNews = async () => {
       try {
         const data = await getNewsById(id);
-        let image = data.image;
-        try {
-          if (typeof image === 'string') {
-            image = JSON.parse(image);
+
+        // 이미지 데이터 처리 로직
+        const parseImageData = (imgData) => {
+          if (!imgData) return [];
+          try {
+            // || 구분자로 분리하여 배열로 변환
+            return imgData.split('||');
+          } catch (e) {
+            console.error('이미지 파싱 실패:', e);
+            // 실패시 단일 이미지로 처리
+            return [imgData];
           }
-        } catch (e) {
-          console.log('이미지 파싱 실패:', e);
-          image = [data.image];
-        }
-        setNews({ ...data, image });
+        };
+
+        const processedImage = parseImageData(data.image);
+        setNews({ ...data, image: processedImage });
       } catch (error) {
         console.error('뉴스를 불러오는데 실패했습니다:', error);
         navigate('/news');
@@ -41,12 +47,31 @@ function NewsDetail() {
           <div className="text-sm text-gray-600 mb-2">{news.category}</div>
           <h1 className="text-3xl font-bold mb-4">{news.title}</h1>
           <div className="text-gray-600 mb-6">{news.date}</div>
-          {news.image && news.image.length > 0 && (
-            <img
-              src={news.image[0]}
-              alt={news.title}
-              className="w-full h-[400px] object-cover rounded-lg mb-6"
-            />
+          {news.image && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {Array.isArray(news.image) ? (
+                news.image.map((img, index) => (
+                  <div
+                    key={index}
+                    className="relative aspect-auto overflow-hidden rounded-lg shadow-lg"
+                  >
+                    <img
+                      src={img}
+                      alt={`${news.title} ${index + 1}`}
+                      className="w-full h-auto object-contain hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="relative aspect-auto overflow-hidden rounded-lg shadow-lg">
+                  <img
+                    src={news.image}
+                    alt={news.title}
+                    className="w-full h-auto object-contain hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+            </div>
           )}
         </div>
 

@@ -39,23 +39,39 @@ const DropAreaInput = ({
   // uploadedFiles 변경 시 상위 컴포넌트에 업데이트 전달
   const handleUpload = async (files) => {
     try {
-      const previews = files.map((file) => ({
+      // 기존 파일들과 새로운 파일들을 합침
+      const existingFiles = [...uploadedFiles];
+      const newFiles = files.filter(
+        (file) =>
+          !existingFiles.some(
+            (existing) => existing.name === file.name || existing === file
+          )
+      );
+
+      const allFiles = [...existingFiles, ...newFiles];
+
+      // maxFile 제한 확인
+      if (allFiles.length > maxFile) {
+        alert(`최대 ${maxFile}개의 파일만 업로드할 수 있습니다.`);
+        return;
+      }
+
+      const previews = allFiles.map((file) => ({
         name: typeof file === 'string' ? file.split('/').pop() : file.name,
         preview: typeof file === 'string' ? file : URL.createObjectURL(file),
       }));
 
       setPreviewFiles(previews);
-      setUploadedFiles(files);
-      onFilesUpdate(files); // 바로 전달
+      setUploadedFiles(allFiles);
+      onFilesUpdate(allFiles);
     } catch (error) {
       console.error('파일 업로드 실패:', error);
     }
   };
 
   const onDrop = async (acceptedFiles) => {
-    console.log('5. 드롭된 파일:', acceptedFiles);
     if (acceptedFiles?.length > 0) {
-      await handleUpload(acceptedFiles);
+      await handleUpload(Array.from(acceptedFiles));
     }
   };
 
@@ -88,9 +104,11 @@ const DropAreaInput = ({
     >
       <DropArea
         fileInputRef={fileInputRef}
-        handleFileChange={async (e) => {
-          const files = Array.from(e.target.files);
-          await handleUpload(files);
+        handleFileChange={async (files) => {
+          // files 배열을 직접 받아서 처리
+          if (files && files.length > 0) {
+            await handleUpload(files);
+          }
         }}
         handleDrop={onDrop}
         imageOnly={imageOnly}

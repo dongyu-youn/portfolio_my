@@ -57,8 +57,8 @@ function SideNavigation() {
 
   return (
     <div
-      className={`fixed right-8 top-1/2 transform -translate-y-1/2 z-50 font-sans ${
-        location.pathname === '/' ? 'md:block' : 'hidden'
+      className={`fixed right-8 top-1/2 transform -translate-y-1/2 z-50 font-sans hidden ${
+        location.pathname === '/' ? 'lg:block' : 'hidden'
       }`}
     >
       <div className="flex flex-col space-y-4">

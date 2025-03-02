@@ -103,7 +103,6 @@ const PortfolioEditPage = () => {
     const dataToSubmit = {
       ...portfolioData,
       image: portfolioData.image[0],
-      id,
     };
 
     if (
@@ -115,12 +114,12 @@ const PortfolioEditPage = () => {
       return;
     }
     try {
-      const response = await updatePortfolio(dataToSubmit);
+      const response = await updatePortfolio(id, dataToSubmit);
       if (response.status === 200) {
         alert('포트폴리오가 수정되었습니다.');
         navigate('/portfolio');
       } else {
-        console.error(response.data.message);
+        alert(response.data.message || '수정에 실패했습니다.');
       }
     } catch (error) {
       console.error('Failed to update portfolio:', error);
@@ -167,23 +166,21 @@ const PortfolioEditPage = () => {
       if (id) {
         try {
           const response = await getPortfolioById(id);
+          console.log('포트폴리오 데이터:', response); // 데이터 확인용 로그
           if (response) {
-            const parsedImage = response.image
-              ? JSON.parse(response.image)
-              : [];
-
             setPortfolioData({
               id: response.id,
-              title: response.title,
-              content: response.content,
-              description: response.description,
-              image: parsedImage,
-              tags: response.tags || [],
+              title: response.title || '',
+              content: response.content || '',
+              description: response.description || '',
+              image: response.image ? [response.image] : [], // 이미지 배열로 변환
+              tags: response.tags,
               link: response.link || '',
             });
           }
         } catch (error) {
           console.error('Failed to load portfolio:', error);
+          alert('포트폴리오 데이터를 불러오는데 실패했습니다.');
         } finally {
           setIsLoading(false);
         }
@@ -250,6 +247,15 @@ const PortfolioEditPage = () => {
               initialFiles={portfolioData.image}
               description="권장 이미지 크기: 367 x 450px"
             />
+            {portfolioData.image[0] && (
+              <div className="">
+                <img
+                  src={portfolioData.image[0]}
+                  alt="업로드된 이미지"
+                  className="max-w-full h-auto rounded-lg shadow-lg"
+                />
+              </div>
+            )}
             <div className="flex justify-end gap-2 pt-4">
               <Button onClick={handleCancel} color="red">
                 취소

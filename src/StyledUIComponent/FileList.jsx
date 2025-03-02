@@ -33,27 +33,13 @@ const FileList = ({ files, removeFile, updateFileOrder }) => {
   }
 
   return (
-    <div
-      className={`grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-4`}
-      style={{ gridTemplateColumns: `repeat(${count}, minmax(0, 1fr))` }}
-    >
+    <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {safeFiles.map((file, index) => (
-        <div
+        <FileItem
           key={file.preview || file.url || index}
-          draggable="true"
-          onDragStart={() => handleDragStart(index)}
-          onDragOver={(event) => handleDragOver(event, index)}
-          onDragEnd={handleDragEnd}
-        >
-          <FileItem
-            file={{
-              name: file.name,
-              preview: file.preview,
-              url: file.url,
-            }}
-            removeFile={() => removeFile(index)}
-          />
-        </div>
+          file={file}
+          removeFile={() => removeFile(index)}
+        />
       ))}
     </div>
   );

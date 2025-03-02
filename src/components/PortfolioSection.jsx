@@ -12,36 +12,33 @@ function PortfolioSection() {
 
   const portfolios = [
     {
-      image: '/images/portofolio/app_01.gif',
-      title: '청년의날',
+      image: '/images/portofolio/app_12.png',
+      title: '울산 신장장애인 협회',
       category: 'WEBSITE',
-      link: 'http://www.youthday.or.kr/',
+      link: 'http://www.kidneyus.or.kr/',
+    },
+
+    {
+      image: '/images/portofolio/app_11.gif',
+      title: '서현 테크놀로지',
+      category: 'WEBSITE',
+      link: 'http://www.seohyuntech.com',
     },
     {
-      image: '/images/portofolio/app_04.gif',
-      title: '함께하는 부산여행 NFT',
+      image: '/images/portofolio/app_08.gif',
+      title: 'WAFFLESTAY',
       category: 'APP',
+      link: 'https://web.wafflestay.kr/',
     },
     {
-      image: '/images/portofolio/app_02.gif',
-      title: 'MTM',
+      image: '/images/portofolio/app_10.gif',
+      title: '따손',
       category: 'WEBSITE',
-      link: 'https://www.presi.co.kr/',
+      link: 'http://www.ddason.org',
     },
     {
-      image: '/images/portofolio/app_05.gif',
-      title: '청년의날 홍보',
-      category: 'APP',
-    },
-    {
-      image: '/images/portofolio/app_03.gif',
-      title: '대한걷기협회',
-      category: 'WEBSITE',
-      link: 'https://www.walk4all.or.kr/index.html',
-    },
-    {
-      image: '/images/portofolio/app_06.gif',
-      title: 'APP 6',
+      image: '/images/portofolio/app_07.gif',
+      title: '탄소중립',
       category: 'APP',
     },
     {
@@ -51,33 +48,37 @@ function PortfolioSection() {
       link: 'http://m.yeinskin.com/',
     },
     {
-      image: '/images/portofolio/app_07.gif',
-      title: '탄소중립',
+      image: '/images/portofolio/app_06.gif',
+      title: 'APP 6',
       category: 'APP',
     },
     {
-      image: '/images/portofolio/app_10.gif',
-      title: '따손',
+      image: '/images/portofolio/app_03.gif',
+      title: '대한걷기협회',
       category: 'WEBSITE',
-      link: 'http://www.ddason.org',
+      link: 'https://www.walk4all.or.kr/index.html',
     },
     {
-      image: '/images/portofolio/app_08.gif',
-      title: 'WAFFLESTAY',
+      image: '/images/portofolio/app_05.gif',
+      title: '청년의날 홍보',
       category: 'APP',
-      link: 'https://web.wafflestay.kr/',
     },
     {
-      image: '/images/portofolio/app_11.gif',
-      title: '서현 테크놀로지',
+      image: '/images/portofolio/app_02.gif',
+      title: 'MTM',
       category: 'WEBSITE',
-      link: 'http://www.seohyuntech.com',
+      link: 'https://www.presi.co.kr/',
     },
     {
-      image: '/images/portofolio/app_12.png',
-      title: '울산 신장장애인 협회',
+      image: '/images/portofolio/app_04.gif',
+      title: '함께하는 부산여행 NFT',
+      category: 'APP',
+    },
+    {
+      image: '/images/portofolio/app_01.gif',
+      title: '청년의날',
       category: 'WEBSITE',
-      link: 'http://www.kidneyus.or.kr/',
+      link: 'http://www.youthday.or.kr/',
     },
   ];
 

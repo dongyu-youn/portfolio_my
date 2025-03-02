@@ -71,35 +71,27 @@ const NewsEditPage = () => {
       alert('필수 필드를 모두 입력해주세요.');
       return;
     }
-    try {
-      const formData = new FormData();
-      formData.append('title', newsData.title);
-      formData.append('content', newsData.content);
-      formData.append('category', newsData.category);
-      formData.append('date', newsData.date);
-      formData.append('image', newsData.image[0]);
 
-      const response = await createNews(formData);
-      alert('뉴스가 생성되었습니다.');
-      navigate('/news');
+    try {
+      // 이미지 배열을 문자열로 변환하여 전송
+      const newsDataToSend = {
+        ...newsData,
+        image: newsData.image.join('||'), // 구분자로 || 사용
+      };
+
+      console.log('전송되는 이미지 문자열:', newsDataToSend.image);
+
+      const response = await createNews(newsDataToSend);
+
+      if (response.status === 201) {
+        alert('뉴스가 생성되었습니다.');
+        navigate(-1);
+      } else {
+        alert(response.data.message);
+      }
     } catch (error) {
       console.error('Failed to create news:', error);
       alert('뉴스 생성에 실패했습니다.');
-    }
-  };
-
-  const handleUpdate = async () => {
-    if (!newsData.title || !newsData.content || !newsData.date) {
-      alert('필수 필드를 모두 입력해주세요.');
-      return;
-    }
-    try {
-      const response = await updateNews(id, newsData);
-      alert('뉴스가 수정되었습니다.');
-      navigate('/news');
-    } catch (error) {
-      console.error('Failed to update news:', error);
-      alert('뉴스 수정에 실패했습니다.');
     }
   };
 
@@ -117,16 +109,93 @@ const NewsEditPage = () => {
     async (files) => {
       try {
         if (files && files.length > 0) {
-          console.log('업로드 시도할 파일:', files[0]);
-          const uploadedUrl = await handleImageUpload(files[0]);
-          handleNewsDataChange('image', [uploadedUrl]);
+          console.log('새로 업로드할 파일들:', files);
+
+          const uploadPromises = files.map((file) => handleImageUpload(file));
+          const newUploadedUrls = await Promise.all(uploadPromises);
+
+          // 기존 이미지 배열 정리
+          let currentImages = newsData.image;
+          if (typeof currentImages === 'string') {
+            try {
+              currentImages = JSON.parse(currentImages);
+            } catch (e) {
+              currentImages = [];
+            }
+          }
+          if (!Array.isArray(currentImages)) {
+            currentImages = currentImages ? [currentImages] : [];
+          }
+
+          // 새 이미지 추가
+          const updatedImages = [...currentImages, ...newUploadedUrls];
+          console.log('전체 이미지 배열:', updatedImages);
+
+          handleNewsDataChange('image', updatedImages);
         }
       } catch (error) {
         console.error('이미지 업로드 실패:', error);
       }
     },
-    [handleNewsDataChange]
+    [handleNewsDataChange, newsData.image]
   );
+
+  const handleUpdate = async () => {
+    if (!newsData.title || !newsData.content || !newsData.date) {
+      alert('필수 필드를 모두 입력해주세요.');
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append('title', newsData.title);
+      formData.append('content', newsData.content);
+      formData.append('category', newsData.category);
+      formData.append('date', newsData.date);
+
+      // 이미지 배열 처리 및 유효성 검사
+      let imageArray = [];
+      if (Array.isArray(newsData.image)) {
+        imageArray = newsData.image
+          .map((img) => {
+            if (typeof img === 'object') return img.src;
+            if (typeof img === 'string') {
+              return img; // URL 유효성 검사 제거
+            }
+            return null;
+          })
+          .filter(Boolean);
+      }
+
+      // 이미지 배열이 비어있는지 확인
+      if (imageArray.length === 0) {
+        alert('최소 1개 이상의 이미지가 필요합니다.');
+        return;
+      }
+
+      // 이미지 배열을 JSON 문자열로 변환
+      const imageJson = JSON.stringify(imageArray);
+
+      // 이미지 JSON 문자열이 올바른 형식인지 확인
+      try {
+        JSON.parse(imageJson); // 파싱 테스트
+      } catch (e) {
+        console.error('이미지 JSON 형식이 올바르지 않습니다:', e);
+        alert('이미지 처리 중 오류가 발생했습니다.');
+        return;
+      }
+
+      formData.append('image', imageJson);
+      console.log('전송할 이미지 배열:', imageArray);
+      console.log('전송할 이미지 JSON:', imageJson);
+
+      await updateNews(id, formData);
+      alert('뉴스가 수정되었습니다.');
+      navigate('/news');
+    } catch (error) {
+      console.error('뉴스 수정 실패:', error);
+      alert('뉴스 수정에 실패했습니다.');
+    }
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -214,7 +283,7 @@ const NewsEditPage = () => {
             <DropAreaInput
               value={newsData.image}
               onFilesUpdate={onMainFilesUpdate}
-              maxFile={1}
+              maxFile={5}
               initialFiles={newsData.image}
               description="권장 이미지 크기: 367 x 450px"
             />

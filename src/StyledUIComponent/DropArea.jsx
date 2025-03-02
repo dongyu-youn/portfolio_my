@@ -17,15 +17,34 @@ const DropArea = ({
         justifyContent: 'center',
       }}
       onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => handleDrop(e, imageOnly, maxFile)}
+      onDrop={(e) => {
+        e.preventDefault();
+        // DataTransfer 객체에서 파일 목록을 배열로 변환
+        const droppedFiles = Array.from(e.dataTransfer.files);
+
+        // 이미지 파일만 필터링 (imageOnly가 true인 경우)
+        const validFiles = imageOnly
+          ? droppedFiles.filter((file) => file.type.startsWith('image/'))
+          : droppedFiles;
+
+        if (imageOnly && validFiles.length !== droppedFiles.length) {
+          alert('이미지 파일만 업로드 가능합니다.');
+          return;
+        }
+
+        handleDrop(validFiles);
+      }}
     >
       <input
         type="file"
         ref={fileInputRef}
-        multiple
+        multiple={maxFile > 1}
         accept={imageOnly ? 'image/*' : '*/*'}
         className="absolute inset-0 z-10 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer"
-        onChange={(e) => handleFileChange(e, imageOnly, maxFile, initialFiles)}
+        onChange={(e) => {
+          const files = Array.from(e.target.files);
+          handleFileChange(files);
+        }}
       />
       <div className="flex flex-col items-center justify-center py-10 text-center">
         <svg
@@ -45,6 +64,11 @@ const DropArea = ({
         <p className="m-0">
           파일을 드래그하여 옮기거나 클릭하여 파일을 선택해 주세요.
         </p>
+        {maxFile > 1 && (
+          <p className="mt-1 text-sm text-gray-500">
+            최대 {maxFile}개의 파일을 업로드할 수 있습니다.
+          </p>
+        )}
         {description && (
           <p className="mt-2 text-sm text-gray-500">{description}</p>
         )}
