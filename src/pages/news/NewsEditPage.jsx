@@ -37,10 +37,13 @@ const NewsEditPage = () => {
 
       const config = {
         headers: {
+          'Content-Type': 'multipart/form-data',
           Accept: '*/*',
         },
         withCredentials: true,
       };
+
+      console.log('업로드하는 파일:', file.name, file.type, file.size);
 
       const response = await axios.post(
         `${API_URL}/upload/image`,
@@ -48,15 +51,37 @@ const NewsEditPage = () => {
         config
       );
 
-      const today = new Date();
-      const dateFolder = today.toISOString().split('T')[0];
+      console.log('서버 응답:', response.data);
 
-      const imageUrl = `${IMG_URL}/uploads/${dateFolder}/${response.data.url
-        .split('/')
-        .pop()}`;
-      return imageUrl;
+      if (!response.data || !response.data.url) {
+        throw new Error('서버 응답에 이미지 URL이 없습니다.');
+      }
+
+      // 현재 날짜 생성
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const dateStr = `${year}-${month}-${day}`;
+
+      // API_URL에서 기본 도메인 추출 (http://localhost:8080)
+      const baseUrl = API_URL.split('/api')[0];
+
+      // 서버 응답에서 파일명만 추출
+      const fileName = response.data.url.split('/').pop();
+
+      // 새로운 URL 구성
+      const fullImageUrl = `${baseUrl}/uploads/${dateStr}/${fileName}`;
+
+      console.log('생성된 URL:', fullImageUrl);
+
+      return fullImageUrl;
     } catch (error) {
-      console.error('업로드 실패:', error);
+      console.error('업로드 실패 상세:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+      });
       throw error;
     }
   };
@@ -73,17 +98,14 @@ const NewsEditPage = () => {
     }
 
     try {
-      // 이미지 배열을 문자열로 변환하여 전송
       const newsDataToSend = {
         ...newsData,
-        image: newsData.image.join('||'), // 구분자로 || 사용
+        image: newsData.image.join('||'),
       };
-
-      console.log('전송되는 이미지 문자열:', newsDataToSend.image);
 
       const response = await createNews(newsDataToSend);
 
-      if (response.status === 201) {
+      if (response) {
         alert('뉴스가 생성되었습니다.');
         navigate(-1);
       } else {
@@ -109,88 +131,53 @@ const NewsEditPage = () => {
     async (files) => {
       try {
         if (files && files.length > 0) {
-          console.log('새로 업로드할 파일들:', files);
+          // File 객체만 업로드 처리
+          const filesToUpload = files.filter((file) => file instanceof File);
 
-          const uploadPromises = files.map((file) => handleImageUpload(file));
+          // 기존 이미지 URL 유지
+          const existingUrls = newsData.image || [];
+
+          const uploadPromises = filesToUpload.map((file) =>
+            handleImageUpload(file)
+          );
           const newUploadedUrls = await Promise.all(uploadPromises);
 
-          // 기존 이미지 배열 정리
-          let currentImages = newsData.image;
-          if (typeof currentImages === 'string') {
-            try {
-              currentImages = JSON.parse(currentImages);
-            } catch (e) {
-              currentImages = [];
-            }
-          }
-          if (!Array.isArray(currentImages)) {
-            currentImages = currentImages ? [currentImages] : [];
-          }
-
-          // 새 이미지 추가
-          const updatedImages = [...currentImages, ...newUploadedUrls];
-          console.log('전체 이미지 배열:', updatedImages);
+          // 기존 URL에 새로운 URL 추가
+          const updatedImages = [...existingUrls, ...newUploadedUrls];
 
           handleNewsDataChange('image', updatedImages);
         }
       } catch (error) {
         console.error('이미지 업로드 실패:', error);
+        alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
       }
     },
-    [handleNewsDataChange, newsData.image]
+    [handleNewsDataChange, newsData.image] // newsData.image 의존성 추가
   );
-
   const handleUpdate = async () => {
     if (!newsData.title || !newsData.content || !newsData.date) {
       alert('필수 필드를 모두 입력해주세요.');
       return;
     }
     try {
-      const formData = new FormData();
-      formData.append('title', newsData.title);
-      formData.append('content', newsData.content);
-      formData.append('category', newsData.category);
-      formData.append('date', newsData.date);
-
-      // 이미지 배열 처리 및 유효성 검사
-      let imageArray = [];
-      if (Array.isArray(newsData.image)) {
-        imageArray = newsData.image
-          .map((img) => {
-            if (typeof img === 'object') return img.src;
-            if (typeof img === 'string') {
-              return img; // URL 유효성 검사 제거
-            }
-            return null;
-          })
-          .filter(Boolean);
-      }
-
-      // 이미지 배열이 비어있는지 확인
-      if (imageArray.length === 0) {
+      if (newsData.image.length === 0) {
         alert('최소 1개 이상의 이미지가 필요합니다.');
         return;
       }
 
-      // 이미지 배열을 JSON 문자열로 변환
-      const imageJson = JSON.stringify(imageArray);
+      const newsDataToSend = {
+        ...newsData,
+        image: newsData.image.join('||'),
+      };
 
-      // 이미지 JSON 문자열이 올바른 형식인지 확인
-      try {
-        JSON.parse(imageJson); // 파싱 테스트
-      } catch (e) {
-        console.error('이미지 JSON 형식이 올바르지 않습니다:', e);
-        alert('이미지 처리 중 오류가 발생했습니다.');
-        return;
+      const response = await updateNews(id, newsDataToSend);
+
+      if (response) {
+        alert('뉴스가 수정되었습니다.');
+        navigate('/news');
+      } else {
+        alert(response.data.message);
       }
-
-      formData.append('image', imageJson);
-      console.log('전송할 이미지 배열:', imageArray);
-      console.log('전송할 이미지 JSON:', imageJson);
-
-      await updateNews(id, formData);
-      alert('뉴스가 수정되었습니다.');
-      navigate('/news');
     } catch (error) {
       console.error('뉴스 수정 실패:', error);
       alert('뉴스 수정에 실패했습니다.');
@@ -203,24 +190,15 @@ const NewsEditPage = () => {
         try {
           const response = await getNewsById(id);
           if (response) {
-            console.log('받아온 뉴스 데이터:', response);
-            let image = response.image;
-            try {
-              if (typeof image === 'string') {
-                image = JSON.parse(image);
-              }
-            } catch (e) {
-              console.log('이미지 파싱 실패:', e);
-              image = [response.image];
-            }
-
-            console.log('처리된 이미지:', image);
+            const imageUrls = response.image
+              ? response.image.split('||').filter((url) => url.trim())
+              : [];
 
             setNewsData({
               id: response.id,
               title: response.title,
               content: response.content,
-              image: image,
+              image: imageUrls,
               category: response.category || '',
               date: response.date || '',
             });

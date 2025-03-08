@@ -41,12 +41,16 @@ const DropAreaInput = ({
     try {
       // 기존 파일들과 새로운 파일들을 합침
       const existingFiles = [...uploadedFiles];
-      const newFiles = files.filter(
-        (file) =>
-          !existingFiles.some(
-            (existing) => existing.name === file.name || existing === file
-          )
-      );
+      const newFiles = files.filter((file) => {
+        // File 객체인 경우 name으로 비교
+        if (file instanceof File) {
+          return !existingFiles.some((existing) =>
+            existing instanceof File ? existing.name === file.name : false
+          );
+        }
+        // URL 문자열인 경우 전체 URL로 비교
+        return !existingFiles.includes(file);
+      });
 
       const allFiles = [...existingFiles, ...newFiles];
 
@@ -57,8 +61,8 @@ const DropAreaInput = ({
       }
 
       const previews = allFiles.map((file) => ({
-        name: typeof file === 'string' ? file.split('/').pop() : file.name,
-        preview: typeof file === 'string' ? file : URL.createObjectURL(file),
+        name: file instanceof File ? file.name : file.split('/').pop(),
+        preview: file instanceof File ? URL.createObjectURL(file) : file,
       }));
 
       setPreviewFiles(previews);
@@ -76,12 +80,17 @@ const DropAreaInput = ({
   };
 
   const handleFileDelete = (index) => {
-    console.log('6. 파일 삭제 전:', { uploadedFiles, previewFiles });
     const newFiles = uploadedFiles.filter((_, i) => i !== index);
     const newPreviews = previewFiles.filter((_, i) => i !== index);
+
+    // URL.revokeObjectURL 호출은 File 객체로 생성된 미리보기 URL에 대해서만 수행
+    const deletedPreview = previewFiles[index];
+    if (deletedPreview?.preview?.startsWith('blob:')) {
+      URL.revokeObjectURL(deletedPreview.preview);
+    }
+
     setUploadedFiles(newFiles);
     setPreviewFiles(newPreviews);
-    console.log('7. 파일 삭제 후:', { newFiles, newPreviews });
     onFilesUpdate(newFiles);
   };
 
