@@ -9,7 +9,7 @@ function Logo({ scrollToTop }) {
         id="logo"
         onClick={scrollToTop}
       >
-        INTERCORE
+        Dongyu Portfolio
       </Link>
     </div>
   );

@@ -30,26 +30,42 @@ function NewsletterSection() {
   const news = [
     {
       id: 1,
-      title: '인터코어, 신규 서비스 출시 예정',
+      title: '한국신장장애인 홈페이지 리뉴얼',
       date: '2024.03.15',
       content:
         '인터코어가 혁신적인 새로운 서비스를 출시할 예정입니다. 자세한 내용은 곧 공개됩니다.',
-      tag: '새소식',
+      tag: '협력',
     },
     {
       id: 2,
-      title: '2024년 상반기 실적 발표',
+      title: '공주온밤/공주공산성 홈페이지 구축',
       date: '2024.03.10',
       content: '인터코어의 2024년 상반기 실적이 전년 대비 30% 성장했습니다.',
-      tag: '실적',
+      tag: '협력',
     },
     {
       id: 3,
-      title: '신규 파트너십 체결',
+      title: '인터코어 홈페이지 구축',
       date: '2024.03.05',
       content:
         '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
-      tag: '파트너십',
+      tag: '개인 ',
+    },
+    {
+      id: 3,
+      title: 'Conpower앱 개발',
+      date: '2024.03.05',
+      content:
+        '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
+      tag: '개인 ',
+    },
+    {
+      id: 3,
+      title: 'Aurem 홈페이지 구축',
+      date: '2024.03.05',
+      content:
+        '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
+      tag: '개인',
     },
   ];
 
@@ -67,10 +83,10 @@ function NewsletterSection() {
           }`}
         >
           <h2 className="sm:text-xl 2xl:text-3xl lg:text-4xl font-bold mb-4">
-            인터코어 소식
+            Project
           </h2>
           <p className="text-gray-600 text-base lg:text-lg">
-            최신 소식과 업데이트를 확인하세요
+            작업했던 프로젝트를 소개합니다
           </p>
         </div>
 

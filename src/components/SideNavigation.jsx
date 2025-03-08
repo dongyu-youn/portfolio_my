@@ -69,7 +69,7 @@ function SideNavigation() {
             className={`relative w-8 h-8 flex items-center justify-center transition-all duration-300 group`}
           >
             <img
-              src="/images/seeds/seed.png"
+              src="/images/moon.png"
               alt="seed"
               className={`absolute w-full h-full transition-all duration-300
                 ${

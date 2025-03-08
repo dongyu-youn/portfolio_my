@@ -118,7 +118,7 @@ function AboutSection() {
   const services = [
     {
       icon: '/images/mainIcons/icon_marketing.gif',
-      title: '맞춤형 웹 솔루션',
+      title: '프론트엔드 ',
       description: (
         <section className="">
           <div className="max-w-6xl mx-auto px-6">
@@ -148,7 +148,7 @@ function AboutSection() {
     },
     {
       icon: '/images/mainIcons/icon_service.gif',
-      title: '홍보/마케팅',
+      title: '백엔드',
       description: (
         <section className="">
           <div className="max-w-6xl mx-auto px-6">
@@ -178,7 +178,7 @@ function AboutSection() {
     },
     {
       icon: '/images/mainIcons/icon_web.gif',
-      title: '알림톡 서비스',
+      title: '인프라',
       description: (
         <div className="flex flex-col items-center space-y-4">
           <img
@@ -221,10 +221,10 @@ function AboutSection() {
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
         <div className="text-left sm:mb-8 lg:mb-16">
           <h2 className="sm:text-xl 2xl:text-3xl lg:text-4xl font-bold mb-4">
-            인터코어만의 솔루션!
+            Stack
           </h2>
           <p className="text-gray-600 text-base lg:text-lg">
-            인터코어만의 솔루션을 소개합니다
+            기술스택을 소개합니다
           </p>
         </div>
 

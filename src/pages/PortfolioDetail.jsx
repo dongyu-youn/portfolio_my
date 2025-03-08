@@ -1,30 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getPortfolioById } from '../api/portfolio';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@material-tailwind/react';
+import { FaGithub } from 'react-icons/fa';
 
 function PortfolioDetail() {
-  const [portfolio, setPortfolio] = useState(null);
-  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const adminToken = localStorage.getItem('adminToken');
+  const [portfolio, setPortfolio] = useState(null);
 
   useEffect(() => {
-    const fetchPortfolio = async () => {
-      try {
-        console.log('포트폴리오 ID:', id);
-        const data = await getPortfolioById(id);
-        console.log('받아온 포트폴리오 데이터:', data);
-        setPortfolio(data);
-      } catch (error) {
-        console.error('포트폴리오를 불러오는데 실패했습니다:', error);
-        navigate('/portfolio');
-      }
-    };
+    console.log('Location State:', location.state);
+    console.log('Portfolio Data:', location.state?.portfolio);
 
-    fetchPortfolio();
-  }, [id, navigate]);
+    if (location.state?.portfolio) {
+      setPortfolio(location.state.portfolio);
+      console.log('Set Portfolio:', location.state.portfolio);
+    } else {
+      navigate('/portfolio');
+    }
+  }, [location.state, navigate]);
+
+  console.log('Current Portfolio State:', portfolio);
 
   if (!portfolio) {
     return <div className="pt-36 min-h-screen">로딩중...</div>;
@@ -58,28 +56,75 @@ function PortfolioDetail() {
                 </span>
               ))}
             </div>
-            <img
-              src={portfolio.image}
-              alt={portfolio.title}
-              className="w-full h-[400px] object-cover rounded-lg mb-6"
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div className="aspect-square">
+                <img
+                  src="/images/a.png"
+                  alt="이미지 1"
+                  className="w-full h-full object-contain rounded-lg border border-gray-200"
+                />
+              </div>
+              <div className="aspect-square">
+                <img
+                  src="/images/b.png"
+                  alt="이미지 2"
+                  className="w-full h-full object-contain rounded-lg border border-gray-200"
+                />
+              </div>
+              <div className="aspect-square">
+                <img
+                  src="/images/c.png"
+                  alt="이미지 3"
+                  className="w-full h-full object-contain rounded-lg border border-gray-200"
+                />
+              </div>
+            </div>
             <div className="prose max-w-none">
-              <h2 className="text-xl font-semibold mb-2">프로젝트 설명</h2>
-              <p className="text-gray-700 whitespace-pre-wrap">
-                {portfolio.description}
+              <h2 className="text-2xl font-semibold mb-2">프로젝트 설명</h2>
+              <p className="text-gray-700 whitespace-pre-wrap text-xl">
+                {portfolio.content}
               </p>
             </div>
 
+            <div className="mt-6">
+              <h2 className="text-2xl font-semibold mb-2">기여도</h2>
+              <p className="text-gray-700 text-xl">{portfolio.contribution}</p>
+            </div>
+
+            <div className="mt-6">
+              <h2 className="text-2xl font-semibold mb-2">역할</h2>
+              <p className="text-gray-700 text-xl">{portfolio.role}</p>
+            </div>
+
+            {portfolio.mainLogic && (
+              <div className="mt-6">
+                <h2 className="text-2xl font-semibold mb-2 ">주요 로직</h2>
+                <p className="text-gray-700 text-xl">{portfolio.mainLogic}</p>
+              </div>
+            )}
+
+            {portfolio.mainContribution && (
+              <div className="mt-6">
+                <h2 className="text-2xl font-semibold mb-2">주요 기여</h2>
+                <p className="text-gray-700 text-xl">
+                  {portfolio.mainContribution}
+                </p>
+              </div>
+            )}
+
             {portfolio.githubUrl && (
               <div className="mt-6">
-                <h2 className="text-xl font-semibold mb-2">GitHub</h2>
+                <h2 className="text-xl font-semibold mb-2 flex items-center gap-2">
+                  <FaGithub className="text-2xl" />
+                  GitHub
+                </h2>
                 <a
                   href={portfolio.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-blue-600 hover:text-blue-800 flex items-center gap-2 transition-colors duration-300"
                 >
-                  {portfolio.githubUrl}
+                  <span>{portfolio.githubUrl}</span>
                 </a>
               </div>
             )}
@@ -102,7 +147,7 @@ function PortfolioDetail() {
               <div className="flex gap-2 mt-8">
                 <Button
                   className="bg-[#00939A]"
-                  onClick={() => navigate(`/portfolio/${id}/edit`)}
+                  onClick={() => navigate(`/portfolio/${portfolio.id}/edit`)}
                 >
                   수정
                 </Button>

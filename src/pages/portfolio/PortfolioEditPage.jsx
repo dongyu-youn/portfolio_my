@@ -37,41 +37,11 @@ const PortfolioEditPage = () => {
   const navigate = useNavigate();
 
   const handleImageUpload = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append('image', file);
-
-      const config = {
-        headers: {
-          Accept: '*/*',
-        },
-        withCredentials: true,
-      };
-
-      const response = await axios.post(
-        `${API_URL}/upload/image`,
-        formData,
-        config
-      );
-
-      console.log('업로드 응답:', response);
-
-      // 현재 날짜로 폴더명 생성
-      const today = new Date();
-      const dateFolder = today.toISOString().split('T')[0]; // 'YYYY-MM-DD' 형식
-
-      // 환경변수의 이미지 서버 URL 사용
-      const imageUrl = `${IMG_URL}/uploads/${dateFolder}/${response.data.url
-        .split('/')
-        .pop()}`;
-      return imageUrl;
-    } catch (error) {
-      console.error('업로드 실패:', error);
-      throw error;
-    }
+    console.log('이미지 업로드 로직 제거됨:', file);
+    return URL.createObjectURL(file); // 임시로 로컬 URL 반환
   };
 
-  const handleCreate = async () => {
+  const handleSubmit = async () => {
     const dataToSubmit = {
       ...portfolioData,
       image: portfolioData.image[0],
@@ -85,46 +55,10 @@ const PortfolioEditPage = () => {
       alert('필수 필드를 모두 입력해주세요.');
       return;
     }
-    try {
-      const response = await createPortfolio(dataToSubmit);
-      if (response.status === 201) {
-        alert('포트폴리오가 생성되었습니다.');
-        navigate(-1);
-      } else {
-        alert(response.data.message);
-      }
-    } catch (error) {
-      console.error('Failed to create portfolio:', error);
-      alert('포트폴리오 생성에 실패했습니다.');
-    }
-  };
 
-  const handleUpdate = async () => {
-    const dataToSubmit = {
-      ...portfolioData,
-      image: portfolioData.image[0],
-    };
-
-    if (
-      !dataToSubmit.title ||
-      !dataToSubmit.description ||
-      !dataToSubmit.image
-    ) {
-      alert('필수 필드를 모두 입력해주세요.');
-      return;
-    }
-    try {
-      const response = await updatePortfolio(id, dataToSubmit);
-      if (response.status === 200) {
-        alert('포트폴리오가 수정되었습니다.');
-        navigate('/portfolio');
-      } else {
-        alert(response.data.message || '수정에 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('Failed to update portfolio:', error);
-      alert('포트폴리오 수정에 실패했습니다.');
-    }
+    console.log('제출 데이터:', dataToSubmit);
+    alert('제출 로직이 제거되었습니다.');
+    navigate(-1);
   };
 
   const handleCancel = () => {
@@ -162,34 +96,12 @@ const PortfolioEditPage = () => {
   );
 
   useEffect(() => {
-    const loadData = async () => {
-      if (id) {
-        try {
-          const response = await getPortfolioById(id);
-          console.log('포트폴리오 데이터:', response); // 데이터 확인용 로그
-          if (response) {
-            setPortfolioData({
-              id: response.id,
-              title: response.title || '',
-              content: response.content || '',
-              description: response.description || '',
-              image: response.image ? [response.image] : [], // 이미지 배열로 변환
-              tags: response.tags,
-              link: response.link || '',
-            });
-          }
-        } catch (error) {
-          console.error('Failed to load portfolio:', error);
-          alert('포트폴리오 데이터를 불러오는데 실패했습니다.');
-        } finally {
-          setIsLoading(false);
-        }
-      } else {
-        setIsLoading(false);
-      }
-    };
-
-    loadData();
+    if (id) {
+      console.log('포트폴리오 데이터 로딩 로직 제거됨:', id);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
   }, [id]);
 
   if (isLoading) {
@@ -260,23 +172,13 @@ const PortfolioEditPage = () => {
               <Button onClick={handleCancel} color="red">
                 취소
               </Button>
-              {location.pathname.includes('edit') ? (
-                <Button
-                  onClick={handleUpdate}
-                  className="bg-[#00939A]"
-                  color="blue"
-                >
-                  수정
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleCreate}
-                  className="bg-[#00939A]"
-                  color="green"
-                >
-                  생성
-                </Button>
-              )}
+              <Button
+                onClick={handleSubmit}
+                className="bg-[#00939A]"
+                color={location.pathname.includes('edit') ? 'blue' : 'green'}
+              >
+                {location.pathname.includes('edit') ? '수정' : '생성'}
+              </Button>
             </div>
           </CardBody>
         </Card>

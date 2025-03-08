@@ -25,7 +25,7 @@ function MainContent() {
           >
             <h2 className="text-2xl sm:text-2xl lg:text-6xl font-light text-[#b9f0ea] text-center whitespace-normal sm:whitespace-normal lg:whitespace-nowrap">
               <TypeAnimation
-                sequence={['IT를 전달하는 인터코어!', 1000]}
+                sequence={['풀스택 개발자 윤동규', 1000]}
                 wrapper="span"
                 speed={-5}
                 style={{ display: 'inline-block' }}
@@ -33,7 +33,9 @@ function MainContent() {
               />
             </h2>
             <p className="text-lg sm:text-base lg:text-2xl font-light text-[#b9f0ea] text-center px-4">
-              가치와 공감으로 고객과 함께 성장합니다
+              주위 친구들에게 직접적으로 도움이 될 만한 프로젝트를 고안하고
+              스스로 기획, 디자인, 코딩, 배포까지 도맡아 프로젝트를
+              진행하였습니다
             </p>
           </div>
 
@@ -49,10 +51,10 @@ function MainContent() {
           >
             <div className="relative flex justify-center items-center">
               <img
-                src="/images/mainIcons/mainIcon.jpeg"
+                src="/images/poket.jpg"
                 alt="Phone 1"
-                className={`transform h-[200px] sm:w-[250px] sm:h-[180px] lg:w-[400px] lg:h-[400px] hover:rotate-0 transition-all duration-1000 mix-blend-luminosity opacity-90 hover:opacity-100 hover:mix-blend-normal rounded-full object-cover
-                  ${isVisible ? 'animate-bulb-glow' : ''}`}
+                className={`transform h-[180px] sm:w-[220px] sm:h-[160px] lg:w-[380px] lg:h-[380px] hover:rotate-0 transition-all duration-1000 mix-blend-luminosity opacity-90 hover:opacity-100 hover:mix-blend-normal rounded-full object-cover object-[center_10%]
+                  `}
               />
             </div>
           </div>
