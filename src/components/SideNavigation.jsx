@@ -6,53 +6,81 @@ function SideNavigation() {
   const location = useLocation();
 
   useEffect(() => {
-    const sections = document.querySelectorAll('section');
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollPercentage =
+        (scrollPosition / (documentHeight - windowHeight)) * 100;
 
-    const options = {
-      root: null,
-      rootMargin: '-20% 0px -70% 0px',
-      threshold: 0,
+      // 스크롤 위치에 따라 섹션 번호 결정
+      if (scrollPercentage < 15) {
+        setActiveSection(1); // Main
+      } else if (scrollPercentage < 35) {
+        setActiveSection(2); // Portfolio
+      } else if (scrollPercentage < 55) {
+        setActiveSection(3); // Stack
+      } else if (scrollPercentage < 75) {
+        setActiveSection(4); // Awards & Presentations
+      } else if (scrollPercentage < 90) {
+        setActiveSection(5); // Study
+      } else {
+        setActiveSection(6); // Strength
+      }
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const index = Array.from(sections).indexOf(entry.target) + 1;
-          setActiveSection(index);
-        }
-      });
-    }, options);
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // 초기 로드 시 실행
 
-    sections.forEach((section) => observer.observe(section));
-
-    return () => sections.forEach((section) => observer.unobserve(section));
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [location.pathname]);
 
   const navigationItems = [
     { id: 1, label: 'Main' },
     { id: 2, label: 'Portfolio' },
-    { id: 3, label: 'Solution' },
-    { id: 4, label: 'representative work' },
-    { id: 5, label: 'NewsLetter' },
-    { id: 6, label: 'Services' },
+    { id: 3, label: 'Stack' },
+    { id: 4, label: 'Awards & Presentations' },
+    { id: 5, label: 'Study' },
+    { id: 6, label: 'Strength' },
   ];
 
   const scrollToSection = (index) => {
-    const sections = document.querySelectorAll('section');
-    const section = sections[index - 1];
-    if (section) {
-      const offset = 100;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const sectionRect = section.getBoundingClientRect().top;
-      const sectionPosition = sectionRect - bodyRect;
-      const offsetPosition = sectionPosition - offset;
+    const documentHeight = document.documentElement.scrollHeight;
+    const windowHeight = window.innerHeight;
+    const scrollableHeight = documentHeight - windowHeight;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-      setActiveSection(index);
+    // 각 섹션의 상대적 위치 계산
+    let targetPosition;
+    switch (index) {
+      case 1: // Main
+        targetPosition = 0;
+        break;
+      case 2: // Portfolio
+        targetPosition = scrollableHeight * 0.2;
+        break;
+      case 3: // Stack
+        targetPosition = scrollableHeight * 0.4;
+        break;
+      case 4: // Awards & Presentations
+        targetPosition = scrollableHeight * 0.6;
+        break;
+      case 5: // Study
+        targetPosition = scrollableHeight * 0.8;
+        break;
+      case 6: // Strength
+        targetPosition = scrollableHeight;
+        break;
+      default:
+        targetPosition = 0;
     }
+
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth',
+    });
+    setActiveSection(index);
   };
 
   return (
@@ -74,19 +102,20 @@ function SideNavigation() {
               className={`absolute w-full h-full transition-all duration-300
                 ${
                   activeSection === item.id
-                    ? 'opacity-100'
-                    : 'opacity-50 hover:opacity-75'
+                    ? 'opacity-100 scale-110'
+                    : 'opacity-40 hover:opacity-75 hover:scale-105'
                 }`}
             />
             <span className="relative z-10 text-sm font-medium text-gray-600">
               {item.id}
             </span>
             <span
-              className={`absolute right-full mr-4 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm ${
-                activeSection === 1
-                  ? 'text-white opacity-100'
-                  : 'text-gray-600 opacity-0'
-              }`}
+              className={`absolute right-full mr-4 transition-all duration-300 whitespace-nowrap text-sm
+                ${
+                  activeSection === item.id
+                    ? 'text-gray-800 opacity-100 translate-x-0'
+                    : 'text-gray-600 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
+                }`}
             >
               {item.label}
             </span>

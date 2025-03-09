@@ -18,7 +18,7 @@ function PortfolioSection() {
   // portfolios가 비어있을 경우 처리
   if (!portfolioData || portfolioData.length === 0) {
     return (
-      <section className="bg-white sm:py-8 lg:py-12 font-sans">
+      <section id="section2" className="bg-white sm:py-8 lg:py-12 font-sans">
         <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
           <div className="text-center">
             <p>포트폴리오 데이터를 불러오는 중입니다...</p>
@@ -46,7 +46,7 @@ function PortfolioSection() {
   };
 
   return (
-    <section className="bg-white sm:py-8 lg:py-12 font-sans">
+    <section id="section2" className="bg-white sm:py-8 lg:py-12 font-sans">
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
         {/* 제목 */}
         <div className="text-left mb-8">
@@ -158,9 +158,11 @@ function PortfolioSection() {
                           title: portfolio.title,
                           category: portfolio.category,
                           link: portfolio.link,
+                          commitHistory: portfolio.commitHistory,
                           description: portfolio.description,
                           tags: portfolio.tags,
                           contribution: portfolio.contribution,
+                          detailImages: portfolio.detailImages,
                           role: portfolio.role,
                           mainLogic: portfolio.mainLogic,
                           githubUrl: portfolio.githubUrl,

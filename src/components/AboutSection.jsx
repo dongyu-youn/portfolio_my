@@ -37,81 +37,61 @@ function AboutSection() {
 
   const solutionData = [
     {
-      title: '애자일 개발',
+      title: 'React & React Native',
       description: [
-        '2주 단위 스프린트 운영',
-        '고객 피드백 신속 반영',
-        '지속적인 개선과 업데이트',
+        '컴포넌트 기반 개발',
+        'SSR/CSR 하이브리드 렌더링',
+        '최적화된 성능 구현',
       ],
-      icon: <FaClock className="w-12 h-12 text-blue-500" />,
+      icon: <FaCode className="w-12 h-12 text-blue-500" />,
     },
     {
-      title: 'UI/UX 최적화',
+      title: 'UI/UX 디자인',
       description: [
+        '반응형 웹 디자인',
         '사용자 중심 인터페이스',
-        '4주 내 기본 구축 완료',
-        '반응형 디자인 적용',
+        '모던 UI 컴포넌트',
       ],
       icon: <FaMobile className="w-12 h-12 text-purple-500" />,
     },
     {
-      title: '기술 스택',
+      title: 'JavaScript/TypeScript',
       description: [
-        'React, Next.js 프론트엔드 개발',
-        'Node.js, Spring Boot 백엔드 구축',
-        'AWS, Docker 클라우드 인프라 활용',
+        '최신 ES6+ 문법 활용',
+        '타입 안정성 확보',
+        '클린 코드 작성',
       ],
       icon: <FaCode className="w-12 h-12 text-green-500" />,
-    },
-    {
-      title: '유지보수',
-      description: [
-        '48시간 내 업데이트',
-        '실시간 모니터링',
-        '2시간 내 긴급 조치',
-      ],
-      icon: <FaUserCog className="w-12 h-12 text-orange-500" />,
-    },
-    {
-      title: '보안 관리',
-      description: [
-        '월 1회 정기 점검',
-        '연 2회 보안 테스트',
-        '데이터 암호화 적용',
-      ],
-      icon: <FaShieldAlt className="w-12 h-12 text-red-500" />,
-    },
-    {
-      title: '성과 분석',
-      description: ['트래픽 모니터링', '사용자 행동 분석', '개선점 도출'],
-      icon: <FaChartLine className="w-12 h-12 text-indigo-500" />,
     },
   ];
 
   const marketingData = [
     {
-      title: '고객 타겟팅',
+      title: 'Node.js',
       description: [
-        '국민 여행자를 위한 홍보',
-        '외국인 여행자',
-        '고양시민',
-        '박람회 인근 주민',
+        'Express 프레임워크',
+        'RESTful API 설계',
+        '비동기 처리 최적화',
       ],
-      icon: <FaUsers className="w-12 h-12 text-blue-500" />,
+      icon: <FaCode className="w-12 h-12 text-blue-500" />,
     },
     {
-      title: '홍보메시지의 활용',
+      title: 'Spring Boot',
       description: [
-        '콘텐츠에 따라 비주얼 응용 및 활용',
-        '바이럴 마케팅 운영',
-        '언론보도',
+        'JPA/Hibernate ORM',
+        '마이크로서비스 아키텍처',
+        '보안 및 인증 구현',
       ],
-      icon: <FaBullhorn className="w-12 h-12 text-red-500" />,
+      icon: <FaCode className="w-12 h-12 text-green-500" />,
     },
     {
-      title: '양방향 소통',
-      description: ['온라인 설문조사', '이벤트 진행', '고객 문의 및 제안'],
-      icon: <FaComments className="w-12 h-12 text-green-500" />,
+      title: 'Django',
+      description: [
+        'Python 기반 백엔드',
+        'ORM 데이터 모델링',
+        'Admin 패널 활용',
+      ],
+      icon: <FaCode className="w-12 h-12 text-red-500" />,
     },
   ];
 
@@ -129,7 +109,7 @@ function AboutSection() {
                   className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform transform hover:scale-105"
                 >
                   {item.icon}
-                  <h3 className="text-xl font-semibold text-purple-600 my-4">
+                  <h3 className="text-xl font-semibold text-purple-600 my-4 whitespace-nowrap">
                     {item.title}
                   </h3>
                   <ul className="text-gray-700 text-sm space-y-2">
@@ -152,7 +132,7 @@ function AboutSection() {
       description: (
         <section className="">
           <div className="max-w-6xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:h-[500px]">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
               {marketingData.map((item, index) => (
                 <div
                   key={index}
@@ -181,17 +161,59 @@ function AboutSection() {
       title: '인프라',
       description: (
         <div className="flex flex-col items-center space-y-4">
-          <img
-            src="/images/alarm/image.png"
-            alt="알림톡 서비스"
-            className="w-[50%] h-auto object-contain rounded-lg mb-4"
-          />
-          <p className="text-gray-600 text-center">
-            알림톡 여행은 고객의 여행 일정과 관련된 정보를 실시간으로 제공하며,
-            맞춤형 알림 서비스를 제공합니다. 앱 스토어나 플레이 스토어에서 앱을
-            다운로드 받은 후, 간단한 회원가입 절차를 통해 서비스를 이용하실 수
-            있습니다.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+            <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+              <FaCode className="w-12 h-12 text-blue-500" />
+              <h3 className="text-xl font-semibold text-purple-600 my-4">
+                AWS
+              </h3>
+              <ul className="text-gray-700 text-sm space-y-2">
+                <li className="flex items-center">
+                  <span className="mr-2 text-blue-500">✔</span>EC2 서버 운영
+                </li>
+                <li className="flex items-center">
+                  <span className="mr-2 text-blue-500">✔</span>S3 스토리지
+                </li>
+                <li className="flex items-center">
+                  <span className="mr-2 text-blue-500">✔</span>RDS 데이터베이스
+                </li>
+              </ul>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+              <FaCode className="w-12 h-12 text-green-500" />
+              <h3 className="text-xl font-semibold text-purple-600 my-4">
+                Gabia
+              </h3>
+              <ul className="text-gray-700 text-sm space-y-2">
+                <li className="flex items-center">
+                  <span className="mr-2 text-blue-500">✔</span>도메인 관리
+                </li>
+                <li className="flex items-center">
+                  <span className="mr-2 text-blue-500">✔</span>메일 서버
+                </li>
+                <li className="flex items-center">
+                  <span className="mr-2 text-blue-500">✔</span>호스팅 서비스
+                </li>
+              </ul>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+              <FaCode className="w-12 h-12 text-red-500" />
+              <h3 className="text-xl font-semibold text-purple-600 my-4">
+                Docker
+              </h3>
+              <ul className="text-gray-700 text-sm space-y-2">
+                <li className="flex items-center">
+                  <span className="mr-2 text-blue-500">✔</span>컨테이너화
+                </li>
+                <li className="flex items-center">
+                  <span className="mr-2 text-blue-500">✔</span>CI/CD 파이프라인
+                </li>
+                <li className="flex items-center">
+                  <span className="mr-2 text-blue-500">✔</span>마이크로서비스
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       ),
     },
@@ -213,8 +235,9 @@ function AboutSection() {
 
   return (
     <section
-      className={` sm:pt-8 lg:pt-12 font-sans bg-[#f8f9fa] ${
-        activeService !== null && !isMobile ? 'lg:pb-[700px]' : 'lg:pb-20'
+      id="section3"
+      className={`sm:pt-8 lg:pt-12 font-sans bg-[#f8f9fa] ${
+        activeService !== null && !isMobile ? 'lg:pb-[400px]' : 'lg:pb-20'
       }`}
       onClick={handleBackgroundClick}
     >

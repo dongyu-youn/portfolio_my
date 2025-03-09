@@ -33,8 +33,8 @@ function MainContent() {
               />
             </h2>
             <p className="text-lg sm:text-base lg:text-2xl font-light text-[#b9f0ea] text-center px-4">
-              주위 친구들에게 직접적으로 도움이 될 만한 프로젝트를 고안하고
-              스스로 기획, 디자인, 코딩, 배포까지 도맡아 프로젝트를
+              주변 사람들에게 직접적으로 도움이 될 만한 프로젝트를 고안하고
+              공감하며 스스로 기획, 디자인, 코딩, 배포까지 도맡아 프로젝트를
               진행하였습니다
             </p>
           </div>

@@ -1,44 +1,62 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import PageLayout from '../components/layout/PageLayout';
-import { getNewsById } from '../api/news';
 import { Button } from '@material-tailwind/react';
+
+const newsData = [
+  {
+    id: 1,
+    title: '임업진흥원 홈페이지 리뉴얼 기획 및 pm 발표',
+    date: '2024-03-15',
+    content:
+      '인터코어가 혁신적인 새로운 서비스를 출시할 예정입니다. 자세한 내용은 곧 공개됩니다.',
+    category: '발표',
+  },
+  {
+    id: 2,
+    title: '이북 5도 홈페이지 리뉴얼 기획 및 pm 발표',
+    date: '2024.03.10',
+    content: '인터코어의 2024년 상반기 실적이 전년 대비 30% 성장했습니다.',
+    category: '발표',
+  },
+  {
+    id: 3,
+    title: '한국해양진흥원 홈페이지 리뉴얼 기획 및 pm 발표',
+    date: '2024.03.05',
+    content:
+      '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
+    category: '발표',
+  },
+  {
+    id: 4,
+    title: 'aws 활용 해커톤 대상 수상',
+    date: '2024.03.05',
+    content:
+      '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
+    category: '개인',
+  },
+  {
+    id: 5,
+    title: '교내 해커톤 대상 3개 수상',
+    date: '2024.03.05',
+    content:
+      '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
+    category: '개인',
+  },
+];
 
 function NewsDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [news, setNews] = useState(null);
   const adminToken = localStorage.getItem('adminToken');
 
-  useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const data = await getNewsById(id);
+  // id를 사용하여 newsData 배열에서 해당 뉴스 찾기
+  const news = newsData.find((item) => item.id === parseInt(id));
 
-        // 이미지 데이터 처리 로직
-        const parseImageData = (imgData) => {
-          if (!imgData) return [];
-          try {
-            // || 구분자로 분리하여 배열로 변환
-            return imgData.split('||');
-          } catch (e) {
-            console.error('이미지 파싱 실패:', e);
-            // 실패시 단일 이미지로 처리
-            return [imgData];
-          }
-        };
-
-        const processedImage = parseImageData(data.image);
-        setNews({ ...data, image: processedImage });
-      } catch (error) {
-        console.error('뉴스를 불러오는데 실패했습니다:', error);
-        navigate('/news');
-      }
-    };
-    fetchNews();
-  }, [id, navigate]);
-
-  if (!news) return null;
+  if (!news) {
+    navigate('/news');
+    return null;
+  }
 
   return (
     <PageLayout className="bg-white">
@@ -47,7 +65,7 @@ function NewsDetail() {
           <div className="text-sm text-gray-600 mb-2">{news.category}</div>
           <h1 className="text-3xl font-bold mb-4">{news.title}</h1>
           <div className="text-gray-600 mb-6">{news.date}</div>
-          {news.image && (
+          {news.image && news.image.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {Array.isArray(news.image) ? (
                 news.image.map((img, index) => (
@@ -76,10 +94,7 @@ function NewsDetail() {
         </div>
 
         <div className="prose max-w-none">
-          <div
-            dangerouslySetInnerHTML={{ __html: news.content }}
-            className="whitespace-pre-wrap"
-          />
+          <div className="whitespace-pre-wrap">{news.content}</div>
         </div>
 
         <div className="mt-8 flex gap-4">

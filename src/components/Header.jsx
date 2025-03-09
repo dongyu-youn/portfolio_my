@@ -23,10 +23,9 @@ function Header() {
 
   const menuItems = [
     { path: '/', text: 'Home' },
-    { path: '/news', text: '소식' },
-    { path: '/history', text: '연혁' },
-    { path: '/recruit', text: '채용정보' },
-    { path: '/portfolio', text: '제작사례' },
+    { path: '/news', text: '제작사례' },
+
+    { path: '/portfolio', text: '수상 및 발표' },
   ];
 
   const isActive = (path) => {

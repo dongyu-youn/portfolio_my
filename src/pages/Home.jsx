@@ -14,8 +14,9 @@ function Home() {
       <AboutSection />
 
       <NewsletterSection />
-      <ServicesSection />
       <ProjectSection />
+      <ServicesSection />
+
       {/* 추가 섹션 */}
     </div>
   );

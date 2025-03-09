@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import {
-  FaSeedling,
-  FaLeaf,
-  FaTree,
-  FaSun,
-  FaWater,
-  FaRecycle,
+  FaLightbulb,
+  FaCode,
+  FaUsers,
+  FaRocket,
+  FaHeart,
+  FaStar,
 } from 'react-icons/fa';
 
 function ServicesSection() {
@@ -17,58 +17,61 @@ function ServicesSection() {
 
   const services = [
     {
-      icon: <FaSeedling size={32} />,
-      title: '새싹처럼 시작하는 블로그 마케팅',
+      icon: <FaLightbulb size={32} />,
+      title: '창의적인 문제 해결',
       description:
-        '작은 새싹처럼 시작해서 블로그와 SNS를 통해 고객과 함께 성장합니다. 인터코어는 신뢰의 씨앗을 심어 풍성한 결실을 맺습니다.',
-      bgColor: 'bg-[#7FB069]',
+        '복잡한 문제도 창의적으로 해결합니다. 새로운 시각으로 접근하여 효율적인 솔루션을 제시하는 것이 제 장점입니다.',
+      bgColor: 'bg-[#FFD700]',
     },
     {
-      icon: <FaLeaf size={32} />,
-      title: '성장하는 디지털 솔루션',
+      icon: <FaCode size={32} />,
+      title: '빠른 학습 능력',
       description:
-        '새로운 아이디어가 돋아나는 잎사귀처럼, 웹과 앱을 통해 고객의 비전을 실현합니다. 지속적인 관리로 더욱 튼튼하게 자라납니다.',
-      bgColor: 'bg-[#98C9A3]',
+        '새로운 기술과 트렌드를 빠르게 습득합니다. 끊임없는 자기 개발로 최신 개발 동향을 놓치지 않습니다.',
+      bgColor: 'bg-[#FFC72C]',
     },
     {
-      icon: <FaTree size={32} />,
-      title: '데이터로 키우는 마케팅 전략',
+      icon: <FaUsers size={32} />,
+      title: '뛰어난 팀워크',
       description:
-        '단단한 나무처럼 견고한 데이터를 기반으로, 성장을 위한 최적의 마케팅 전략을 제시합니다.',
-      bgColor: 'bg-[#77AB59]',
+        '원활한 의사소통과 협업 능력으로 팀 프로젝트에서 시너지를 만들어냅니다. 함께 일하는 즐거움을 아는 개발자입니다.',
+      bgColor: 'bg-[#FFB81C]',
     },
     {
-      icon: <FaSun size={32} />,
-      title: '빛나는 오프라인 홍보물',
+      icon: <FaRocket size={32} />,
+      title: '도전을 즐기는 자세',
       description:
-        '따스한 햇살처럼 고객의 브랜드를 밝게 비춰줄 인쇄물을 제작합니다.',
-      bgColor: 'bg-[#C4D6B0]',
+        '새로운 도전을 두려워하지 않습니다. 어려운 과제도 긍정적인 마인드로 해결해나갑니다.',
+      bgColor: 'bg-[#FFAA1D]',
     },
     {
-      icon: <FaWater size={32} />,
-      title: '함께 자라나는 파트너십',
+      icon: <FaHeart size={32} />,
+      title: '책임감과 열정',
       description:
-        '물과 영양분처럼 필수적인 파트너가 되어, 고객의 비즈니스가 더욱 건강하게 자랄 수 있도록 지원합니다.',
-      bgColor: 'bg-[#A8E6CF]',
+        '맡은 일에 대한 강한 책임감과 열정을 가지고 있습니다. 프로젝트가 성공적으로 완료될 때까지 최선을 다합니다.',
+      bgColor: 'bg-[#FFA500]',
     },
     {
-      icon: <FaRecycle size={32} />,
-      title: '지속 가능한 성장',
+      icon: <FaStar size={32} />,
+      title: '꼼꼼한 코드 관리',
       description:
-        '자연의 순환처럼 끊임없이 혁신하고 발전하며, 고객과 함께 지속 가능한 미래를 만들어갑니다.',
-      bgColor: 'bg-[#8ECF6F]',
+        '깔끔하고 유지보수가 쉬운 코드 작성을 지향합니다. 문서화와 코드 리뷰에도 적극적으로 참여합니다.',
+      bgColor: 'bg-[#FF9900]',
     },
   ];
 
   return (
-    <section className="bg-[#f8f9fa] sm:py-10 lg:py-12 font-sans">
+    <section
+      id="section6" // Strength 섹션은 6번
+      className="bg-[#f8f9fa] sm:py-10 lg:py-12 font-sans"
+    >
       <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
         <div className="text-left mb-16">
           <h2 className="sm:text-xl 2xl:text-3xl lg:text-4xl font-bold mb-4">
-            OUR services
+            MY STRENGTHS
           </h2>
           <p className="text-gray-600 text-base lg:text-lg">
-            새싹처럼 자라나는 우리의 서비스
+            저의 특별한 장점들을 소개합니다
           </p>
         </div>
 
@@ -100,8 +103,6 @@ function ServicesSection() {
             </div>
           ))}
         </div>
-
-        {/* 하단 이미지 */}
       </div>
     </section>
   );

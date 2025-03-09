@@ -24,11 +24,23 @@ const initialNewsData = {
 };
 
 const NewsEditPage = () => {
-  const [newsData, setNewsData] = useState(initialNewsData);
-  const [isLoading, setIsLoading] = useState(true);
-  const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [newsData, setNewsData] = useState(() => {
+    // location.state에서 전달된 데이터가 있으면 사용
+    if (location.state?.newsData) {
+      const receivedData = location.state.newsData;
+      return {
+        ...initialNewsData,
+        ...receivedData,
+        image: receivedData.image || [],
+      };
+    }
+    return initialNewsData;
+  });
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleImageUpload = async (file) => {
     try {
@@ -186,6 +198,12 @@ const NewsEditPage = () => {
 
   useEffect(() => {
     const loadData = async () => {
+      // location.state에 데이터가 있으면 API 호출 건너뛰기
+      if (location.state?.newsData) {
+        setIsLoading(false);
+        return;
+      }
+
       if (id) {
         try {
           const response = await getNewsById(id);
@@ -214,7 +232,7 @@ const NewsEditPage = () => {
     };
 
     loadData();
-  }, [id]);
+  }, [id, location.state]);
 
   if (isLoading) {
     return <p>Loading...</p>;

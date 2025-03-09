@@ -6,14 +6,45 @@ import {
   FaShareAlt,
   FaMapMarkerAlt,
   FaBullhorn,
+  FaStar,
 } from 'react-icons/fa';
 
 function ProjectSection() {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeYear, setActiveYear] = useState('2024');
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedFeature, setSelectedFeature] = useState(null);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  const timelineData = {
+    2021: [
+      { date: '2022.06.10', content: '아이디어 구상' },
+      { date: '2022.07.15', content: '시장성 검토' },
+      { date: '2022.08.20', content: '기술 타당성 조사' },
+      { date: '2022.12.25', content: '사업 모델 수립' },
+    ],
+    2022: [
+      { date: '2022.06.10', content: '아이디어 구상' },
+      { date: '2022.07.15', content: '시장성 검토' },
+      { date: '2022.08.20', content: '기술 타당성 조사' },
+      { date: '2022.12.25', content: '사업 모델 수립' },
+    ],
+    2023: [
+      { date: '2023.09.10', content: '시장 조사 및 분석' },
+      { date: '2023.10.05', content: '사업계획 수립' },
+      { date: '2023.11.15', content: '초기 투자 유치' },
+      { date: '2023.12.20', content: '개발팀 구성' },
+    ],
+    2024: [
+      { date: '2024.03.15', content: '프로젝트 기획 및 설계' },
+      { date: '2024.03.20', content: '초기 프로토타입 개발' },
+      { date: '2024.04.01', content: '베타 테스트 시작' },
+      { date: '2024.04.15', content: '사용자 피드백 수집 및 분석' },
+    ],
+  };
 
   const features = [
     {
@@ -51,89 +82,69 @@ function ProjectSection() {
     },
   ];
 
+  const handleYearClick = (year) => {
+    setActiveYear(year);
+  };
+
+  const handleEventClick = (event) => {
+    setSelectedEvent(event);
+  };
+
+  const handleFeatureClick = (feature) => {
+    setSelectedFeature(feature);
+  };
+
   return (
-    <section className="bg-white sm:pt-10 lg:pt-12 font-sans sm:mb-12 lg:mb-8">
-      <div className="mx-auto px-4 lg:max-w-lg 2xl:max-w-2xl">
-        <div className="text-left mb-16">
-          <h2 className="sm:text-xl lg:text-3xl lg:text-4xl font-bold mb-4">
-            대표작품
+    <section className="bg-white py-20 font-sans lg:max-w-lg 2xl:max-w-2xl mx-auto">
+      <div className=" px-4">
+        {/* 제목 섹션 */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-black mb-4 tracking-tight">
+            스터디 기록
           </h2>
-          <p className="text-gray-600 text-base lg:text-lg">
-            건설기계통합관리서비스
-          </p>
+          <div className="w-32 h-1 bg-black mx-auto rounded-full mb-12"></div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
-          {/* 왼쪽 기능 리스트 - 간격 조정 */}
-          <div className="lg:w-1/3 space-y-16">
-            {features.slice(0, 3).map((feature, index) => (
-              <div
-                key={index}
-                className={`flex items-center gap-6 transition-all duration-700 transform hover:scale-105
-                  ${
-                    isVisible
-                      ? 'translate-x-0 opacity-100'
-                      : '-translate-x-10 opacity-0'
-                  }`}
-                style={{ transitionDelay: `${index * 0.2}s` }}
-              >
-                <div className="flex-1 text-right">
-                  <h3 className="font-bold text-lg mb-2 hover:text-[#A87E6E] transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm hover:text-gray-800 transition-colors duration-300">
-                    {feature.description}
-                  </p>
-                </div>
-                <div className="w-14 h-14 flex items-center justify-center bg-[#A87E6E] rounded-full transform rotate-45 flex-shrink-0 hover:bg-[#8B6B5A] transition-colors duration-300 hover:scale-110">
-                  <div className="transform -rotate-45 text-white">
-                    {feature.icon}
+        {/* 타임라인 섹션 */}
+        <div className="flex justify-between w-full">
+          {Object.entries(timelineData).map(([year, events]) => (
+            <div
+              key={year}
+              className={`mb-16 cursor-pointer ${
+                activeYear === year ? 'opacity-100' : 'opacity-70'
+              }`}
+              onClick={() => handleYearClick(year)}
+            >
+              <h3 className="text-3xl font-bold mb-8 text-left">{year}</h3>
+              <div className="relative border-l-2 border-gray-200 pl-8 ml-2">
+                {events.map((event, index) => (
+                  <div
+                    key={index}
+                    className={`mb-8 relative transition-all duration-200 hover:bg-gray-100 hover:scale-105 p-2 rounded ${
+                      isVisible
+                        ? 'opacity-100 translate-x-0'
+                        : 'opacity-0 -translate-x-4'
+                    } ${selectedEvent === event ? 'bg-gray-200' : ''}`}
+                    style={{ transitionDelay: `${index * 0.1}s` }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEventClick(event);
+                    }}
+                  >
+                    <FaStar
+                      className="absolute -left-[2.1rem] top-2 text-yellow-400"
+                      size={12}
+                    />
+                    <p className="text-gray-600 mb-1">{event.date}</p>
+                    <p className="text-lg">{event.content}</p>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-
-          {/* 중앙 이미지 */}
-          <div className="lg:w-1/3">
-            <img
-              src="/images/mainContent/image.png"
-              alt="Project Preview"
-              className={`w-full transition-all duration-300 transform hover:scale-110
-                ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
-            />
-          </div>
-
-          {/* 오른쪽 기능 리스트 */}
-          <div className="lg:w-1/3 space-y-16">
-            {features.slice(3).map((feature, index) => (
-              <div
-                key={index}
-                className={`flex items-center gap-6 transition-all duration-700 transform hover:scale-105
-                  ${
-                    isVisible
-                      ? 'translate-x-0 opacity-100'
-                      : 'translate-x-10 opacity-0'
-                  }`}
-                style={{ transitionDelay: `${(index + 3) * 0.2}s` }}
-              >
-                <div className="w-14 h-14 flex items-center justify-center bg-[#A87E6E] rounded-full transform rotate-45 flex-shrink-0 hover:bg-[#8B6B5A] transition-colors duration-300 hover:scale-110">
-                  <div className="transform -rotate-45 text-white">
-                    {feature.icon}
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg mb-2 hover:text-[#A87E6E] transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm hover:text-gray-800 transition-colors duration-300">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
+
+        {/* 서비스 그리드 */}
       </div>
     </section>
   );
