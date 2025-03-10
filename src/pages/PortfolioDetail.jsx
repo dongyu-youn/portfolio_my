@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import { Button } from '@material-tailwind/react';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import OrganizationChart from '../components/OrganizationChart';
+import CategoryTag from '../components/portfolio/CategoryTag';
+import ImageGrid from '../components/portfolio/ImageGrid';
+import ProjectDescription from '../components/portfolio/ProjectDescription';
 
 // 카테고리별 스타일 설정
 const categoryStyles = {
@@ -66,6 +69,11 @@ function PortfolioDetail() {
     setShowDonation(false);
   };
 
+  const getOrganizationChart = () => {
+    // 프로젝트 타이틀을 props로 전달
+    return <OrganizationChart projectTitle={portfolio.title} />;
+  };
+
   if (!portfolio) {
     return <div className="pt-36 min-h-screen">로딩중...</div>;
   }
@@ -92,46 +100,12 @@ function PortfolioDetail() {
               </Button>
             </div>
 
-            {/* 카테고리 표시 */}
-            <div className="mb-4">
-              <span
-                className={`inline-block px-4 py-1.5 ${currentStyle.tagBg} ${currentStyle.tagText} rounded-md font-medium`}
-              >
-                {portfolio.category}
-              </span>
-            </div>
-
-            {/* 태그 */}
-            <div className="flex gap-2 flex-wrap mb-4">
-              {portfolio.tags?.map((tag, index) => (
-                <span
-                  key={index}
-                  className={`inline-block px-3 py-1 ${currentStyle.tagBg} ${currentStyle.tagText} text-sm rounded-full`}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {/* 이미지 그리드 섹션 업데이트 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-              {portfolio.detailImages?.map((image, index) => (
-                <div key={index} className="aspect-square">
-                  <img
-                    src={image}
-                    alt={`프로젝트 이미지 ${index + 1}`}
-                    className="w-full h-full object-contain rounded-lg border border-gray-200"
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="prose max-w-none">
-              <h2 className="text-2xl font-semibold mb-2">프로젝트 설명</h2>
-              <p className="text-gray-700 whitespace-pre-wrap text-xl">
-                {portfolio.content}
-              </p>
-            </div>
+            <CategoryTag category={portfolio.category} />
+            <ImageGrid images={portfolio.detailImages} />
+            <ProjectDescription
+              content={portfolio.content}
+              role={portfolio.role}
+            />
 
             {/* 기여도를 시각적으로 표현 */}
             <div className="mt-6">
@@ -147,11 +121,6 @@ function PortfolioDetail() {
               </p>
             </div>
 
-            <div className="mt-6">
-              <h2 className="text-2xl font-semibold mb-2">역할</h2>
-              <p className="text-gray-700 text-xl">{portfolio.role}</p>
-            </div>
-
             {/* 주요 로직 섹션 */}
             {portfolio.mainLogic && (
               <div
@@ -160,7 +129,7 @@ function PortfolioDetail() {
               >
                 <div className="p-4 bg-gray-50 rounded-lg border-l-4 border-blue-500">
                   <h2 className="text-2xl font-semibold mb-2 text-blue-900 flex justify-between items-center">
-                    주요 로직
+                    해결했던 컴플레인
                     <span className="text-sm text-gray-600">
                       {activeSection === 'logic' ? '(접기)' : '(펼쳐보기)'}
                     </span>
@@ -186,7 +155,7 @@ function PortfolioDetail() {
                               {showOrganization ? '(접기)' : '(펼쳐보기)'}
                             </span>
                           </button>
-                          {showOrganization && <OrganizationChart />}
+                          {showOrganization && getOrganizationChart()}
                         </div>
 
                         {/* 후원/기부 섹션 */}
@@ -216,8 +185,6 @@ function PortfolioDetail() {
               </div>
             )}
 
-            {/* 조직도와 후원/기부 섹션 */}
-
             {/* 주요 기여 섹션 */}
             {portfolio.mainContribution && (
               <div
@@ -239,7 +206,7 @@ function PortfolioDetail() {
                       animate={{ opacity: 1, height: 'auto' }}
                       transition={{ duration: 0.3 }}
                     >
-                      <p className="text-gray-700 text-xl">
+                      <p className="text-gray-700 text-xl whitespace-pre-wrap">
                         {portfolio.mainContribution}
                       </p>
                     </motion.div>
@@ -266,11 +233,86 @@ function PortfolioDetail() {
                 </a>
                 {portfolio.commitHistory && (
                   <details className="mt-4">
-                    <summary className="cursor-pointer text-gray-700 hover:text-gray-900 transition-colors duration-300">
+                    <summary className="cursor-pointer text-gray-700 hover:text-gray-900 transition-colors duration-300 flex items-center gap-2">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
                       커밋 히스토리 보기
                     </summary>
-                    <div className="mt-2 text-sm text-gray-600 whitespace-pre-wrap overflow-auto max-h-96">
-                      {portfolio.commitHistory}
+                    <div className="mt-4 bg-gray-50 rounded-lg p-4 border border-gray-200">
+                      {portfolio.commitHistory
+                        .split('\n')
+                        .map((line, index) => {
+                          // 커밋 해시 (a5847f2, e1b13b0 등) 스타일링
+                          if (line.match(/^\* [a-f0-9]{7}/)) {
+                            return (
+                              <div
+                                key={index}
+                                className="font-mono text-purple-600 font-bold mt-4"
+                              >
+                                {line}
+                              </div>
+                            );
+                          }
+                          // 날짜 스타일링
+                          else if (
+                            line.match(/\d{4}[-/.]\d{1,2}[-/.]\d{1,2}/)
+                          ) {
+                            return (
+                              <div
+                                key={index}
+                                className="text-blue-600 font-semibold"
+                              >
+                                {line}
+                              </div>
+                            );
+                          }
+                          // 수정된 파일 경로 스타일링
+                          else if (
+                            line.includes('src/') ||
+                            line.includes('.jsx') ||
+                            line.includes('.js')
+                          ) {
+                            return (
+                              <div
+                                key={index}
+                                className="text-green-600 font-mono pl-4"
+                              >
+                                {line}
+                              </div>
+                            );
+                          }
+                          // 일반 설명 텍스트
+                          else if (line.trim().startsWith('-')) {
+                            return (
+                              <div
+                                key={index}
+                                className="text-gray-700 pl-8 py-0.5"
+                              >
+                                {line}
+                              </div>
+                            );
+                          }
+                          // 기타 텍스트
+                          return (
+                            <div
+                              key={index}
+                              className="text-gray-600 pl-4 py-0.5"
+                            >
+                              {line}
+                            </div>
+                          );
+                        })}
                     </div>
                   </details>
                 )}

@@ -15,7 +15,7 @@ export const portfolioData = [
     githubUrl: 'https://github.com/username/kidney-us',
     mainLogic: '후원/기부 신청, 회원관리 api',
     mainContribution:
-      '회원 인증 시스템 고도화, 관리자 대시보드 개발, 실시간 알림 구현',
+      '1. 사용자 친화적인 UI/UX 구현\n2. 장기기증 후원, 기부 신청 페이지\n3. 공지사항 등 게시글 관리\n4. 주간보호센터 프로그램 일정 관리\n5. 회원가입/로그인페이지 리뉴얼(주소, 메일인증)\n6. 신청정보를 관리자 메일/인쇄/pdf다운 기능 개선',
     commitHistory: `* a5847f2 - dongyu-youn, 2025-03-07 20:27:33 +0900 : 2025.3.7 HistoryPage.jsx 수정: 연혁 페이지의 타임라인 데이터 업데이트 및 UI 개선 authApi.jsx 수정: 사용자 인증 관련 API 메서드 추가 및 수정  SignupPage.jsx 수정: 회원가입 페이지 UI 개선 및 인증 로직 추가  SponsorshipPage.jsx 수정: 후원 페이지의 기능 개선 및 UI 업데이트
 | 
 * e1b13b0 - dongyu-youn, 2025-03-01 12:35:25 +0900 : 2025.3.1 style: 공지사항 첨부파일 다운로드 UI 개선
@@ -851,6 +851,159 @@ export const portfolioData = [
     mainLogic:
       '이벤트 및 여행 페이지 개선, 프로그램 페이지 및 다이얼로그 기능 개선, 네비게이션 및 경로 관리, 홈페이지 및 UI/UX 개선',
     mainContribution: '전체 시스템 설계 및 구현, AWS 인프라 구축, 성능 최적화',
+    commitHistory: `* afc7338 - dongyu-youn, 2025-01-10 10:46:36 +0900 : 2025.1.10 travel 카드 간격 수정
+| 
+* 104c014 - dongyu-youn, 2025-01-10 10:18:21 +0900 : 2025.1.10 feat: 프로그램 페이지 및 다이얼로그 기능 개선
+| - ProgramDialog에서 연도와 상관없이 음성 재생 기능 복원
+| - ProgramsPage에서 연도별 데이터 필터링 로직 유지
+| - TravelImageCard 컴포넌트 추가 및 TravelPage에 적용
+| - NoticeEditPage에서 공지사항 생성 및 수정 후 이동 경로 수정
+| - Event 페이지 및 API 관련 코드 정리 및 오류 수정
+| - MainPage에서 데이터 로딩 및 파싱 로직 개선
+| - 기타 스타일 및 UI 개선
+| 
+* 21733a0 - dongyu-youn, 2025-01-09 20:40:15 +0900 : 2025.1.8
+| 
+* 14ed15f - dongyu-youn, 2025-01-09 20:18:40 +0900 : 2025.1.9
+| 
+* fc1ef79 - dongyu-youn, 2025-01-09 18:05:00 +0900 : 2025.1.9 모바일 화면 수정
+| 
+* e2d663c - dongyu-youn, 2025-01-09 16:02:27 +0900 : 2025.1.9 feat: ProgramDialog에서 특정 연도에만 음성 재생 기능 추가
+| - ProgramDialog 컴포넌트에서 2023년 데이터에만 음성 재생 기능 추가
+| - ProgramsPage에서 연도별 데이터 필터링 로직 개선
+| - TravelDetailPage 및 NoticeDetailPage의 스타일 수정
+| - TravelImageCard의 반응형 이미지 크기 조정
+| - 환경 설정 파일(.env.development)에서 API URL 수정
+| 
+* 179478f - dongyu-youn, 2025-01-07 10:19:43 +0900 : 2025.1.7 edit페이지 사진 크기 상세설명 추가
+| 
+* 73dfc0b - dongyu-youn, 2025-01-07 09:51:18 +0900 : Merge branch 'dongyu' of https://github.com/Intercore998/gssmedia-frontend into dongyu
+| the commit.
+| 
+* 05d1baa - dongyu-youn, 2025-01-07 09:50:05 +0900 : 2025.1.7 오디어 플레이어 문제 개선
+| 
+* 23911e7 - dongyu-youn, 2025-01-06 16:44:33 +0900 : local
+| 
+* a0757e2 - dongyu-youn, 2025-01-06 16:12:05 +0900 : 2025.1.6 event카드 more추가
+| 
+* 828e0d8 - dongyu-youn, 2025-01-06 15:46:16 +0900 : 2025.1.6 feat: 이벤트 카드 컴포넌트 추가 및 애니메이션 설정
+| - EventCard 컴포넌트 신규 생성
+|   - 반응형 레이아웃 구현 (모바일/데스크톱)
+|   - 이벤트 정보 표시 (제목, 날짜, 장소, 내용)
+| 
+| - Tailwind 애니메이션 설정 추가
+|   - fadeInUp, bounce, pulse 등 다양한 애니메이션 효과 추가
+|   - 키프레임 정의 및 duration 설정
+| 
+* 6db543f - dongyu-youn, 2025-01-06 13:47:31 +0900 : 2025.1.6 이미지 비율 조정
+| 
+* befea58 - dongyu-youn, 2025-01-06 11:36:34 +0900 : 2025.1.6 프로그램 edit 자동년도 설정
+| 
+* c3c1c6e - dongyu-youn, 2025-01-06 11:08:17 +0900 : 2025.1.6 dialog 위치 반응형 재조정
+| 
+* b50cb4b - dongyu-youn, 2025-01-06 11:07:56 +0900 : 2025.1.6 lg사이즈 px변경
+| 
+* 2f548fe - dongyu-youn, 2025-01-03 17:51:22 +0900 : 2024.1.3 공지사항 뒤로가기 pencil 추가
+| 
+* 2a12261 - dongyu-youn, 2025-01-03 17:32:23 +0900 : 2024.1.3 travel 간격수정
+| 
+* 101a338 - dongyu-youn, 2025-01-03 17:28:08 +0900 : 2025.1.3 대표님 요구사항 수정
+| 
+* c26f724 - dongyu-youn, 2025-01-03 12:46:35 +0900 : 2024.1.3 notice 페이지 글자 수정
+| 
+* 984286a - dongyu-youn, 2025-01-03 12:41:23 +0900 : 2024.1.3
+| Merge branch 'dongyu' of https://github.com/Intercore998/gssmedia-frontend into dongyu
+| 
+* c08020c - dongyu-youn, 2025-01-03 12:38:32 +0900 : 2024.1.3 feature/trip과 merge
+| 
+* 81e72f5 - dongyu-youn, 2025-01-03 12:32:02 +0900 : 2025.1.3 1. 공지사항 생성 완료시 /notice로 안감 const handleCreate = () => {     createNotice({ title, content }).then((res) => {       if (res.status === 201) {         alert('Notice created');         moveTo('/notice');       } else {         console.log(res);       }     });   }; 3. 공지사항 paging문제  <CardFooter       className={flex items-center justify-between border-t border-blue-gray-50 p-4 rounded-b-3xl ${
+      `엑세스토큰` ? 'lg:w-full' : 'lg:w-[150%]'
+    }}     > 4. edit화면 제목 padding지우기 <Input             className="" 5. 여행사진 이벤트/포스트 mt-12로 조정  <h1 className="sm:mb-4 lg:mb-12 text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-nanum text-center mt-12"> 6.program title 글씨 크기 수정
+| 
+* 1a6eb98 - dongyu-youn, 2025-01-03 09:28:13 +0900 : 2024.1.3 mediapage 정렬 수정 공지시항 adminpage수정
+| 
+* f05fd54 - dongyu-youn, 2025-01-02 21:52:22 +0900 : 2024.1.2 - 네비게이션 개선:   - DesktopHeaderNav에 hover 효과 및 cursor-pointer 추가   - 네비게이션 아이템 클릭 영역 최적화
+| - Edit 페이지 반응형 레이아웃 구현:
+|   - TravelEditPage, NoticeEditPage, NewsEditPage 반응형 디자인 적용
+|   - 모바일부터 데스크톱까지 일관된 사용자 경험 제공
+|   - 패딩, 마진, 간격 등 반응형으로 조정
+|   - 입력 필드 및 버튼 레이아웃 최적화
+| 
+* 0189df9 - dongyu-youn, 2025-01-02 14:36:02 +0900 : 2024.1.2 공지사항 admin 테이블 수정 travel update delete
+| 
+* f5e4eef - dongyu-youn, 2025-01-02 10:14:25 +0900 : 2025.1.2
+| 공지사항 테이블 수정
+| footer 글자 간격조정
+| dialog 배치
+| 
+* 3cf7a23 - dongyu-youn, 2024-12-28 15:33:49 +0900 : 2024.12.28
+| 파일명 news> event 교체
+| 홈화면 postandtable 높이 수정
+| 
+| 모달창 flex-col처리
+| 
+* 7116338 - dongyu-youn, 2024-12-27 13:57:12 +0900 : 2024.12.27
+| 이벤트/포스트 여행사진 페이지 추가
+| 
+* ea59500 - dongyu-youn, 2024-12-26 21:43:50 +0900 : 2024.12.26
+| 더보기, 공지사항 요구사항 수정
+| 
+* 1be98a9 - dongyu-youn, 2024-12-26 21:34:19 +0900 : 2024.12.26
+| tabSwiper 슬라이드 모바일 버튼 생성
+| 
+* 66fc94a - dongyu-youn, 2024-12-26 19:18:32 +0900 : 2024.12.26 대표님 말씀한거 수정
+| 
+* 3bab79b - dongyu-youn, 2024-12-26 18:24:15 +0900 : 2024.12.26
+| 
+* 6537757 - dongyu-youn, 2024-12-26 18:17:57 +0900 : 2024.12.26 이벤트 포스터 데이터 수정
+| 
+* 042158f - dongyu-youn, 2024-12-26 17:34:02 +0900 : 2024.12.26
+| 이벤트/포스터 프로그램 데이터로 변경
+| 
+* d898b13 - dongyu-youn, 2024-12-26 16:09:08 +0900 : 2024.12.26
+| 이벤트/포스트 여행사진 페이지 완성
+| 
+* b251ae8 - dongyu-youn, 2024-12-26 14:20:16 +0900 : 2024.12.26
+| infosection 라운드 수정
+| 
+| 유용한정보 링크 홈으로 수정
+| 
+* a70247d - dongyu-youn, 2024-12-26 13:01:49 +0900 : Merge branch 'dongyu' of https://github.com/Intercore998/gssmedia-frontend into feature/event
+| 
+* bab7501 - dongyu-youn, 2024-12-26 12:40:23 +0900 : 2024.12.26 이벤트 포스트 페이지 카드 생성
+| 
+* ee27d4a - dongyu-youn, 2024-12-26 10:46:45 +0900 : 2024.12.26 infosection, footernav 디자인 수정
+| 
+* 0135de5 - dongyu-youn, 2024-12-26 10:07:55 +0900 : 2024.12.26
+| 탭스와이퍼 모바일 화살표 추가
+| 
+* cdd0833 - dongyu-youn, 2024-12-26 09:52:54 +0900 : 2024.12.26 프로그램 메인 카드 수정 공지사항 렌더링 에러 수정
+| 
+* e629564 - dongyu-youn, 2024-12-24 18:19:55 +0900 : 2024.12.24
+| 공지사항 4칸 수정
+| title 글자 크기 개선
+| 
+* 2c29d66 - dongyu-youn, 2024-12-24 17:45:29 +0900 : 2024.12.24
+| 공지사항 모바일 정리
+| 
+* 21fa48b - dongyu-youn, 2024-12-24 17:19:07 +0900 : 2024.12.24
+| 홈, 프로그램 sm 디자인 수정
+| 
+* 1f4e191 - dongyu-youn, 2024-12-24 10:33:10 +0900 : 2024.12.24
+  footer link 및 footer 반응형
+  
+  홈화면 폰트 및 디자인 수정
+  
+* f88f3f3 - dongyu-youn, 2024-12-22 18:43:33 +0900 : 2024.12.22 mainpage 전체 padding 조정 모달 화살표 에러 개선 footer개선
+  memo
+  로딩화면 수정
+  
+* d983d1a - dongyu-youn, 2024-12-19 22:11:29 +0900 : 2024.12.19 메인페이지 디자인 변경
+| 프로그램 페이지 mainTitle 및 슬라이드
+| 
+* 95b2d2d - dongyu-youn, 2024-12-19 14:23:09 +0900 : 2024.12.19 메인화면 이미지 변경
+  
+* a234bc6 - dongyu-youn, 2024-12-18 15:31:37 +0900 : feat: loop slide 변경 2024.12.18`,
   },
   {
     id: 3,
@@ -861,8 +1014,163 @@ export const portfolioData = [
     link: 'https://web.wafflestay.kr/',
     contribution: '70%',
     role: '앱 개발, API 연동',
+    githubUrl: 'https://github.com/username/seohyun-tech',
     mainContribution:
       '네비게이션 및 경로 관리, 예약관련 시스템 관리, Breadcrumb 도입',
+    commitHistory: `* 37de917 - dongyu-youn, 2025-01-10 10:47:55 +0900 : develop
+| 
+* 9b81854 - dongyu-youn, 2025-01-10 10:17:35 +0900 : 2025.1.10 feat: Breadcrumb 컴포넌트 추가 및 적용
+| - Breadcrumb 컴포넌트를 생성하여 경로 표시 기능 구현
+| - ProgramDetailPage, NoticeDetailPage, NewsDetailPage에 Breadcrumb 추가
+| - 경로에 따라 동적 링크 및 라벨 표시
+| refactor: 코드 구조 개선 및 중복 제거
+| - ProgramDetailPage, NoticeDetailPage, NewsDetailPage에서 중복 코드 제거
+| - Breadcrumb 컴포넌트로 경로 표시 로직 통합
+| - 코드 가독성 및 유지보수성 향상
+| 이러한 변경사항들은 코드의 재사용성을 높이고, 사용자에게 더 나은 네비게이션 경험을 제공하기 위한 것입니다.
+| 
+* 16b5b2d - dongyu-youn, 2025-01-09 20:02:18 +0900 : 2025.1.9
+| 
+* 03441ce - dongyu-youn, 2025-01-09 19:59:27 +0900 : program 페이지 수정
+| 
+* 5f1c3c5 - dongyu-youn, 2025-01-09 18:06:25 +0900 : 2025.1.9 모바일 화면 수정
+| 
+* 9c1dc51 - dongyu-youn, 2025-01-09 17:26:50 +0900 : 2025.1.9 1. feat: ReviewComponent 추가 및 MainPage에 통합
+| - ReviewComponent를 생성하여 리뷰 슬라이더 기능 구현
+| - MainPage에 ReviewComponent를 추가하여 리뷰 데이터 표시
+| - 가짜 리뷰 데이터 생성 및 적용
+| 2. style: ReviewComponent 스타일 개선
+| - 슬라이더를 사용하여 리뷰를 순차적으로 표시
+| - 카드 디자인을 개선하여 더 나은 사용자 경험 제공
+| - 반응형 디자인 적용으로 다양한 화면 크기 지원
+| refactor: MainPage 코드 구조 개선
+| - ReviewComponent import 및 사용 위치 조정
+| - 불필요한 코드 제거 및 가독성 향상
+| - 데이터 흐름을 명확하게 정리
+| 
+* 91491f1 - dongyu-youn, 2025-01-06 11:12:13 +0900 : 2025.1.6 subnav위치 재조정
+| 
+* 1e3818b - dongyu-youn, 2025-01-06 10:10:26 +0900 : 2025.1.6 1.feat: 공지사항/뉴스 상세 페이지 네비게이션 기능 추가
+| - 뒤로가기 버튼 추가 (FaChevronLeft 아이콘)
+| - 관리자용 편집 버튼 추가 (PencilIcon)
+| - 반응형 디자인 적용 (sm/lg 브레이크포인트별 위치 조정)
+| style: 예약 카드 UI 개선
+| - 카드 레이아웃을 세로 형태로 변경
+| - 이미지 크기 및 비율 조정
+| - 버튼 위치 및 스타일 개선
+| refactor: 관리자 기능 UI 개선
+| - 수정/삭제 버튼을 드롭다운 메뉴로 변경
+| - 메뉴 아이콘 위치 최적화
+| - 관리자 권한 체크 로직 추가
+| 4. style: 상세 페이지 반응형 디자인 개선
+| - 모바일/데스크톱 화면에 따른 버튼 위치 조정
+| - 컨텐츠 여백 및 정렬 개선
+| - 이미지 크기 자동 조절 기능 추가
+| 
+* de264c5 - dongyu-youn, 2025-01-05 20:02:58 +0900 : 2025.1.5 1. feat: 예약 카드에 페이드인 애니메이션 추가
+| - BookItem 컴포넌트에 아래에서 위로 올라오는 애니메이션 적용
+| - tailwind.config.js에 fadeInUp 애니메이션 설정 추가
+| - 애니메이션 타이밍과 이징 효과 조정
+| style: 예약 카드 UI 디자인 개선
+| - 카드 컨테이너에 둥근 모서리 적용
+| - 버튼 스타일을 둥근 형태로 변경
+| - 예약 확인 버튼을 테두리가 있는 스타일로 변경
+| feat: 관리자 기능 드롭다운 메뉴로 변경
+| - 수정/삭제 버튼을 드롭다운 메뉴로 대체
+| - 메뉴 트리거용 더보기 아이콘 추가
+| - 관리자 컨트롤을 우측 상단으로 이동
+| refactor: BookItem 컴포넌트 구조 개선
+| - 컴포넌트 레이아웃 및 간격 조정
+| - className과 style prop 처리 방식 개선
+| - 반응형 디자인 개선
+| 
+* 52c07e8 - dongyu-youn, 2025-01-04 17:47:56 +0900 : 2025.1.4 프로그램 notice detail 디자인 수정
+| 
+* be08a39 - dongyu-youn, 2025-01-03 09:33:26 +0900 : 2024.1.3 mainpae 오류 수정
+| 
+* 69578a1 - dongyu-youn, 2024-12-27 15:03:34 +0900 : 2024.12.27
+| 팝업존 수정
+| 
+* b448367 - dongyu-youn, 2024-12-27 14:16:13 +0900 : 2024.12.27 탭스와이퍼 모바일 버튼 추가
+| 
+* 3950387 - dongyu-youn, 2024-12-27 13:59:35 +0900 : 2024.12.27
+| 레이아웃 디테일 수정
+| 
+* e411fdd - dongyu-youn, 2024-12-23 21:15:38 +0900 : 2024.12.23
+| reservation 배너 수정
+| 
+* ab866e1 - dongyu-youn, 2024-12-23 21:13:31 +0900 : 2024.12.23 program detail 글자크기 수정
+| 
+* d3dd9fa - dongyu-youn, 2024-12-23 19:53:11 +0900 : 2024.12.23 대표님말한거 모두 반영
+| 
+* 529e4d6 - dongyu-youn, 2024-12-23 18:03:52 +0900 : 2024.12.23
+| 캐러셀 슬라이드 생성
+| 모바일 메뉴수정
+| 
+* fdd1fd9 - dongyu-youn, 2024-12-23 17:22:34 +0900 : 2024.12.23
+| notice, news detail 모바일 디자인 수정
+| 로고 모바일 디자인 수정
+| 
+* d920125 - dongyu-youn, 2024-12-23 11:36:33 +0900 : 2024.12.23
+| 프로그램 오류
+| 
+* 464a5e1 - dongyu-youn, 2024-12-23 10:57:13 +0900 : 2024.12.23
+| 팝업슬라이드 버튼 삭제
+| 
+* d2cb6d0 - dongyu-youn, 2024-12-23 10:39:38 +0900 : 2024.12.23
+| 팝업창 수정
+| 
+* 160a377 - dongyu-youn, 2024-12-23 10:27:16 +0900 : 2024.12.23 공주온 폰트 수정 팝업창 이미지 조정
+| 
+* 456c718 - dongyu-youn, 2024-12-22 19:46:46 +0900 : 2024.12.22 mainpage infosection 글자간격 개선
+| 
+* 8d7c70b - dongyu-youn, 2024-12-22 19:35:18 +0900 : 2024.12.22 main화면 간격조정
+| 
+* 7da06eb - dongyu-youn, 2024-12-21 21:05:11 +0900 : 2024.12.21
+| 변경사항
+| 폰트수정
+| table수정
+| footer, about페이지등 반응형 개선
+| 
+* f23c8aa - dongyu-youn, 2024-12-20 13:48:56 +0900 : 2024.12.20
+| 어바웃페이지 패딩수정
+| 
+* ceac734 - dongyu-youn, 2024-12-20 13:37:54 +0900 : 2024.12.20
+  memo
+  색상 입히기
+  이벤트 포스터 노트북 화면 수정
+  
+* d3b5ded - dongyu-youn, 2024-12-18 17:10:09 +0900 : 2024.12.18
+| 
+* 9a45175 - dongyu-youn, 2024-12-18 10:33:54 +0900 : feat: 배너 수정 2024.12.18
+  
+* 527a514 - dongyu-youn, 2024-12-19 10:15:03 +0900 : feat: 디자인 요청 수정 2024.12.19
+| 
+* 92b48fd - dongyu-youn, 2024-12-18 21:26:31 +0900 : feat: 헤더 호버 문제 해결 2024.12.18
+  
+* c78cfed - dongyu-youn, 2024-12-17 21:55:26 +0900 : feat: swiper => slick slide 모두 변경 2024.12.17
+| 
+* 8c9d8eb - dongyu-youn, 2024-12-17 21:34:35 +0900 : feat: 공지/뉴스 onClick 2024.12.17
+| 
+* 4a5d79a - dongyu-youn, 2024-12-17 19:09:54 +0900 : feat: grid 수정 2024.12.17
+| 
+* 0fbc6ba - dongyu-youn, 2024-12-17 18:21:48 +0900 : feat: sm 디자인 추가 2024.12.17
+| 
+* e16704c - dongyu-youn, 2024-12-17 15:53:32 +0900 : feat: 반응형 디자인 수정 2024.12.17
+| 
+* 682c62a - dongyu-youn, 2024-12-17 15:29:22 +0900 : feat: notice edit/delete 핸들러 구현 2024.12.17
+| 
+* 81f6726 - dongyu-youn, 2024-12-17 11:32:53 +0900 : feat: 프로그램 데이터 입력 2024.12.17
+| 
+* 4236eb7 - dongyu-youn, 2024-12-16 22:17:22 +0900 : feat: editor 사진 드래그 수정 2024.12.16
+| 
+* f919589 - dongyu-youn, 2024-12-16 21:02:00 +0900 : feat: editor 수정 2024.12.16
+| 
+* 3a3613a - dongyu-youn, 2024-12-16 18:00:41 +0900 : feat: notion 디자인 수정 2024.12.16
+| 
+* de2888e - dongyu-youn, 2024-12-16 16:56:07 +0900 : feat: 홈화면 디자인 수정
+| 
+* 8805246 - dongyu-youn, 2024-12-16 15:19:25 +0900 : feat: header 폰트 수정`,
   },
   {
     id: 4,
