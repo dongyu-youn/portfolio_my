@@ -1,54 +1,13 @@
 import { useState, useEffect } from 'react';
 import { FaNewspaper, FaClock, FaArrowRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { newsData } from '../data/newsData';
 
 function NewsletterSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeNews, setActiveNews] = useState(null);
   const navigate = useNavigate();
-
-  const [news] = useState([
-    {
-      id: 1,
-      title: '임업진흥원 홈페이지 리뉴얼 기획 및 pm 발표',
-      date: '2024-03-15',
-      content:
-        '인터코어가 혁신적인 새로운 서비스를 출시할 예정입니다. 자세한 내용은 곧 공개됩니다.',
-      category: '발표',
-      image: [],
-    },
-    {
-      id: 2,
-      title: '이북 5도 홈페이지 리뉴얼 기획 및 pm 발표',
-      date: '2024.03.10',
-      content: '인터코어의 2024년 상반기 실적이 전년 대비 30% 성장했습니다.',
-      tag: '발표',
-    },
-    {
-      id: 3,
-      title: '한국해양진흥원 홈페이지 리뉴얼 기획 및 pm 발표',
-      date: '2024.03.05',
-      content:
-        '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
-      tag: '발표 ',
-    },
-    {
-      id: 3,
-      title: 'aws 활용 해커톤 대상 수상',
-      date: '2024.03.05',
-      content:
-        '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
-      tag: '개인 ',
-    },
-    {
-      id: 3,
-      title: '교내 해커톤 대상 3개 수상',
-      date: '2024.03.05',
-      content:
-        '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
-      tag: '개인',
-    },
-  ]);
+  const [news] = useState(newsData);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -73,12 +32,26 @@ function NewsletterSection() {
   }, []);
 
   const handleNewsClick = (newsItem) => {
-    navigate(`/news/${newsItem.id}`);
+    const fullNewsData = news.find((item) => item.id === newsItem.id);
+    console.log('fullNewsData:', fullNewsData);
+
+    setActiveNews(activeNews === newsItem.id ? null : newsItem.id);
+    navigate(`/news/${newsItem.id}`, {
+      state: {
+        newsData: fullNewsData,
+        allNews: news,
+      },
+    });
   };
 
   const handleEditClick = (newsItem) => {
+    const fullNewsData = news.find((item) => item.id === newsItem.id);
+
     navigate(`/news/edit/${newsItem.id}`, {
-      state: { newsData: newsItem },
+      state: {
+        newsData: fullNewsData,
+        allNews: news,
+      },
     });
   };
 
@@ -128,7 +101,7 @@ function NewsletterSection() {
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-2">
                       <span className="bg-brand-green text-white text-xs px-3 py-1 rounded-full">
-                        {item.tag}
+                        {item.category || item.tag}
                       </span>
                       <span className="text-gray-500 text-sm flex items-center">
                         <FaClock className="mr-2" size={14} />
@@ -141,6 +114,16 @@ function NewsletterSection() {
                         ${activeNews === item.id ? 'max-h-40' : 'max-h-0'}`}
                     >
                       <p className="text-gray-600 mt-4">{item.content}</p>
+                      {item.script && (
+                        <p className="text-gray-600 mt-2">
+                          <strong>발표 대본:</strong> {item.script}
+                        </p>
+                      )}
+                      {item.reflection && (
+                        <p className="text-gray-600 mt-2">
+                          <strong>느낀점:</strong> {item.reflection}
+                        </p>
+                      )}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();

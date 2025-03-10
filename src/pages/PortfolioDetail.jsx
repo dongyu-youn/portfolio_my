@@ -101,7 +101,30 @@ function PortfolioDetail() {
             </div>
 
             <CategoryTag category={portfolio.category} />
+            {portfolio.tags && portfolio.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 my-4">
+                {portfolio.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
             <ImageGrid images={portfolio.detailImages} />
+            {portfolio.title === '오름' && (
+              <div className="mt-6 mb-6">
+                <div className="mb-3 text-gray-600 text-sm">
+                  * Adobe Premiere Pro를 활용하여 직접 편집한 홍보 영상입니다.
+                </div>
+                <video className="w-full rounded-lg shadow-lg" controls>
+                  <source src="/images/mp4/movie.mp4" type="video/mp4" />
+                  브라우저가 비디오를 지원하지 않습니다.
+                </video>
+              </div>
+            )}
             <ProjectDescription
               content={portfolio.content}
               role={portfolio.role}
@@ -178,6 +201,25 @@ function PortfolioDetail() {
                             </div>
                           )}
                         </div>
+                        <div>
+                          <button
+                            onClick={handleDonationClick}
+                            className="flex items-center gap-2 text-xl font-semibold mb-2"
+                          >
+                            <span>DNS(배포) 문제 해결</span>
+                            <span className="text-sm">
+                              {showDonation ? '(접기)' : '(펼쳐보기)'}
+                            </span>
+                          </button>
+                          {showDonation && (
+                            <div className="mt-4">
+                              {/* 여기에 후원/기부 관련 내용을 추가하세요 */}
+                              <p className="text-gray-700 text-xl">
+                                후원/기부 관련 내용이 들어갈 자리입니다.
+                              </p>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -222,15 +264,30 @@ function PortfolioDetail() {
                   <FaGithub className="text-2xl" />
                   GitHub
                 </h2>
-                <a
-                  href={portfolio.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 flex items-center gap-2 transition-colors duration-300 hover:underline"
-                >
-                  <span>{portfolio.githubUrl}</span>
-                  <FaExternalLinkAlt className="text-sm" />
-                </a>
+                {Array.isArray(portfolio.githubUrl) ? (
+                  portfolio.githubUrl.map((url, index) => (
+                    <a
+                      key={index}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 flex items-center gap-2 transition-colors duration-300 hover:underline mb-2"
+                    >
+                      <span>{url}</span>
+                      <FaExternalLinkAlt className="text-sm" />
+                    </a>
+                  ))
+                ) : (
+                  <a
+                    href={portfolio.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 flex items-center gap-2 transition-colors duration-300 hover:underline"
+                  >
+                    <span>{portfolio.githubUrl}</span>
+                    <FaExternalLinkAlt className="text-sm" />
+                  </a>
+                )}
                 {portfolio.commitHistory && (
                   <details className="mt-4">
                     <summary className="cursor-pointer text-gray-700 hover:text-gray-900 transition-colors duration-300 flex items-center gap-2">
@@ -336,6 +393,28 @@ function PortfolioDetail() {
                   className="text-blue-600 hover:text-blue-800 flex items-center gap-2 transition-colors duration-300 hover:underline"
                 >
                   <span>{portfolio.link}</span>
+                </a>
+              </div>
+            )}
+
+            {portfolio.title === '오름' && (
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h2 className="text-xl font-semibold mb-2 flex items-center gap-2 text-gray-900">
+                  <img
+                    src="/images/notion.png"
+                    alt="notion icon"
+                    className="w-6 h-6"
+                  />
+                  Notion 문서
+                </h2>
+                <a
+                  href="https://military-sceptre-b48.notion.site/18ac1628f36b4a31b2c076ae0f464b6d"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 flex items-center gap-2 transition-colors duration-300 hover:underline"
+                >
+                  <span>오름 프로젝트 문서</span>
+                  <FaExternalLinkAlt className="text-sm" />
                 </a>
               </div>
             )}

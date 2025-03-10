@@ -4,7 +4,7 @@ export const portfolioData = [
     image: '/images/portofolio/icon.jpg',
     detailImages: ['/images/a.png', '/images/b.png', '/images/c.png'],
     content:
-      '1. 사용자 친화적인 UI/UX 구현\n2. 장기기증 후원, 기부 신청 페이지\n3. 공지사항 등 게시글 관리\n4. 주간보호센터 프로그램 일정 관리\n5. 회원가입/로그인페이지 리뉴얼(주소, 메일인증)\n6. 신청정보를 관리자 메일/인쇄/pdf다운 기능 개선',
+      '기존 울산 장애인 협회의 단일적이고 비효율적인 페이지를 사용자 친화적으로 재설계하여, 신청 과정을 더욱 간편하고 직관적으로 개선했습니다.',
     title: '울산 신장장애인 협회',
     category: 'WEBSITE',
     link: 'http://www.kidneyus.or.kr/',
@@ -12,7 +12,10 @@ export const portfolioData = [
     tags: ['React', 'Nest.js', 'MySQL'],
     contribution: '80%',
     role: '프론트엔드 개발, UI/UX 디자인, 백엔드 개발',
-    githubUrl: 'https://github.com/username/kidney-us',
+    githubUrl: [
+      'https://github.com/Intercore998/kidneyulsan-frontend',
+      'https://github.com/Intercore998/kidneyulsan-backend',
+    ],
     mainLogic: '후원/기부 신청, 회원관리 api',
     mainContribution:
       '1. 사용자 친화적인 UI/UX 구현\n2. 장기기증 후원, 기부 신청 페이지\n3. 공지사항 등 게시글 관리\n4. 주간보호센터 프로그램 일정 관리\n5. 회원가입/로그인페이지 리뉴얼(주소, 메일인증)\n6. 신청정보를 관리자 메일/인쇄/pdf다운 기능 개선',
@@ -835,19 +838,20 @@ export const portfolioData = [
     id: 2,
     image: '/images/gong1.png',
     detailImages: [
-      '/images/portofolio/image.png',
-      '/images/b.png',
-      '/images/c.png',
+      '/images/gs/image.png',
+      '/images/gs/image2.png',
+      '/images/gs/image3.png',
     ],
+    tags: ['React', 'Node.js', 'MySQL'],
     content:
       '공주 공산성 행사 및 관련 문화재를 알리기 위한 온라인 플랫폼입니다. 이 사이트는 방문객들에게 공산성의 역사적 가치와 행사 정보를 제공하며, 방문객들이 쉽게 정보를 찾고 예약할 수 있도록 도와줍니다.',
     title: '공주 공산성',
 
     category: 'WEBSITE',
-    link: 'http://www.seohyuntech.com',
+    link: 'http://ggm-art.kr/',
     contribution: '60%',
     role: '풀스택 개발',
-    githubUrl: 'https://github.com/username/seohyun-tech',
+    githubUrl: 'https://github.com/Intercore998/gssmedia-frontend',
     mainLogic:
       '이벤트 및 여행 페이지 개선, 프로그램 페이지 및 다이얼로그 기능 개선, 네비게이션 및 경로 관리, 홈페이지 및 UI/UX 개선',
     mainContribution: '전체 시스템 설계 및 구현, AWS 인프라 구축, 성능 최적화',
@@ -1009,12 +1013,18 @@ export const portfolioData = [
     id: 3,
     image: '/images/mainIcons/image.png',
     content: '공주 온밤',
+    detailImages: [
+      '/images/gong/image.png',
+      '/images/gong/image2.png',
+      '/images/gong/image3.png',
+    ],
+    tags: ['React', 'Node.js', 'MySQL'],
     title: '공주 온밤',
     category: 'APP',
-    link: 'https://web.wafflestay.kr/',
+    link: 'http://gongjuonbam.kr/',
     contribution: '70%',
     role: '앱 개발, API 연동',
-    githubUrl: 'https://github.com/username/seohyun-tech',
+    githubUrl: 'https://github.com/Intercore998/gongjuon-frontend',
     mainContribution:
       '네비게이션 및 경로 관리, 예약관련 시스템 관리, Breadcrumb 도입',
     commitHistory: `* 37de917 - dongyu-youn, 2025-01-10 10:47:55 +0900 : develop
@@ -1175,12 +1185,21 @@ export const portfolioData = [
   {
     id: 4,
     image: '/images/about/tree/intercore.png',
+    detailImages: [
+      '/images/inter/image.png',
+      '/images/inter/image2.png',
+      '/images/inter/image3.png',
+    ],
     content: '자사 홈페이지',
     title: '자사 홈페이지',
     category: 'WEBSITE',
-    link: 'http://www.ddason.org',
-    contribution: '90%',
+    link: 'http://www.intercore.kr/',
+    contribution: '100%',
     role: '웹사이트 개발, 서버 구축',
+    githubUrl: [
+      'https://github.com/intercore2025/hompage__frontend',
+      'https://github.com/intercore2025/hompage__backend',
+    ],
   },
   {
     id: 5,
@@ -1189,17 +1208,26 @@ export const portfolioData = [
     title: '콘파워',
     category: 'APP',
     contribution: '75%',
+    githubUrl: [
+      'https://github.com/intercore2025/conpower_mobile',
+      'https://github.com/dongyu-youn/conpower_backend',
+    ],
     role: '앱 개발, 데이터베이스 설계',
   },
   {
     id: 6,
     image: '/images/portofolio/aurem.png',
-    content: '오름',
+    content:
+      '“인프라가 좁은 지역의 대학생들을 보고 좋은 팀을 만들어 주고 싶어 진행한 프로젝트 팀에 적절한 팀원을 자동으로 배치해주고 특정 금액을 걸어 프로젝트 완성시에만 환급받도록 하여 완성된 프로젝트를 보장해준다”',
     title: '오름',
     category: 'WEBSITE',
-    link: 'http://m.yeinskin.com/',
+    mainLogic:
+      '팀매칭/팀원추가 로직, 인공지능 매칭 로직, 멘토 멘티 매칭 로직, 환급 시스템 로직',
+    tags: ['React', 'Nest.js', 'MySQL'],
+    link: 'http://43.201.57.22:3000',
     contribution: '85%',
-    role: '반응형 웹사이트 개발',
+    role: '기획 및 풀스택 개발',
+    githubUrl: 'https://github.com/username/seohyun-tech',
   },
   {
     id: 7,

@@ -76,15 +76,6 @@ function AboutSection() {
       icon: <FaCode className="w-12 h-12 text-blue-500" />,
     },
     {
-      title: 'Spring Boot',
-      description: [
-        'JPA/Hibernate ORM',
-        '마이크로서비스 아키텍처',
-        '보안 및 인증 구현',
-      ],
-      icon: <FaCode className="w-12 h-12 text-green-500" />,
-    },
-    {
       title: 'Django',
       description: [
         'Python 기반 백엔드',
@@ -92,6 +83,15 @@ function AboutSection() {
         'Admin 패널 활용',
       ],
       icon: <FaCode className="w-12 h-12 text-red-500" />,
+    },
+    {
+      title: 'Spring Boot',
+      description: [
+        'JPA/Hibernate ORM',
+        '마이크로서비스 아키텍처',
+        '보안 및 인증 구현',
+      ],
+      icon: <FaCode className="w-12 h-12 text-green-500" />,
     },
   ];
 

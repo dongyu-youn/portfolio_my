@@ -2,53 +2,14 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import PageLayout from '../components/layout/PageLayout';
 import { Button } from '@material-tailwind/react';
-
-const newsData = [
-  {
-    id: 1,
-    title: '임업진흥원 홈페이지 리뉴얼 기획 및 pm 발표',
-    date: '2024-03-15',
-    content:
-      '인터코어가 혁신적인 새로운 서비스를 출시할 예정입니다. 자세한 내용은 곧 공개됩니다.',
-    category: '발표',
-  },
-  {
-    id: 2,
-    title: '이북 5도 홈페이지 리뉴얼 기획 및 pm 발표',
-    date: '2024.03.10',
-    content: '인터코어의 2024년 상반기 실적이 전년 대비 30% 성장했습니다.',
-    category: '발표',
-  },
-  {
-    id: 3,
-    title: '한국해양진흥원 홈페이지 리뉴얼 기획 및 pm 발표',
-    date: '2024.03.05',
-    content:
-      '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
-    category: '발표',
-  },
-  {
-    id: 4,
-    title: 'aws 활용 해커톤 대상 수상',
-    date: '2024.03.05',
-    content:
-      '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
-    category: '개인',
-  },
-  {
-    id: 5,
-    title: '교내 해커톤 대상 3개 수상',
-    date: '2024.03.05',
-    content:
-      '글로벌 기업과의 전략적 파트너십 체결을 통해 사업 영역을 확장합니다.',
-    category: '개인',
-  },
-];
+import { newsData } from '../data/newsData';
 
 function NewsDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const adminToken = localStorage.getItem('adminToken');
+  const [showScript, setShowScript] = useState(false);
+  const [showReflection, setShowReflection] = useState(false);
 
   // id를 사용하여 newsData 배열에서 해당 뉴스 찾기
   const news = newsData.find((item) => item.id === parseInt(id));
@@ -95,6 +56,43 @@ function NewsDetail() {
 
         <div className="prose max-w-none">
           <div className="whitespace-pre-wrap">{news.content}</div>
+
+          {news.script && (
+            <div className="mt-8">
+              <button
+                onClick={() => setShowScript(!showScript)}
+                className="flex items-center gap-2 text-gray-700 font-medium mb-2"
+              >
+                <span>{showScript ? '▼' : '▶'} 발표 대본</span>
+              </button>
+              {showScript && (
+                <div className="whitespace-pre-wrap bg-gray-50 p-6 rounded-lg">
+                  <div className="prose max-w-none">
+                    {news.script.split('\n\n').map((paragraph, index) => (
+                      <p
+                        key={index}
+                        className="mb-4 text-gray-800 leading-relaxed"
+                        style={{
+                          fontSize: '1.05rem',
+                          lineHeight: '1.8',
+                        }}
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {news.reflection && (
+            <div className="mt-8">
+              <div className="whitespace-pre-wrap bg-gray-50 p-4 rounded-lg">
+                {news.reflection}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="mt-8 flex gap-4">

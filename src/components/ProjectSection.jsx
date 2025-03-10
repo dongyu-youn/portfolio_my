@@ -21,10 +21,9 @@ function ProjectSection() {
 
   const timelineData = {
     2021: [
-      { date: '2022.06.10', content: '아이디어 구상' },
-      { date: '2022.07.15', content: '시장성 검토' },
-      { date: '2022.08.20', content: '기술 타당성 조사' },
-      { date: '2022.12.25', content: '사업 모델 수립' },
+      { date: '2021.07.01', content: 'HTML/CSS 카카오톡 클론코딩' },
+      { date: '2021.10.09', content: 'React 무비팝콘 클론코딩' },
+      { date: '2021.10.14', content: '에어비앤비 클론코딩' },
     ],
     2022: [
       { date: '2022.06.10', content: '아이디어 구상' },
@@ -39,10 +38,10 @@ function ProjectSection() {
       { date: '2023.12.20', content: '개발팀 구성' },
     ],
     2024: [
-      { date: '2024.03.15', content: '프로젝트 기획 및 설계' },
-      { date: '2024.03.20', content: '초기 프로토타입 개발' },
-      { date: '2024.04.01', content: '베타 테스트 시작' },
-      { date: '2024.04.15', content: '사용자 피드백 수집 및 분석' },
+      { date: '2024.04.06', content: 'LocalStorage 활용한 Todo앱' },
+      { date: '2024.07.26', content: '리액트 카운팅앱' },
+      { date: '2024.10.06', content: 'HTML/CSS 포트폴리오 사이트' },
+      { date: '2024.10.06', content: '리액트/Firebase 유튜브 클론' },
     ],
   };
 

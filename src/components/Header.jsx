@@ -23,7 +23,7 @@ function Header() {
 
   const menuItems = [
     { path: '/', text: 'Home' },
-    { path: '/news', text: '제작사례' },
+    { path: '/news', text: '공부기록' },
 
     { path: '/portfolio', text: '수상 및 발표' },
   ];
